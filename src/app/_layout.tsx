@@ -13,6 +13,7 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 
 import { APIProvider } from '@/api';
 import { SupabaseProvider } from '@/providers/supabase-provider';
+import { RevenueCatProvider } from '@/providers/revenue-cat-provider';
 import { loadSelectedTheme } from '@/lib';
 import { useThemeConfig } from '@/lib/use-theme-config';
 
@@ -40,6 +41,7 @@ export default function RootLayout() {
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="signup" options={{ headerShown: false }} />
+        <Stack.Screen name="paywall" options={{ presentation: 'modal', headerShown: false }} />
       </Stack>
     </Providers>
   );
@@ -57,8 +59,10 @@ function Providers({ children }: { children: React.ReactNode }) {
           <APIProvider>
             <BottomSheetModalProvider>
               <SupabaseProvider>
-                {children}
-                <FlashMessage position="top" />
+                <RevenueCatProvider>
+                  {children}
+                  <FlashMessage position="top" />
+                </RevenueCatProvider>
               </SupabaseProvider>
             </BottomSheetModalProvider>
           </APIProvider>

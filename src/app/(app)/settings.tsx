@@ -1,6 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Env } from '@env';
 import { useColorScheme } from 'nativewind';
+import { useRouter } from 'expo-router';
 
 import { Item } from '@/components/settings/item';
 import { ItemsContainer } from '@/components/settings/items-container';
@@ -18,6 +19,7 @@ import { translate } from '@/lib';
 import { useSupabase } from '@/hooks/use-supabase';
 
 export default function Settings() {
+  const router = useRouter();
   const { signOut } = useSupabase();
   const { colorScheme } = useColorScheme();
   const iconColor =
@@ -34,6 +36,14 @@ export default function Settings() {
           <ItemsContainer title="settings.generale">
             <LanguageItem />
             <ThemeItem />
+          </ItemsContainer>
+
+          <ItemsContainer title="Premium">
+             <Item
+                text="Upgrade to Pro"
+                icon={<Rate color={iconColor} />}
+                onPress={() => router.push('/paywall')}
+             />
           </ItemsContainer>
 
           <ItemsContainer title="settings.about">
