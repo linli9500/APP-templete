@@ -14,10 +14,11 @@ import {
   View,
 } from '@/components/ui';
 import { Github, Rate, Share, Support, Website } from '@/components/ui/icons';
-import { translate, useAuth } from '@/lib';
+import { translate } from '@/lib';
+import { useSupabase } from '@/hooks/use-supabase';
 
 export default function Settings() {
-  const signOut = useAuth.use.signOut();
+  const { signOut } = useSupabase();
   const { colorScheme } = useColorScheme();
   const iconColor =
     colorScheme === 'dark' ? colors.neutral[400] : colors.neutral[500];

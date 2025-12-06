@@ -8,26 +8,27 @@ import {
   Settings as SettingsIcon,
   Style as StyleIcon,
 } from '@/components/ui/icons';
-import { useAuth, useIsFirstTime } from '@/lib';
+import { useIsFirstTime } from '@/lib';
+import { useSupabase } from '@/hooks/use-supabase';
 
 export default function TabLayout() {
-  const status = useAuth.use.status();
+  const { session, isLoaded } = useSupabase();
   const [isFirstTime] = useIsFirstTime();
   const hideSplash = useCallback(async () => {
     await SplashScreen.hideAsync();
   }, []);
   useEffect(() => {
-    if (status !== 'idle') {
+    if (isLoaded) {
       setTimeout(() => {
         hideSplash();
       }, 1000);
     }
-  }, [hideSplash, status]);
+  }, [hideSplash, isLoaded]);
 
   if (isFirstTime) {
     return <Redirect href="/onboarding" />;
   }
-  if (status === 'signOut') {
+  if (isLoaded && !session) {
     return <Redirect href="/login" />;
   }
   return (
