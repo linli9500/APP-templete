@@ -35,8 +35,8 @@ require('dotenv').config({
 
 // TODO: Replace these values with your own
 
-const BUNDLE_ID = 'com.obytes'; // ios bundle id
-const PACKAGE = 'com.obytes'; // android package name
+const BUNDLE_ID = 'com.vibefox.app'; // ios bundle id
+const PACKAGE = 'com.vibefox.app'; // android package name
 const NAME = 'ObytesApp'; // app name
 const EXPO_ACCOUNT_OWNER = 'obytes'; // expo account owner
 const EAS_PROJECT_ID = 'c3e1075b-6fe7-4686-aa49-35b46a229044'; // eas project id

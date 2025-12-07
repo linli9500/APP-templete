@@ -1,13 +1,15 @@
-安装依赖：pnpm install
+
 
 启动
 pnpm run web
 
+安卓原生启动：pnpm run android:development
 
 git add .
-git commit -m "新增注册登录及对接supabase"
+git commit -m "修改APP的包名上架google登录"
 git push origin main
 
+C:\Program Files\Android\Android Studio
 
 #投射到手机
 1、adb reverse tcp:8081 tcp:8081
