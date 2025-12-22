@@ -10,7 +10,7 @@ Notifications.setNotificationHandler({
     shouldShowAlert: true,
     shouldPlaySound: false,
     shouldSetBadge: false,
-  }),
+  } as Notifications.NotificationBehavior),
 });
 
 export async function registerForPushNotificationsAsync() {

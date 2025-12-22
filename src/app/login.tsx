@@ -36,6 +36,7 @@ export default function Login() {
       </View>
 
       <View className="px-4 pb-8 space-y-4">
+        {/* Social Login Hidden for Expo Go Testing
         <View className="flex-row items-center">
           <View className="h-[1px] flex-1 bg-neutral-200 dark:bg-neutral-700" />
           <Text className="mx-4 text-xs text-neutral-400">OR CONTINUE WITH</Text>
@@ -45,6 +46,7 @@ export default function Login() {
         <AppleSignInButton />
         <View className="h-2" />
         <GoogleSignInButton />
+        */}
       </View>
     </>
   );

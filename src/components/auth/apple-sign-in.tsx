@@ -25,13 +25,31 @@ export function AppleSignInButton() {
           });
           // Sign in via Supabase Auth.
           if (credential.identityToken) {
-            const { error } = await supabase.auth.signInWithIdToken({
-              provider: 'apple',
-              token: credential.identityToken,
+          if (credential.identityToken) {
+            // 1. Call Web Bridge API
+            const response = await fetch(`${process.env.EXPO_PUBLIC_WEB_API_URL || 'https://mfexai-v2.workers.dev'}/api/app/social-login`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                provider: 'apple',
+                idToken: credential.identityToken,
+                userInfo: {
+                    name: credential.fullName // Apple only sends this on first login!
+                }
+              }),
             });
+            
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || 'Apple Login Bridge Failed');
+
+            // 2. Set Session
+            const { error } = await supabase.auth.setSession({
+              access_token: data.access_token,
+              refresh_token: data.access_token,
+            });
+            
             if (error) {
-               console.error('Apple Sign-In Error:', error);
-               // You might want to show a flash message here
+               console.error('Supabase Session Error:', error);
             }
           }
         } catch (e: any) {
