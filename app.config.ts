@@ -34,6 +34,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   newArchEnabled: true,
   updates: {
     fallbackToCacheTimeout: 0,
+    url: `https://u.expo.dev/${Env.EAS_PROJECT_ID}`,
+  },
+  runtimeVersion: {
+    policy: 'appVersion',
   },
   assetBundlePatterns: ['**/*'],
   ios: {
@@ -100,6 +104,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       {
         userTrackingPermission:
           'This identifier will be used to deliver personalized ads to you.',
+      },
+    ],
+    [
+      'expo-notifications',
+      {
+        icon: './assets/icon.png',
+        color: '#ffffff',
       },
     ],
   ],

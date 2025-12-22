@@ -17,6 +17,8 @@ import {
 import { Github, Rate, Share, Support, Website } from '@/components/ui/icons';
 import { translate } from '@/lib';
 import { useSupabase } from '@/hooks/use-supabase';
+import { checkAppUpdate } from '@/lib/updates';
+import { review } from '@/lib/review';
 
 export default function Settings() {
   const router = useRouter();
@@ -38,17 +40,14 @@ export default function Settings() {
             <ThemeItem />
           </ItemsContainer>
 
-          <ItemsContainer title="Premium">
-             <Item
-                text="Upgrade to Pro"
-                icon={<Rate color={iconColor} />}
-                onPress={() => router.push('/paywall')}
-             />
-          </ItemsContainer>
-
           <ItemsContainer title="settings.about">
             <Item text="settings.app_name" value={Env.NAME} />
             <Item text="settings.version" value={Env.VERSION} />
+            <Item 
+              text="settings.check_updates" 
+              icon={<Share color={iconColor} />} 
+              onPress={() => checkAppUpdate(true)} 
+            />
           </ItemsContainer>
 
           <ItemsContainer title="settings.support_us">
@@ -60,18 +59,21 @@ export default function Settings() {
             <Item
               text="settings.rate"
               icon={<Rate color={iconColor} />}
-              onPress={() => {}}
-            />
-            <Item
-              text="settings.support"
-              icon={<Support color={iconColor} />}
-              onPress={() => {}}
+              onPress={() => review.requestReview()}
             />
           </ItemsContainer>
 
           <ItemsContainer title="settings.links">
-            <Item text="settings.privacy" onPress={() => {}} />
-            <Item text="settings.terms" onPress={() => {}} />
+            <Item 
+              text="settings.privacy" 
+              // @ts-ignore
+              onPress={() => router.push({ pathname: '/webview', params: { url: 'https://google.com', title: 'Privacy Policy' } })} 
+            />
+            <Item 
+              text="settings.terms" 
+              // @ts-ignore
+              onPress={() => router.push({ pathname: '/webview', params: { url: 'https://google.com', title: 'Terms of Service' } })} 
+            />
             <Item
               text="settings.github"
               icon={<Github color={iconColor} />}

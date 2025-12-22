@@ -6,7 +6,7 @@ pnpm run web
 安卓原生启动：pnpm run android:development
 
 git add .
-git commit -m "1、增加崩溃监控sentry2、增加聚合接口功能"
+git commit -m "增加热更新、webview"
 git push origin main
 
 C:\Program Files\Android\Android Studio
@@ -51,3 +51,11 @@ RevenueCat: 去 RevenueCat 后台获取 iOS/Android API Keys。
 网络层拦截器 (提升用户体验，防止静默失败)
 隐私弹窗 (ATT) (上架前置条件)
 推送通知 (后期运营需求)
+
+-------
+
+⚠️ 下一步 (留给未来)
+目前代码拿到 Token 后，只是打印了 console.log。 等您那天想正式开通时，只需要做两件事：
+
+改数据库: 在 Supabase profiles 表加个 push_token 字段。
+改代码: 打开 src/lib/notifications.ts，把其中注释掉的 saveTokenToBackend 解开，Token 就能存进库里了。

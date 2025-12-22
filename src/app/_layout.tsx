@@ -28,7 +28,8 @@ import { useSupabase } from '@/hooks/use-supabase'; // Check imports for TabLayo
 // Step 42 showed TabLayout.
 // I am editing RootLayout (src/app/_layout.tsx).
 
-Sentry.Sentry.init({
+
+Sentry.init({
   dsn: Env.SENTRY_DSN,
   debug: __DEV__,
 });
@@ -49,12 +50,17 @@ SplashScreen.setOptions({
   fade: true,
 });
 
+import { checkAppUpdate } from '@/lib/updates';
+import { registerForPushNotificationsAsync } from '@/lib/notifications';
+
 export default function RootLayout() {
   useEffect(() => {
     (async () => {
       // Small delay to ensure the app is ready/visible
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await requestTrackingPermissionsAsync();
+      await checkAppUpdate(); // Silent check
+      await registerForPushNotificationsAsync(); // Register for Push
     })();
   }, []);
 
