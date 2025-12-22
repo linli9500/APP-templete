@@ -11,19 +11,29 @@ import {
 import { useIsFirstTime } from '@/lib';
 import { useSupabase } from '@/hooks/use-supabase';
 
+import { useAppConfig } from '@/lib/use-app-config';
+
 export default function TabLayout() {
   const { session, isLoaded } = useSupabase();
   const [isFirstTime] = useIsFirstTime();
+  const { initApp } = useAppConfig();
+  
   const hideSplash = useCallback(async () => {
     await SplashScreen.hideAsync();
   }, []);
+
   useEffect(() => {
+    // Start bootstrap when layout mounts
+    // We allow navigation to proceed even if bootstrap isn't finished to avoid blocking UI too long,
+    // or we can await it if critical. Here we fire-and-forget but log.
+    initApp();
+
     if (isLoaded) {
       setTimeout(() => {
         hideSplash();
       }, 1000);
     }
-  }, [hideSplash, isLoaded]);
+  }, [hideSplash, isLoaded, initApp]);
 
   if (isFirstTime) {
     return <Redirect href="/onboarding" />;

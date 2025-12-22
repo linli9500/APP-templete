@@ -1,6 +1,14 @@
 // Import  global CSS file
 import '../../global.css';
 
+import { Env } from '@env';
+import * as Sentry from '@sentry/react-native';
+
+Sentry.init({
+  dsn: Env.SENTRY_DSN,
+  debug: __DEV__,
+});
+
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
