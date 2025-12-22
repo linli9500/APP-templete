@@ -3,15 +3,12 @@ import '../../global.css';
 
 import { Env } from '@env';
 import * as Sentry from '@sentry/react-native';
-
-Sentry.init({
-  dsn: Env.SENTRY_DSN,
-  debug: __DEV__,
-});
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+import { useCallback, useEffect } from 'react';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
+import { Stack, Redirect } from 'expo-router'; // Add Redirect here as it might be used
 import * as SplashScreen from 'expo-splash-screen';
 import React from 'react';
 import { StyleSheet } from 'react-native';
@@ -22,8 +19,19 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { APIProvider } from '@/api';
 import { SupabaseProvider } from '@/providers/supabase-provider';
 import { RevenueCatProvider } from '@/providers/revenue-cat-provider';
-import { loadSelectedTheme } from '@/lib';
+import { loadSelectedTheme, useIsFirstTime } from '@/lib'; // Check if useIsFirstTime is exported from @/lib
 import { useThemeConfig } from '@/lib/use-theme-config';
+import { useSupabase } from '@/hooks/use-supabase'; // Check imports for TabLayout vs RootLayout
+// RootLayout seemed to just wrap Providers around Stack. 
+// Step 155 showed RootLayout content. 
+// Wait, Step 155 showed RootLayout wrapping Stack.
+// Step 42 showed TabLayout.
+// I am editing RootLayout (src/app/_layout.tsx).
+
+Sentry.Sentry.init({
+  dsn: Env.SENTRY_DSN,
+  debug: __DEV__,
+});
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -42,6 +50,14 @@ SplashScreen.setOptions({
 });
 
 export default function RootLayout() {
+  useEffect(() => {
+    (async () => {
+      // Small delay to ensure the app is ready/visible
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await requestTrackingPermissionsAsync();
+    })();
+  }, []);
+
   return (
     <Providers>
       <Stack>

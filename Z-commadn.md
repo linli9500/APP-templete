@@ -6,7 +6,7 @@ pnpm run web
 安卓原生启动：pnpm run android:development
 
 git add .
-git commit -m "修改APP的包名上架google登录"
+git commit -m "1、增加崩溃监控sentry2、增加聚合接口功能"
 git push origin main
 
 C:\Program Files\Android\Android Studio
@@ -45,3 +45,9 @@ RevenueCat: 去 RevenueCat 后台获取 iOS/Android API Keys。
 请运行：npx expo run:ios (如果您用Mac) 或 npx expo run:android。
 这会自动构建一个包含所有原生功能的“定制版 APP”安装到模拟器或手机上。
 建议：您现在去申请这些 Key，填好之后，我们就开始构建！需要我指导如何申请某一个具体的 Key 吗？
+
+
+
+网络层拦截器 (提升用户体验，防止静默失败)
+隐私弹窗 (ATT) (上架前置条件)
+推送通知 (后期运营需求)

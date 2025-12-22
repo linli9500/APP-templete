@@ -52,12 +52,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundColor: '#2E3C4B',
     },
     package: Env.PACKAGE,
+    googleServicesFile: process.env.GOOGLE_SERVICES_JSON ?? './google-services.json',
   },
   web: {
     favicon: './assets/favicon.png',
     bundler: 'metro',
   },
   plugins: [
+    '@react-native-firebase/app',
     [
       'expo-splash-screen',
       {
@@ -91,6 +93,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         url: 'https://sentry.io/',
         organization: Env.SENTRY_ORG,
         project: Env.SENTRY_PROJECT,
+      },
+    ],
+    [
+      'expo-tracking-transparency',
+      {
+        userTrackingPermission:
+          'This identifier will be used to deliver personalized ads to you.',
       },
     ],
   ],
