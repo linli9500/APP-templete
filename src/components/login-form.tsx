@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import * as z from 'zod';
 
-import { Button, ControlledInput, Text, View } from '@/components/ui';
+import { Button, ControlledInput, Text, View, PatternLogo } from '@/components/ui';
 
 const schema = z.object({
   name: z.string().optional(),
@@ -41,14 +41,16 @@ export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
         <View className="items-center justify-center">
           <Text
             testID="form-title"
-            className="pb-6 text-center text-4xl font-bold"
+            className="pb-8 text-center text-2xl font-bold uppercase tracking-[6px]"
           >
-            Sign In
+            <View className="items-center justify-center pb-4">
+               <PatternLogo width={80} height={80} color="#000000" />
+            </View>
+            FORTUNE
           </Text>
 
-          <Text className="mb-6 max-w-xs text-center text-gray-500">
-            Welcome! 👋 This is a demo login screen! Feel free to use any email
-            and password to sign in and try it out.
+          <Text className="mb-8 max-w-xs text-center text-xs uppercase tracking-widest text-neutral-500">
+            Based on your unique astrological profile
           </Text>
         </View>
 

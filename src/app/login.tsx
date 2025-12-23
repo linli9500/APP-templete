@@ -9,6 +9,8 @@ import { LoginForm } from '@/components/login-form';
 import { FocusAwareStatusBar, Text, View } from '@/components/ui';
 import { useSignIn } from '@/hooks/use-sign-in';
 
+import { QuickLogin } from '@/components/auth/quick-login';
+
 export default function Login() {
   const router = useRouter();
   const { signInWithPassword } = useSignIn();
@@ -30,7 +32,7 @@ export default function Login() {
       <FocusAwareStatusBar />
       <LoginForm onSubmit={onSubmit} />
       <View className="items-center pb-4">
-          <Link href="/signup" className="text-center text-primary-500">
+          <Link href="/signup" className="text-center text-sm font-medium text-neutral-800 tracking-wider uppercase">
             Don't have an account? Sign Up
           </Link>
       </View>
@@ -48,6 +50,7 @@ export default function Login() {
         <GoogleSignInButton />
         */}
       </View>
+      <QuickLogin />
     </>
   );
 }

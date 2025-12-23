@@ -13,6 +13,7 @@ export * from './progress-bar';
 export * from './select';
 export * from './text';
 export * from './utils';
+export * from './pattern-logo';
 
 // export base components from react-native
 export {

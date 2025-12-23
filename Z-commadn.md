@@ -6,7 +6,7 @@ pnpm run web
 安卓原生启动：pnpm run android:development
 
 git add .
-git commit -m "和web端做整合auth"
+git commit -m "打通web和app的登录功能"
 git push origin main
 
 C:\Program Files\Android\Android Studio

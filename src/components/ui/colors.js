@@ -75,4 +75,10 @@ module.exports = {
     800: '#991B1B',
     900: '#7F1D1D',
   },
+  pattern: {
+    bg: '#F5F5F0', // Bone/Beige
+    card: '#F2EEE9', // Cream/Off-White
+    text: '#000000',
+    subtext: '#121212',
+  },
 };

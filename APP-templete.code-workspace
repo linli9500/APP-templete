@@ -1,12 +1,9 @@
 {
 	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../mfexai-v2"
-		}
-	],
+    {
+      "path": "."
+    }
+  ],
   "settings": {
     "typescript.tsdk": "node_modules/typescript/lib"
   }

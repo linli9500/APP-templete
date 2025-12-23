@@ -2,7 +2,7 @@
 import { Link, Redirect, SplashScreen, Tabs } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
-import { Pressable, Text } from '@/components/ui';
+import { Pressable, Text, colors } from '@/components/ui';
 import {
   Feed as FeedIcon,
   Settings as SettingsIcon,
@@ -42,7 +42,30 @@ export default function TabLayout() {
     return <Redirect href="/login" />;
   }
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: colors.black,
+        tabBarInactiveTintColor: colors.neutral[400],
+        tabBarStyle: {
+          backgroundColor: colors.pattern.bg,
+          borderTopColor: colors.pattern.bg,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        headerStyle: {
+          backgroundColor: colors.pattern.bg,
+          elevation: 0,
+          shadowOpacity: 0,
+          borderBottomWidth: 0,
+        },
+        headerTitleStyle: {
+          fontFamily: 'Inter', // Ensure Inter is used
+          fontWeight: 'bold',
+          textTransform: 'uppercase',
+          letterSpacing: 2,
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
