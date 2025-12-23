@@ -3,7 +3,7 @@ import '../../global.css';
 
 import { Env } from '@env';
 import * as Sentry from '@sentry/react-native';
-import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+// import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import { useCallback, useEffect } from 'react';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
@@ -11,7 +11,7 @@ import { ThemeProvider } from '@react-navigation/native';
 import { Stack, Redirect } from 'expo-router'; // Add Redirect here as it might be used
 import * as SplashScreen from 'expo-splash-screen';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import FlashMessage from 'react-native-flash-message';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
@@ -58,7 +58,11 @@ export default function RootLayout() {
     (async () => {
       // Small delay to ensure the app is ready/visible
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      await requestTrackingPermissionsAsync();
+      /*
+      if (Platform.OS === 'ios') {
+        await requestTrackingPermissionsAsync();
+      }
+      */
       await checkAppUpdate(); // Silent check
       await registerForPushNotificationsAsync(); // Register for Push
     })();
