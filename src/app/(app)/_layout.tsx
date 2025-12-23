@@ -8,6 +8,7 @@ import {
   Home as HomeIcon,
   Settings as SettingsIcon,
   Style as StyleIcon,
+  User as UserIcon,
 } from '@/components/ui/icons';
 import { useIsFirstTime } from '@/lib';
 import { useSupabase } from '@/hooks/use-supabase';
@@ -54,6 +55,9 @@ export default function TabLayout() {
           borderTopColor: colors.pattern.bg,
           elevation: 0,
           shadowOpacity: 0,
+          height: 90,
+          paddingBottom: 10,
+          paddingTop: 15,
         },
         headerTitleStyle: {
           fontFamily: 'Inter',
@@ -95,7 +99,7 @@ export default function TabLayout() {
         options={{
           title: translate('journey.settings_title'),
           headerShown: false,
-          tabBarIcon: ({ color }) => <SettingsIcon color={color} />,
+          tabBarIcon: ({ color }) => <UserIcon color={color} />,
           tabBarButtonTestID: 'settings-tab',
         }}
       />

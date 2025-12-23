@@ -53,6 +53,20 @@
   "onboarding": {
     "message": "Welcome to obytes app site"
   },
+  "you": {
+    "title": "All About You",
+    "subtitle": "An ever-growing library on the story of you",
+    "view_friends": "View Friends",
+    "run_bond": "Run Bond",
+    "add_custom_friend": "Add Custom Friend",
+    "wound_title": "The Wounded Healer",
+    "wound_subtitle": "Natal Chiron Complex",
+    "wound_desc": "This audio dives into the part of you that is meant to unearth, address, and heal your deepest wounds.",
+    "listen_now": "Listen now",
+    "your_pattern": "Your Pattern",
+    "impacting_you": "Impacting You Now",
+    "new_tag": "New"
+  },
   "settings": {
     "about": "About",
     "app_name": "App Name",

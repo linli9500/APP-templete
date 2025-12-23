@@ -53,6 +53,20 @@
   "onboarding": {
     "message": "欢迎使用 obytes app site"
   },
+  "you": {
+    "title": "关于你",
+    "subtitle": "一个关于你人生故事的成长库",
+    "view_friends": "查看好友",
+    "run_bond": "开始连结",
+    "add_custom_friend": "添加自定义好友",
+    "wound_title": "强力疗愈者",
+    "wound_subtitle": "本命凯龙星情结",
+    "wound_desc": "这段音频深入探索你注定要挖掘、面对并治愈内心最深层创伤的部分。",
+    "listen_now": "立即收听",
+    "your_pattern": "你的模式",
+    "impacting_you": "此刻的影响",
+    "new_tag": "新"
+  },
   "settings": {
     "about": "关于",
     "app_name": "App Name",

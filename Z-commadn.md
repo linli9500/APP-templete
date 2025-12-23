@@ -1,31 +1,18 @@
 
 
-启动
+# 启动
 pnpm run web
 
 安卓原生启动：pnpm run android:development
 
 git add .
-git commit -m "打通web和app的登录功能"
+git commit -m "基本框架搭建好，底部导航"
 git push origin main
 
-C:\Program Files\Android\Android Studio
-
-#投射到手机
-1、adb reverse tcp:8081 tcp:8081
-2、手机直接输入：直接输入： http://localhost:8081
-
-
-⚡ 必杀技：USB 反向代理 (解决所有网络问题)
-既然已经连了 USB，我们可以建立一个稳定通道，这样甚至不需要连 WiFi 都能调试。
-
-请依次运行以下命令：
-
-建立通道 (把电脑的 8081 端口映射到手机):
-powershell
+# 投射到手机
 adb reverse tcp:8081 tcp:8081
-在手机浏览器输入： 拿起手机，打开 Chrome 或自带浏览器，直接输入： http://localhost:8081
-只要步骤 1 运行成功，步骤 2 里的手机浏览器就会自动唤起 Expo Go APP 并加载您的项目。 （如果手机提示是否打开 Expo Go，选“是”）
+手机浏览器打开/localhost:8081
+
 
 
 恭喜！原生依赖和代码集成全部完成 🎉
