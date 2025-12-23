@@ -1,0 +1,89 @@
+{
+  "auth": {
+    "login": "登入",
+    "sign_up": "註冊",
+    "name": "姓名",
+    "email": "電子郵件",
+    "password": "密碼",
+    "login_failed": "登入失敗",
+    "dont_have_account": "還沒有帳號？去註冊",
+    "already_have_account": "已有帳號？去登入",
+    "continue_with": "或者使用以下方式登入",
+    "required_email": "電子郵件為必填項",
+    "invalid_email": "電子郵件格式不正確",
+    "required_password": "密碼為必填項",
+    "min_length_password": "密碼至少需要 6 個字符",
+    "fortune_subtitle": "基於你獨特的命運畫像",
+    "account_created": "帳號已建立",
+    "verify_email": "請檢查您的電子郵件以驗證帳號。",
+    "registration_failed": "註冊失敗"
+  },
+  "insight": {
+    "title": "核心分析",
+    "subtitle": "解碼你內在的真實自我。",
+    "true_self": "真實自我",
+    "core_tag": "核心",
+    "architect_title": "命運架構師",
+    "architect_desc": "你擁有構建混亂的天賦。你的心理畫像顯示你內心深處渴望秩序與目標。",
+    "view_report": "查看完整報告",
+    "energy_station": "能量站",
+    "emotion_detector": "情緒探測器",
+    "current_vibe": "當前狀態：",
+    "vibe_value": "焦慮",
+    "suggested_action": "建議行動：",
+    "action_value": "深呼吸",
+    "charge": "充能",
+    "analyze": "分析",
+    "daily_guidance": "每日指引",
+    "quote": "“擁抱不確定性。那是你力量生長的土壤。”"
+  },
+  "bonds": {
+    "title": "連結",
+    "subtitle": "分析你與他人的羈絆。",
+    "daily_resonance": "每日共鳴",
+    "resonance_desc": "查看今天的契合度與能量共鳴。"
+  },
+  "journey": {
+    "title": "旅程",
+    "subtitle": "你的時間線：過去，現在與未來。",
+    "time_machine": "時光機",
+    "time_machine_desc": "解鎖未來 5-10 年的洞察。",
+    "settings_title": "我的"
+  },
+  "onboarding": {
+    "message": "歡迎使用 obytes app site"
+  },
+  "settings": {
+    "about": "關於",
+    "app_name": "App Name",
+    "account_preferences": "帳戶與偏好",
+    "arabic": "阿拉伯語",
+    "english": "英語",
+    "zh_cn": "簡體中文",
+    "zh_tw": "繁體中文",
+    "generale": "通用",
+    "github": "Github",
+    "language": "語言",
+    "legal": "法律資訊",
+    "links": "連結",
+    "logout": "登出",
+    "more": "更多",
+    "privacy": "隱私政策",
+    "rate": "評分",
+    "share": "分享",
+    "support": "支持",
+    "support_us": "支持我們",
+    "terms": "服務條款",
+    "theme": {
+      "dark": "深色",
+      "light": "淺色",
+      "system": "系統",
+      "title": "主題"
+    },
+    "title": "設置",
+    "check_updates": "檢查更新",
+    "version": "版本",
+    "website": "網站"
+  },
+  "welcome": "歡迎使用 obytes app site"
+}

@@ -4,6 +4,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import * as z from 'zod';
+import { translate } from '@/lib';
 
 import { Button, ControlledInput, Text, View, PatternLogo } from '@/components/ui';
 
@@ -11,14 +12,14 @@ const schema = z.object({
   name: z.string().optional(),
   email: z
     .string({
-      required_error: 'Email is required',
+      required_error: translate('auth.required_email'),
     })
-    .email('Invalid email format'),
+    .email(translate('auth.invalid_email')),
   password: z
     .string({
-      required_error: 'Password is required',
+      required_error: translate('auth.required_password'),
     })
-    .min(6, 'Password must be at least 6 characters'),
+    .min(6, translate('auth.min_length_password')),
 });
 
 export type FormType = z.infer<typeof schema>;
@@ -50,7 +51,7 @@ export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
           </Text>
 
           <Text className="mb-8 max-w-xs text-center text-xs uppercase tracking-widest text-neutral-500">
-            Based on your unique astrological profile
+            {translate('auth.fortune_subtitle')}
           </Text>
         </View>
 
@@ -58,26 +59,26 @@ export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
           testID="name"
           control={control}
           name="name"
-          label="Name"
+          label={translate('auth.name')}
         />
 
         <ControlledInput
           testID="email-input"
           control={control}
           name="email"
-          label="Email"
+          label={translate('auth.email')}
         />
         <ControlledInput
           testID="password-input"
           control={control}
           name="password"
-          label="Password"
+          label={translate('auth.password')}
           placeholder="***"
           secureTextEntry={true}
         />
         <Button
           testID="login-button"
-          label="Login"
+          label={translate('auth.login')}
           onPress={handleSubmit(onSubmit)}
         />
       </View>

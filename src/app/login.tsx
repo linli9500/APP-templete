@@ -1,6 +1,7 @@
 import { useRouter, Link } from 'expo-router';
 import React from 'react';
 import { showMessage } from 'react-native-flash-message';
+import { translate } from '@/lib';
 
 import type { LoginFormProps } from '@/components/login-form';
 import { AppleSignInButton } from '@/components/auth/apple-sign-in';
@@ -21,7 +22,7 @@ export default function Login() {
       router.replace('/');
     } catch (error: any) {
       showMessage({
-        message: 'Login Failed',
+        message: translate('auth.login_failed'),
         description: error.message,
         type: 'danger',
       });
@@ -33,7 +34,7 @@ export default function Login() {
       <LoginForm onSubmit={onSubmit} />
       <View className="items-center pb-4">
           <Link href="/signup" className="text-center text-sm font-medium text-neutral-800 tracking-wider uppercase">
-            Don't have an account? Sign Up
+            {translate('auth.dont_have_account')}
           </Link>
       </View>
 

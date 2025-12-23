@@ -1,6 +1,7 @@
 import { useRouter, Link } from 'expo-router';
 import React from 'react';
 import { showMessage } from 'react-native-flash-message';
+import { translate } from '@/lib';
 
 import type { LoginFormProps } from '@/components/login-form';
 import { LoginForm } from '@/components/login-form';
@@ -15,15 +16,15 @@ export default function SignUp() {
     try {
       await signUp({ email: data.email, password: data.password, name: data.name });
       showMessage({
-        message: 'Account Created',
-        description: 'Please check your email to verify your account.',
+        message: translate('auth.account_created'),
+        description: translate('auth.verify_email'),
         type: 'success',
       });
       // Optionally redirect to login or wait for verification
       router.replace('/login');
     } catch (error: any) {
       showMessage({
-        message: 'Registration Failed',
+        message: translate('auth.registration_failed'),
         description: error.message,
         type: 'danger',
       });
@@ -35,7 +36,7 @@ export default function SignUp() {
       <LoginForm onSubmit={onSubmit} />
       <View className="items-center pb-4">
           <Link href="/login" className="text-center text-sm font-medium text-neutral-800 tracking-wider uppercase">
-            Already have an account? Log In
+            {translate('auth.already_have_account')}
           </Link>
       </View>
     </>

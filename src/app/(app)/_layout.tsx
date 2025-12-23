@@ -5,11 +5,13 @@ import React, { useCallback, useEffect } from 'react';
 import { Pressable, Text, colors } from '@/components/ui';
 import {
   Feed as FeedIcon,
+  Home as HomeIcon,
   Settings as SettingsIcon,
   Style as StyleIcon,
 } from '@/components/ui/icons';
 import { useIsFirstTime } from '@/lib';
 import { useSupabase } from '@/hooks/use-supabase';
+import { translate } from '@/lib';
 
 import { useAppConfig } from '@/lib/use-app-config';
 
@@ -46,20 +48,15 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: colors.black,
         tabBarInactiveTintColor: colors.neutral[400],
+        headerShown: false,
         tabBarStyle: {
           backgroundColor: colors.pattern.bg,
           borderTopColor: colors.pattern.bg,
           elevation: 0,
           shadowOpacity: 0,
         },
-        headerStyle: {
-          backgroundColor: colors.pattern.bg,
-          elevation: 0,
-          shadowOpacity: 0,
-          borderBottomWidth: 0,
-        },
         headerTitleStyle: {
-          fontFamily: 'Inter', // Ensure Inter is used
+          fontFamily: 'Inter',
           fontWeight: 'bold',
           textTransform: 'uppercase',
           letterSpacing: 2,
@@ -69,26 +66,34 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Feed',
-          tabBarIcon: ({ color }) => <FeedIcon color={color} />,
-          headerRight: () => <CreateNewPostLink />,
-          tabBarButtonTestID: 'feed-tab',
+          title: translate('insight.title'),
+          tabBarIcon: ({ color }) => <HomeIcon color={color} />,
+          tabBarButtonTestID: 'insight-tab',
         }}
       />
 
       <Tabs.Screen
-        name="style"
+        name="bonds"
         options={{
-          title: 'Style',
-          headerShown: false,
-          tabBarIcon: ({ color }) => <StyleIcon color={color} />,
-          tabBarButtonTestID: 'style-tab',
+          title: translate('bonds.title'),
+          tabBarIcon: ({ color }) => <StyleIcon color={color} />, // Placeholder icon
+          tabBarButtonTestID: 'bonds-tab',
         }}
       />
+
+      <Tabs.Screen
+        name="journey"
+        options={{
+          title: translate('journey.title'), 
+          tabBarIcon: ({ color }) => <FeedIcon color={color} />, // Placeholder icon
+          tabBarButtonTestID: 'journey-tab',
+        }}
+      />
+
       <Tabs.Screen
         name="settings"
         options={{
-          title: 'Settings',
+          title: translate('journey.settings_title'),
           headerShown: false,
           tabBarIcon: ({ color }) => <SettingsIcon color={color} />,
           tabBarButtonTestID: 'settings-tab',
@@ -98,12 +103,4 @@ export default function TabLayout() {
   );
 }
 
-const CreateNewPostLink = () => {
-  return (
-    <Link href="/feed/add-post" asChild>
-      <Pressable>
-        <Text className="px-3 text-primary-300">Create</Text>
-      </Pressable>
-    </Link>
-  );
-};
+

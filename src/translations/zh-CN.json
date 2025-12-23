@@ -1,0 +1,89 @@
+{
+  "auth": {
+    "login": "登录",
+    "sign_up": "注册",
+    "name": "姓名",
+    "email": "邮箱",
+    "password": "密码",
+    "login_failed": "登录失败",
+    "dont_have_account": "还没有账号？去注册",
+    "already_have_account": "已有账号？去登录",
+    "continue_with": "或者使用以下方式登录",
+    "required_email": "邮箱为必填项",
+    "invalid_email": "邮箱格式不正确",
+    "required_password": "密码为必填项",
+    "min_length_password": "密码至少需要 6 个字符",
+    "fortune_subtitle": "基于你独特的命运画像",
+    "account_created": "账号已创建",
+    "verify_email": "请检查您的邮箱以验证账号。",
+    "registration_failed": "注册失败"
+  },
+  "insight": {
+    "title": "核心分析",
+    "subtitle": "解码你内在的真实自我。",
+    "true_self": "真实自我",
+    "core_tag": "核心",
+    "architect_title": "命运架构师",
+    "architect_desc": "你拥有构建混乱的天赋。你的心理画像显示你内心深处渴望秩序与目标。",
+    "view_report": "查看完整报告",
+    "energy_station": "能量站",
+    "emotion_detector": "情绪探测器",
+    "current_vibe": "当前状态：",
+    "vibe_value": "焦虑",
+    "suggested_action": "建议行动：",
+    "action_value": "深呼吸",
+    "charge": "充能",
+    "analyze": "分析",
+    "daily_guidance": "每日指引",
+    "quote": "“拥抱不确定性。那是你力量生长的土壤。”"
+  },
+  "bonds": {
+    "title": "连结",
+    "subtitle": "分析你与他人的羁绊。",
+    "daily_resonance": "每日共鸣",
+    "resonance_desc": "查看今天的契合度与能量共鸣。"
+  },
+  "journey": {
+    "title": "旅程",
+    "subtitle": "你的时间线：过去，现在与未来。",
+    "time_machine": "时光机",
+    "time_machine_desc": "解锁未来 5-10 年的洞察。",
+    "settings_title": "我的"
+  },
+  "onboarding": {
+    "message": "欢迎使用 obytes app site"
+  },
+  "settings": {
+    "about": "关于",
+    "app_name": "App Name",
+    "account_preferences": "账户与偏好",
+    "arabic": "阿拉伯语",
+    "english": "英语",
+    "zh_cn": "简体中文",
+    "zh_tw": "繁体中文",
+    "generale": "通用",
+    "github": "Github",
+    "language": "语言",
+    "legal": "法律信息",
+    "links": "链接",
+    "logout": "退出登录",
+    "more": "更多",
+    "privacy": "隐私政策",
+    "rate": "评分",
+    "share": "分享",
+    "support": "支持",
+    "support_us": "支持我们",
+    "terms": "服务条款",
+    "theme": {
+      "dark": "深色",
+      "light": "浅色",
+      "system": "系统",
+      "title": "主题"
+    },
+    "title": "设置",
+    "check_updates": "检查更新",
+    "version": "版本",
+    "website": "网站"
+  },
+  "welcome": "欢迎使用 obytes app site"
+}
