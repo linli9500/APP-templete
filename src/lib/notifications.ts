@@ -3,6 +3,7 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 import { supabase } from '@/lib/supabase';
+import { client } from '@/api/common/client';
 
 // Configure how notifications behave when the app is in foreground
 Notifications.setNotificationHandler({
@@ -45,7 +46,6 @@ export async function registerForPushNotificationsAsync() {
       token = (await Notifications.getExpoPushTokenAsync({ projectId })).data;
       console.log('📱 Expo Push Token:', token);
       
-      // TODO: Save this token to your backend (e.g., Supabase profiles table)
       await saveTokenToBackend(token);
       
     } catch (e) {
@@ -60,20 +60,15 @@ export async function registerForPushNotificationsAsync() {
 
 async function saveTokenToBackend(token: string) {
   try {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.user) return;
 
-    // TODO: Ensure your 'profiles' table has a 'push_token' column
-    /*
-    const { error } = await supabase
-      .from('profiles')
-      .update({ push_token: token })
-      .eq('id', user.id);
-
-    if (error) console.error('Error saving push token to DB:', error);
-    */
-    console.log('[Mock] Saving token to DB for user:', user.id);
+    await client.post('/app/device', {
+      token,
+      platform: Platform.OS,
+    });
+    console.log('✅ Push token saved to backend');
   } catch (error) {
-    console.error('Error in saveTokenToBackend:', error);
+    console.error('❌ Error saving push token:', error);
   }
 }

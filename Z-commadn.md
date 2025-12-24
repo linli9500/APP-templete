@@ -9,8 +9,9 @@ pnpm run android:development
 
 # github上传
 git add .
-git commit -m "增加聚合登录页面"
+git commit -m "v1.0.4-通知功能打通前后端"
 git push origin main
+
 
 # 投射到手机
 adb reverse tcp:8081 tcp:8081
