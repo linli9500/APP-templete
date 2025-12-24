@@ -6,6 +6,8 @@ export type AppBootstrapData = {
     latest_version: string;
     force_update: boolean;
     download_url: string;
+    ios_url?: string;
+    android_url?: string;
   };
   features: {
     enable_new_year_theme: boolean;
@@ -22,6 +24,8 @@ const MOCK_BOOTSTRAP_DATA: AppBootstrapData = {
     latest_version: '1.0.1',
     force_update: false,
     download_url: 'https://example.com/update',
+    ios_url: '',
+    android_url: '',
   },
   features: {
     enable_new_year_theme: false,
@@ -38,6 +42,8 @@ const DEFAULT_BOOTSTRAP_DATA: AppBootstrapData = {
     latest_version: '1.0.0',
     force_update: false,
     download_url: '',
+    ios_url: '',
+    android_url: '',
   },
   features: {
     enable_new_year_theme: false,

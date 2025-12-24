@@ -52,6 +52,8 @@ SplashScreen.setOptions({
 
 import { checkAppUpdate } from '@/lib/updates';
 import { registerForPushNotificationsAsync } from '@/lib/notifications';
+import { useAppConfig } from '@/lib/use-app-config'; 
+import { UpdateChecker } from '@/components/update-checker';
 
 export default function RootLayout() {
   useEffect(() => {
@@ -65,11 +67,15 @@ export default function RootLayout() {
       */
       await checkAppUpdate(); // Silent check
       await registerForPushNotificationsAsync(); // Register for Push
+      
+      // Initialize remote config
+      useAppConfig.getState().initApp();
     })();
   }, []);
 
   return (
     <Providers>
+      <UpdateChecker />
       <Stack>
         <Stack.Screen name="(app)" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
