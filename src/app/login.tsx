@@ -47,6 +47,13 @@ export default function LoginSelection() {
 
   // --- Auth Handlers ---
 
+  React.useEffect(() => {
+    GoogleSignin.configure({
+      scopes: ['https://www.googleapis.com/auth/userinfo.email'],
+      webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+    });
+  }, []);
+
   const handleGoogleLogin = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -72,7 +79,11 @@ export default function LoginSelection() {
             refresh_token: data.access_token, // Usually bridge returns access_token as refresh_token too or specific one
         });
         
-        if (error) console.error('Supabase Session Error:', error);
+        if (error) {
+             console.error('Supabase Session Error:', error);
+        } else {
+             router.replace('/');
+        }
       }
     } catch (error: any) {
         if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -106,10 +117,16 @@ export default function LoginSelection() {
             const data = await response.json();
             if (!response.ok) throw new Error(data.error || 'Apple Login Bridge Failed');
 
-            await supabase.auth.setSession({
+            const { error } = await supabase.auth.setSession({
                 access_token: data.access_token,
                 refresh_token: data.access_token,
             });
+
+            if (error) {
+                console.error('Supabase Session Error:', error);
+            } else {
+                router.replace('/');
+            }
         }
     } catch (e: any) {
         if (e.code !== 'ERR_REQUEST_CANCELED') {
