@@ -3,7 +3,7 @@ import '../../global.css';
 
 import { Env } from '@env';
 import * as Sentry from '@sentry/react-native';
-// import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import { useCallback, useEffect } from 'react';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
@@ -60,11 +60,9 @@ export default function RootLayout() {
     (async () => {
       // Small delay to ensure the app is ready/visible
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      /*
       if (Platform.OS === 'ios') {
         await requestTrackingPermissionsAsync();
       }
-      */
       await checkAppUpdate(); // Silent check
       await registerForPushNotificationsAsync(); // Register for Push
       

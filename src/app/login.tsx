@@ -45,6 +45,21 @@ export default function LoginSelection() {
   const buttonBg = isDark ? '#FFFFFF' : '#000000';
   const buttonText = isDark ? '#000000' : '#FFFFFF';
 
+  const [isAgreed, setIsAgreed] = React.useState(true);
+
+  const checkAgreement = () => {
+    if (!isAgreed) {
+        // Shake or show toast
+        const { showMessage } = require('react-native-flash-message');
+        showMessage({
+            message: translate('auth.agree_required'),
+            type: "warning",
+        });
+        return false;
+    }
+    return true;
+  };
+
   // --- Auth Handlers ---
 
   React.useEffect(() => {
@@ -154,13 +169,15 @@ export default function LoginSelection() {
         
         {/* Email Login */}
         <TouchableOpacity 
-            onPress={() => router.push('/email-login')}
-            className="flex-row items-center justify-center py-4 rounded-full bg-black dark:bg-white relative"
+            onPress={() => {
+                if (checkAgreement()) router.push('/email-login');
+            }}
+            className={`flex-row items-center justify-center py-4 rounded-full relative ${isAgreed ? 'bg-black dark:bg-white' : 'bg-neutral-300 dark:bg-neutral-800'}`}
         >
             <View style={{ position: 'absolute', left: 24 }}>
-                <EmailIcon color={buttonText} />
+                <EmailIcon color={isAgreed ? buttonText : '#999'} />
             </View>
-            <Text className="text-white dark:text-black font-medium text-base">
+            <Text className={`font-medium text-base ${isAgreed ? 'text-white dark:text-black' : 'text-neutral-500'}`}>
                 {translate('auth.continue_with_email')}
             </Text>
         </TouchableOpacity>
@@ -168,13 +185,15 @@ export default function LoginSelection() {
         {/* Apple Login (iOS & Web) */}
         {(Platform.OS === 'ios' || Platform.OS === 'web') && (
             <TouchableOpacity 
-                onPress={handleAppleLogin}
-                className="flex-row items-center justify-center py-4 rounded-full bg-black dark:bg-white relative"
+                onPress={() => {
+                    if (checkAgreement()) handleAppleLogin();
+                }}
+                className={`flex-row items-center justify-center py-4 rounded-full relative ${isAgreed ? 'bg-black dark:bg-white' : 'bg-neutral-300 dark:bg-neutral-800'}`}
             >
                 <View style={{ position: 'absolute', left: 24 }}>
-                     <AppleIcon color={buttonText} />
+                     <AppleIcon color={isAgreed ? buttonText : '#999'} />
                 </View>
-                <Text className="text-white dark:text-black font-medium text-base">
+                <Text className={`font-medium text-base ${isAgreed ? 'text-white dark:text-black' : 'text-neutral-500'}`}>
                     {translate('auth.continue_with_apple')}
                 </Text>
             </TouchableOpacity>
@@ -182,13 +201,15 @@ export default function LoginSelection() {
 
         {/* Google Login */}
         <TouchableOpacity 
-            onPress={handleGoogleLogin}
-            className="flex-row items-center justify-center py-4 rounded-full bg-black dark:bg-white relative"
+            onPress={() => {
+                if (checkAgreement()) handleGoogleLogin();
+            }}
+            className={`flex-row items-center justify-center py-4 rounded-full relative ${isAgreed ? 'bg-black dark:bg-white' : 'bg-neutral-300 dark:bg-neutral-800'}`}
         >
              <View style={{ position: 'absolute', left: 24 }}>
                 <GoogleIcon />
             </View>
-            <Text className="text-white dark:text-black font-medium text-base">
+            <Text className={`font-medium text-base ${isAgreed ? 'text-white dark:text-black' : 'text-neutral-500'}`}>
                 {translate('auth.continue_with_google')}
             </Text>
         </TouchableOpacity>
@@ -196,11 +217,37 @@ export default function LoginSelection() {
       </View>
 
        {/* Footer / ToS */}
-       <View className="absolute bottom-10 left-0 right-0 items-center px-6">
-          <Text className="text-xs text-neutral-400 text-center leading-5 dark:text-neutral-500">
-              {translate('auth.legal_disclaimer')}
-          </Text>
-       </View>
+       <TouchableOpacity 
+          activeOpacity={1}
+          onPress={() => setIsAgreed(!isAgreed)}
+          className="absolute bottom-10 left-0 right-0 flex-row items-center justify-center px-6"
+       >
+          <View className={`w-4 h-4 rounded border mr-2 items-center justify-center ${isAgreed ? 'bg-black border-black dark:bg-white dark:border-white' : 'border-neutral-400'}`}>
+              {isAgreed && (
+                  <Svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke={isDark ? "black" : "white"} strokeWidth={3} strokeLinecap="round" strokeLinejoin="round">
+                      <Path d="M20 6L9 17l-5-5" />
+                  </Svg>
+              )}
+          </View>
+          <View className="flex-row flex-wrap justify-center">
+            <Text className="text-xs text-neutral-400 dark:text-neutral-500">
+                {translate('auth.agree_to')}
+            </Text>
+            <TouchableOpacity onPress={() => router.push('/webview?url=https://example.com/terms&title=Terms')}>
+                <Text className="text-xs font-bold text-black dark:text-white mx-1">
+                    {translate('settings.terms')}
+                </Text>
+            </TouchableOpacity>
+            <Text className="text-xs text-neutral-400 dark:text-neutral-500">
+                &
+            </Text>
+            <TouchableOpacity onPress={() => router.push('/webview?url=https://example.com/privacy&title=Privacy')}>
+                <Text className="text-xs font-bold text-black dark:text-white ml-1">
+                    {translate('settings.privacy')}
+                </Text>
+            </TouchableOpacity>
+          </View>
+       </TouchableOpacity>
 
     </View>
   );

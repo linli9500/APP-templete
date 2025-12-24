@@ -68,7 +68,11 @@ export default function Options() {
 
           <View className="mt-8 mb-4 items-center">
              <TouchableOpacity 
-                onPress={signOut}
+                onPress={async () => {
+                   await signOut();
+                   // Force navigation to ensure immediate feedback
+                   router.replace('/login');
+                }}
                 className="bg-black dark:bg-white rounded-full py-3 px-8 min-w-[150px] items-center"
              >
                 <Text className="text-white font-bold text-base">{translate('settings.logout')}</Text>

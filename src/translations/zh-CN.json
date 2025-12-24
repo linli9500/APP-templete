@@ -20,7 +20,9 @@
     "continue_with_email": "使用邮箱继续",
     "continue_with_google": "使用 Google 继续",
     "continue_with_apple": "使用 Apple 继续",
-    "legal_disclaimer": "继续即表示您同意我们的服务条款和隐私政策。"
+    "legal_disclaimer": "继续即表示您同意我们的服务条款和隐私政策。",
+    "agree_to": "我已阅读并同意",
+    "agree_required": "请先同意服务条款和隐私政策"
   },
   "insight": {
     "title": "核心分析",

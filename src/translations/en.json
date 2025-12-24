@@ -20,7 +20,9 @@
     "continue_with_email": "Continue with Email",
     "continue_with_google": "Continue with Google",
     "continue_with_apple": "Continue with Apple",
-    "legal_disclaimer": "By continuing you agree to our Terms of Service and Privacy Policy."
+    "legal_disclaimer": "By continuing you agree to our Terms of Service and Privacy Policy.",
+    "agree_to": "I agree to the",
+    "agree_required": "Please agree to the Terms and Privacy Policy"
   },
   "insight": {
     "title": "Insight",
