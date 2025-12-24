@@ -32,25 +32,42 @@ const MOCK_BOOTSTRAP_DATA: AppBootstrapData = {
   },
 };
 
+// Default safe values in case of API, network error
+const DEFAULT_BOOTSTRAP_DATA: AppBootstrapData = {
+  version: {
+    latest_version: '1.0.0',
+    force_update: false,
+    download_url: '',
+  },
+  features: {
+    enable_new_year_theme: false,
+    show_home_banner: false,
+  },
+  ui: {
+    theme_color: '#system',
+  },
+};
+
 /**
  * Fetches aggregated configuration for the app startup.
- * In a real scenario, this might call a Supabase Edge Function or RPC.
+ * Calls the backend /api/app/config endpoint.
  */
 export const getBootstrapData = async (): Promise<AppBootstrapData> => {
   try {
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 800));
-
-    // TODO: Replace with real Supabase call when backend is ready
-    // const { data, error } = await client.rpc('get_app_bootstrap_data');
-    // if (error) throw error;
-    // return data;
-
-    console.log('📱 Bootstrap data fetched successfully (MOCK)');
-    return MOCK_BOOTSTRAP_DATA;
+    const { data } = await client.get('/app/config');
+    console.log('📱 Bootstrap config loaded:', data);
+    
+    // Ensure data shape is correct by merging with defaults
+    return {
+        ...DEFAULT_BOOTSTRAP_DATA,
+        ...data,
+        version: { ...DEFAULT_BOOTSTRAP_DATA.version, ...(data.version || {}) },
+        features: { ...DEFAULT_BOOTSTRAP_DATA.features, ...(data.features || {}) },
+        ui: { ...DEFAULT_BOOTSTRAP_DATA.ui, ...(data.ui || {}) },
+    };
   } catch (error) {
     console.error('Failed to fetch bootstrap data:', error);
-    // Return safe defaults in case of error
-    return MOCK_BOOTSTRAP_DATA;
+    // Return safe defaults in case of error (offline, server down)
+    return DEFAULT_BOOTSTRAP_DATA;
   }
 };
