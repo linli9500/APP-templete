@@ -25,7 +25,6 @@ export function AppleSignInButton() {
           });
           // Sign in via Supabase Auth.
           if (credential.identityToken) {
-          if (credential.identityToken) {
             // 1. Call Web Bridge API
             const response = await fetch(`${process.env.EXPO_PUBLIC_WEB_API_URL || 'https://mfexai-v2.workers.dev'}/api/app/social-login`, {
               method: 'POST',
@@ -45,7 +44,7 @@ export function AppleSignInButton() {
             // 2. Set Session
             const { error } = await supabase.auth.setSession({
               access_token: data.access_token,
-              refresh_token: data.access_token,
+              refresh_token: data.access_token, // Usually bridge returns access_token as refresh_token too or specific one
             });
             
             if (error) {

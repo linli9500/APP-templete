@@ -16,7 +16,11 @@
     "fortune_subtitle": "Based on your unique astrological profile",
     "account_created": "Account Created",
     "verify_email": "Please check your email to verify your account.",
-    "registration_failed": "Registration Failed"
+    "registration_failed": "Registration Failed",
+    "continue_with_email": "Continue with Email",
+    "continue_with_google": "Continue with Google",
+    "continue_with_apple": "Continue with Apple",
+    "legal_disclaimer": "By continuing you agree to our Terms of Service and Privacy Policy."
   },
   "insight": {
     "title": "Insight",

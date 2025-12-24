@@ -25,7 +25,6 @@ export function GoogleSignInButton() {
           await GoogleSignin.hasPlayServices();
           const userInfo = await GoogleSignin.signIn();
            if (userInfo.data?.idToken) {
-           if (userInfo.data?.idToken) {
             // 1. Call Web Bridge API
             const response = await fetch(`${process.env.EXPO_PUBLIC_WEB_API_URL || 'https://mfexai-v2.workers.dev'}/api/app/social-login`, {
               method: 'POST',

@@ -16,7 +16,11 @@
     "fortune_subtitle": "基于你独特的命运画像",
     "account_created": "账号已创建",
     "verify_email": "请检查您的邮箱以验证账号。",
-    "registration_failed": "注册失败"
+    "registration_failed": "注册失败",
+    "continue_with_email": "使用邮箱继续",
+    "continue_with_google": "使用 Google 继续",
+    "continue_with_apple": "使用 Apple 继续",
+    "legal_disclaimer": "继续即表示您同意我们的服务条款和隐私政策。"
   },
   "insight": {
     "title": "核心分析",

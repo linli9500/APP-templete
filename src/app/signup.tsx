@@ -35,7 +35,7 @@ export default function SignUp() {
       <FocusAwareStatusBar />
       <LoginForm onSubmit={onSubmit} />
       <View className="items-center pb-4">
-          <Link href="/login" className="text-center text-sm font-medium text-neutral-800 tracking-wider uppercase">
+          <Link href="/email-login" className="text-center text-sm font-medium text-neutral-800 dark:text-neutral-200 tracking-wider uppercase">
             {translate('auth.already_have_account')}
           </Link>
       </View>
