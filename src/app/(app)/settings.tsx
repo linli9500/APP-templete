@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, View, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useColorScheme } from 'nativewind';
 import { Text, FocusAwareStatusBar } from '@/components/ui';
 import { translate } from '@/lib';
 import { PatternLogo } from '@/components/ui/pattern-logo';
@@ -23,6 +24,11 @@ const TargetIcon = ({ color }: { color: string }) => (
 export default function YouPage() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
+  const { colorScheme } = useColorScheme();
+  const iconColor = colorScheme === 'dark' ? '#000000' : '#000000'; // Keep black for now as card background is light/colored
+  const settingsIconColor = colorScheme === 'dark' ? '#FFFFFF' : '#000000'; {
+// Using white for dark mode settings icon
+  }
 
   return (
     <View className="flex-1 bg-[#F5F5F0] dark:bg-neutral-900">
@@ -42,7 +48,7 @@ export default function YouPage() {
           <View className="flex-row space-x-4">
             <Link href="/options" asChild>
               <TouchableOpacity className="p-2 bg-white dark:bg-neutral-800 rounded-full shadow-sm">
-                 <SettingsIcon color="black" width={20} height={20} /> 
+                 <SettingsIcon color={colorScheme === 'dark' ? 'white' : 'black'} width={20} height={20} /> 
               </TouchableOpacity>
             </Link>
           </View>

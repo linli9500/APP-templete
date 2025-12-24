@@ -15,7 +15,7 @@ import { translate } from '@/lib';
 import { useSupabase } from '@/hooks/use-supabase';
 
 const BackIcon = () => (
-    <View className="w-10 h-10 rounded-full bg-black dark:bg-white justify-center items-center">
+    <View className="w-10 h-10 rounded-full bg-black dark:bg-neutral-800 justify-center items-center">
         <ArrowRight color="white" className="rotate-180" />
     </View>
 );
@@ -36,8 +36,8 @@ export default function Options() {
         {/* Custom Header */}
         <View className="flex-row items-center justify-between mt-6 mb-8">
             <TouchableOpacity onPress={() => router.back()}>
-                <View className="w-8 h-8 rounded-full bg-black dark:bg-white justify-center items-center" style={{ transform: [{ rotate: '180deg' }] }}>
-                    <ArrowRight color={colorScheme === 'dark' ? 'black' : 'white'} width={16} height={16} />
+                <View className="w-8 h-8 rounded-full bg-black dark:bg-neutral-800 justify-center items-center" style={{ transform: [{ rotate: '180deg' }] }}>
+                    <ArrowRight color="white" width={16} height={16} />
                 </View>
             </TouchableOpacity>
             <Text className="text-2xl font-bold text-black dark:text-white flex-1 text-center pr-8">
@@ -71,7 +71,7 @@ export default function Options() {
                 onPress={signOut}
                 className="bg-black dark:bg-white rounded-full py-3 px-8 min-w-[150px] items-center"
              >
-                <Text className="text-white dark:text-black font-bold text-base">{translate('settings.logout')}</Text>
+                <Text className="text-white font-bold text-base">{translate('settings.logout')}</Text>
              </TouchableOpacity>
           </View>
 

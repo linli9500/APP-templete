@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useColorScheme } from 'nativewind';
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
@@ -29,6 +30,8 @@ export type LoginFormProps = {
 };
 
 export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
+  const { colorScheme } = useColorScheme();
+  const logoColor = colorScheme === 'dark' ? '#FFFFFF' : '#000000';
   const { handleSubmit, control } = useForm<FormType>({
     resolver: zodResolver(schema),
   });
@@ -42,15 +45,15 @@ export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
         <View className="items-center justify-center">
           <Text
             testID="form-title"
-            className="pb-8 text-center text-2xl font-bold uppercase tracking-[6px]"
+            className="pb-8 text-center text-2xl font-bold uppercase tracking-[6px] text-black dark:text-white"
           >
             <View className="items-center justify-center pb-4">
-               <PatternLogo width={80} height={80} color="#000000" />
+               <PatternLogo width={80} height={80} color={logoColor} />
             </View>
             FORTUNE
           </Text>
 
-          <Text className="mb-8 max-w-xs text-center text-xs uppercase tracking-widest text-neutral-500">
+          <Text className="mb-8 max-w-xs text-center text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
             {translate('auth.fortune_subtitle')}
           </Text>
         </View>

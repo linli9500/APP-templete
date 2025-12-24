@@ -6,7 +6,7 @@ pnpm run web
 安卓原生启动：pnpm run android:development
 
 git add .
-git commit -m "基本框架搭建好，底部导航"
+git commit -m "优化全局样式"
 git push origin main
 
 # 投射到手机

@@ -36,9 +36,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     fallbackToCacheTimeout: 0,
     url: `https://u.expo.dev/${Env.EAS_PROJECT_ID}`,
   },
-  runtimeVersion: {
-    policy: 'appVersion',
-  },
+  runtimeVersion: Env.VERSION.toString(),
   assetBundlePatterns: ['**/*'],
   ios: {
     supportsTablet: true,
