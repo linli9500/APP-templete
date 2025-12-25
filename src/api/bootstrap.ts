@@ -16,6 +16,11 @@ export type AppBootstrapData = {
   ui: {
     theme_color: string;
   };
+  // 公告配置 - 内容格式: "title:标题内容; description:正文内容"
+  announcement: {
+    enabled: boolean;
+    content: string;
+  };
 };
 
 // Mock data suitable for initial development
@@ -33,6 +38,10 @@ const MOCK_BOOTSTRAP_DATA: AppBootstrapData = {
   },
   ui: {
     theme_color: '#system',
+  },
+  announcement: {
+    enabled: false,
+    content: '',
   },
 };
 
@@ -52,6 +61,10 @@ const DEFAULT_BOOTSTRAP_DATA: AppBootstrapData = {
   ui: {
     theme_color: '#system',
   },
+  announcement: {
+    enabled: false,
+    content: '',
+  },
 };
 
 /**
@@ -70,6 +83,7 @@ export const getBootstrapData = async (): Promise<AppBootstrapData> => {
         version: { ...DEFAULT_BOOTSTRAP_DATA.version, ...(data.version || {}) },
         features: { ...DEFAULT_BOOTSTRAP_DATA.features, ...(data.features || {}) },
         ui: { ...DEFAULT_BOOTSTRAP_DATA.ui, ...(data.ui || {}) },
+        announcement: { ...DEFAULT_BOOTSTRAP_DATA.announcement, ...(data.announcement || {}) },
     };
   } catch (error) {
     console.error('Failed to fetch bootstrap data:', error);

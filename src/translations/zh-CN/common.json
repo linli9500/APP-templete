@@ -65,7 +65,8 @@
   },
   "common": {
     "confirm": "确定",
-    "cancel": "取消"
+    "cancel": "取消",
+    "dont_show_again": "不再提示"
   },
   "welcome": "欢迎使用 obytes app site",
   "onboarding": {

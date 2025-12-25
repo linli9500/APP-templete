@@ -5,6 +5,7 @@ interface AppConfigState {
   version: AppBootstrapData['version'] | null;
   features: AppBootstrapData['features'];
   ui: AppBootstrapData['ui'];
+  announcement: AppBootstrapData['announcement'];
   isLoading: boolean;
   error: string | null;
   
@@ -21,6 +22,10 @@ export const useAppConfig = create<AppConfigState>((set) => ({
   ui: {
     theme_color: 'system',
   },
+  announcement: {
+    enabled: false,
+    content: '',
+  },
   isLoading: true,
   error: null,
 
@@ -32,6 +37,7 @@ export const useAppConfig = create<AppConfigState>((set) => ({
         version: data.version,
         features: data.features,
         ui: data.ui,
+        announcement: data.announcement,
         isLoading: false,
       });
     } catch (e) {

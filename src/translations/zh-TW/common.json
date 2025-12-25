@@ -56,6 +56,11 @@
     "screenshot_waiting": "等待中",
     "screenshot_success": "截圖檢測成功!"
   },
+  "common": {
+    "confirm": "確定",
+    "cancel": "取消",
+    "dont_show_again": "不再提示"
+  },
   "welcome": "歡迎使用 obytes app site",
   "onboarding": {
     "message": "歡迎使用 obytes app site"

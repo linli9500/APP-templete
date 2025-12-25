@@ -64,7 +64,8 @@
   },
   "common": {
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "dont_show_again": "Don't show again"
   },
   "welcome": "Welcome to obytes app site",
   "onboarding": {
