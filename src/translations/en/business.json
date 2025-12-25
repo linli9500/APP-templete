@@ -1,30 +1,4 @@
 {
-  "auth": {
-    "login": "Login",
-    "sign_up": "Sign Up",
-    "name": "Name",
-    "email": "Email",
-    "password": "Password",
-    "login_failed": "Login Failed",
-    "dont_have_account": "Don't have an account? Sign Up",
-    "already_have_account": "Already have an account? Login",
-    "continue_with": "OR CONTINUE WITH",
-    "required_email": "Email is required",
-    "invalid_email": "Invalid email format",
-    "required_password": "Password is required",
-    "min_length_password": "Password must be at least 6 characters",
-    "fortune_subtitle": "Based on your unique astrological profile",
-    "account_created": "Account Created",
-    "verify_email": "Please check your email to verify your account.",
-    "registration_failed": "Registration Failed",
-    "continue_with_email": "Continue with Email",
-    "continue_with_google": "Continue with Google",
-    "continue_with_apple": "Continue with Apple",
-    "legal_disclaimer": "By continuing you agree to our Terms of Service and Privacy Policy.",
-    "agree_to": "I agree to the",
-    "agree_required": "Please agree to the Terms and Privacy Policy",
-    "not_logged_in": "Not Logged In"
-  },
   "insight": {
     "title": "Insight",
     "subtitle": "Decode your inner self.",
@@ -57,9 +31,6 @@
     "time_machine_desc": "Unlock insights for the next 5-10 years.",
     "settings_title": "You"
   },
-  "onboarding": {
-    "message": "Welcome to obytes app site"
-  },
   "you": {
     "title": "All About You",
     "subtitle": "An ever-growing library on the story of you",
@@ -74,38 +45,6 @@
     "impacting_you": "Impacting You Now",
     "new_tag": "New"
   },
-  "settings": {
-    "about": "About",
-    "app_name": "App Name",
-    "account_preferences": "Account & Preferences",
-    "zh_cn": "Simplified Chinese",
-    "zh_tw": "Traditional Chinese",
-    "english": "English",
-    "generale": "General",
-    "github": "Github",
-    "language": "Language",
-    "legal": "Legal Information",
-    "links": "Links",
-    "logout": "Logout",
-    "more": "More",
-    "privacy": "Privacy Policy",
-    "rate": "Rate",
-    "share": "Share",
-    "support": "Support",
-    "support_us": "Support Us",
-    "terms": "Terms of Service",
-    "theme": {
-      "dark": "Dark",
-      "light": "Light",
-      "system": "System",
-      "title": "Theme"
-    },
-    "title": "Settings",
-    "check_updates": "Check for Updates",
-    "version": "Version",
-    "website": "Website"
-  },
-  "welcome": "Welcome to obytes app site",
   "analysis": {
     "birth_date_label": "Birth Date",
     "birth_time_label": "Birth Time",
@@ -120,10 +59,9 @@
     "select_birth_time_error": "Please select birth time",
     "select_gender_error": "Please select gender",
     "select_birth_date_title": "Select Birth Date",
-    "select_birth_time_title": "Select Birth Time"
-  },
-  "common": {
-    "confirm": "Confirm",
-    "cancel": "Cancel"
+    "select_birth_time_title": "Select Birth Time",
+    "request_failed": "Analysis request failed, please check input or network",
+    "start_failed": "Failed to start analysis",
+    "decoding_in_progress": "Decoding more in-depth analysis..."
   }
 }

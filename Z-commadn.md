@@ -9,7 +9,7 @@ pnpm run android:development
 
 # github上传
 git add .
-git commit -m "APP-v1.0.8-修改所有的通知为center胶囊模式通知"
+git commit -m "APP-v1.0.9-改为不强制登录以及打通核心功能流式展示（待优化字段和UI）"
 git push origin main
 
 

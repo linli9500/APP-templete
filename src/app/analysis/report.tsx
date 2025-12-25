@@ -21,7 +21,9 @@ export default function AnalysisReportScreen() {
        // We should rely on a "mounted" flag or similar.
        startAnalysis({
           birthDate: localParams.birthDate as string,
+          birthTime: (localParams.birthTime as string) || '12:00',
           gender: (localParams.gender as 'male' | 'female' | 'other') || 'male',
+          language: (localParams.language as string) || 'zh-CN',
           key: (localParams.key as string) || 'test_analysis'
        });
     }
@@ -31,7 +33,9 @@ export default function AnalysisReportScreen() {
   const handleStart = () => {
     startAnalysis({
       birthDate: (localParams.birthDate as string) || '1990-01-01',
+      birthTime: (localParams.birthTime as string) || '12:00',
       gender: (localParams.gender as 'male' | 'female' | 'other') || 'male',
+      language: (localParams.language as string) || 'zh-CN',
       key: (localParams.key as string) || 'test_analysis'
     });
   };
@@ -39,31 +43,16 @@ export default function AnalysisReportScreen() {
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#F5F5F0' }}>
+      <SafeAreaView className="flex-1 bg-pattern-bg dark:bg-black">
         
         {/* State 1: Decoding Animation */}
         {isDecoding && <DecodingOverlay />}
 
-        {/* State 2: Report Display (or Empty Start State) */}
-        {!isDecoding && !displayContent && !isLoading && (
-           <View className="flex-1 justify-center items-center p-4">
-              <Text className="text-xl mb-4 text-center">心理画像解码测试</Text>
-              <Button 
-                label="开始深度解码" 
-                onPress={handleStart}
-              />
-              <Text className="mt-4 text-xs text-neutral-400">
-                 请确保数据库中存在 key 为 'test_analysis' 的 prompt 配置
-              </Text>
-           </View>
-        )}
-
         {/* State 3: Content Display */}
-        {(!isDecoding && (displayContent || isLoading)) && (
+        {(!isDecoding && displayContent) && (
            <StreamReport 
               content={displayContent} 
               isEffectActive={isEffectActive || isLoading}
-              isLoading={isLoading}
            />
         )}
       </SafeAreaView>

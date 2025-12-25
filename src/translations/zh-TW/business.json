@@ -1,24 +1,4 @@
 {
-  "auth": {
-    "login": "登入",
-    "sign_up": "註冊",
-    "name": "姓名",
-    "email": "電子郵件",
-    "password": "密碼",
-    "login_failed": "登入失敗",
-    "dont_have_account": "還沒有帳號？去註冊",
-    "already_have_account": "已有帳號？去登入",
-    "continue_with": "或者使用以下方式登入",
-    "required_email": "電子郵件為必填項",
-    "invalid_email": "電子郵件格式不正確",
-    "required_password": "密碼為必填項",
-    "min_length_password": "密碼至少需要 6 個字符",
-    "fortune_subtitle": "基於你獨特的命運畫像",
-    "account_created": "帳號已建立",
-    "verify_email": "請檢查您的電子郵件以驗證帳號。",
-    "registration_failed": "註冊失敗",
-    "not_logged_in": "未登入"
-  },
   "insight": {
     "title": "核心分析",
     "subtitle": "解碼你內在的真實自我。",
@@ -51,9 +31,6 @@
     "time_machine_desc": "解鎖未來 5-10 年的洞察。",
     "settings_title": "我的"
   },
-  "onboarding": {
-    "message": "歡迎使用 obytes app site"
-  },
   "you": {
     "title": "關於你",
     "subtitle": "一個關於你人生故事的成長庫",
@@ -67,38 +44,5 @@
     "your_pattern": "你的模式",
     "impacting_you": "此刻的影響",
     "new_tag": "新"
-  },
-  "settings": {
-    "about": "關於",
-    "app_name": "App Name",
-    "account_preferences": "帳戶與偏好",
-    "arabic": "阿拉伯語",
-    "english": "英語",
-    "zh_cn": "簡體中文",
-    "zh_tw": "繁體中文",
-    "generale": "通用",
-    "github": "Github",
-    "language": "語言",
-    "legal": "法律資訊",
-    "links": "連結",
-    "logout": "登出",
-    "more": "更多",
-    "privacy": "隱私政策",
-    "rate": "評分",
-    "share": "分享",
-    "support": "支持",
-    "support_us": "支持我們",
-    "terms": "服務條款",
-    "theme": {
-      "dark": "深色",
-      "light": "淺色",
-      "system": "系統",
-      "title": "主題"
-    },
-    "title": "設置",
-    "check_updates": "檢查更新",
-    "version": "版本",
-    "website": "網站"
-  },
-  "welcome": "歡迎使用 obytes app site"
+  }
 }

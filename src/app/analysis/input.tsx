@@ -23,24 +23,14 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
+// ... (imports)
+
+// ... (schema)
+
 export default function AnalysisInputScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { t } = useTranslation(); // Note: This might be 'translate' from '@/lib' or 'useTranslation' from react-i18next. 
-  // checking imports: import { useTranslation } from 'react-i18next'; is present. 
-  // BUT the project uses `translate` helper usually.
-  // user request said: "translate('key') or tx attribute".
-  // The file imports `useTranslation` on line 14. 
-  // And `import { Text } from '@/components/ui';` which usually supports `tx`.
-  // Let's check `Text` component usage. If it supports `tx`, use it.
-  // Previous view showed `import { translate } from '@/lib';` was NOT in input.tsx options.tsx had it.
-  // input.tsx line 14: import { useTranslation } from 'react-i18next';
-  // I should probably use `translate` from `@/lib` for consistency if that's the project pattern, OR `t` from `useTranslation`.
-  // The user rule says: "必须使用 `translate('key')` 或 `tx` 属性".
-  // I will use `translate` from `@/lib` as it appears to be the project standard helper (options.tsx uses it).
-  // AND `tx` for Text components.
-
-  // Wait, I need to add import { translate } from '@/lib';
+  const { t, i18n } = useTranslation(); 
   
   const [openDate, setOpenDate] = useState(false);
   const [openTime, setOpenTime] = useState(false);
@@ -62,6 +52,7 @@ export default function AnalysisInputScreen() {
         birthDate: format(data.birthDate, 'yyyy-MM-dd'),
         birthTime: format(data.birthTime, 'HH:mm'),
         gender: data.gender,
+        language: i18n.language, // Pass current language
         key: 'test_analysis', 
       }
     });
@@ -70,7 +61,10 @@ export default function AnalysisInputScreen() {
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-      <View style={[styles.container, { paddingTop: insets.top }]}>
+      <View 
+         style={{ paddingTop: insets.top }} 
+         className="flex-1 bg-pattern-bg dark:bg-black"
+      >
         <FocusAwareStatusBar />
 
         {/* Custom Header */}
@@ -84,19 +78,19 @@ export default function AnalysisInputScreen() {
         </View>
 
         <ScrollView contentContainerStyle={styles.content}>
-          <Text className="text-3xl font-bold mb-2 text-black" tx="insight.title" />
-          <Text className="text-neutral-500 mb-8 text-base" tx="analysis.input_instruction" />
+          <Text className="text-3xl font-bold mb-2 text-black dark:text-white" tx="insight.title" />
+          <Text className="text-neutral-500 dark:text-neutral-400 mb-8 text-base" tx="analysis.input_instruction" />
 
           {/* Birth Date Picker Trigger */}
           <View className="mb-6">
-            <Text className="mb-2 font-semibold text-black" tx="analysis.birth_date_label" />
+            <Text className="mb-2 font-semibold text-black dark:text-white" tx="analysis.birth_date_label" />
             <Controller
               control={control}
               name="birthDate"
               render={({ field: { value } }) => (
                 <TouchableOpacity onPress={() => setOpenDate(true)} activeOpacity={0.8}>
-                   <View className="border border-neutral-200 rounded-xl p-4 bg-white">
-                      <Text className={value ? "text-black" : "text-neutral-400"}>
+                   <View className="border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 bg-white dark:bg-neutral-900">
+                      <Text className={value ? "text-black dark:text-white" : "text-neutral-400"}>
                         {value ? format(value, 'yyyy-MM-dd') : translate('analysis.select_date_placeholder')}
                       </Text>
                    </View>
@@ -112,7 +106,7 @@ export default function AnalysisInputScreen() {
               open={openDate}
               date={selectedDate || new Date(2000, 0, 1)}
               mode="date"
-              locale="zh-CN"
+              locale={i18n.language}
               confirmText={translate('common.confirm')}
               cancelText={translate('common.cancel')}
               title={translate('analysis.select_birth_date_title')}
@@ -128,14 +122,14 @@ export default function AnalysisInputScreen() {
 
           {/* Birth Time Picker Trigger */}
           <View className="mb-6">
-            <Text className="mb-2 font-semibold text-black" tx="analysis.birth_time_label" />
+            <Text className="mb-2 font-semibold text-black dark:text-white" tx="analysis.birth_time_label" />
             <Controller
               control={control}
               name="birthTime"
               render={({ field: { value } }) => (
                 <TouchableOpacity onPress={() => setOpenTime(true)} activeOpacity={0.8}>
-                   <View className="border border-neutral-200 rounded-xl p-4 bg-white">
-                      <Text className={value ? "text-black" : "text-neutral-400"}>
+                   <View className="border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 bg-white dark:bg-neutral-900">
+                      <Text className={value ? "text-black dark:text-white" : "text-neutral-400"}>
                         {value ? format(value, 'HH:mm') : translate('analysis.select_time_placeholder')}
                       </Text>
                    </View>
@@ -151,7 +145,8 @@ export default function AnalysisInputScreen() {
               open={openTime}
               date={selectedTime || new Date()}
               mode="time"
-              locale="zh-CN"
+              locale="en-GB" // Force 24h format
+              is24hourSource="locale"
               confirmText={translate('common.confirm')}
               cancelText={translate('common.cancel')}
               title={translate('analysis.select_birth_time_title')}
@@ -167,7 +162,7 @@ export default function AnalysisInputScreen() {
 
           {/* Gender Selection */}
           <View className="mb-8">
-            <Text className="mb-2 font-semibold text-black" tx="analysis.gender_label" />
+            <Text className="mb-2 font-semibold text-black dark:text-white" tx="analysis.gender_label" />
             <Controller
               control={control}
               name="gender"
@@ -175,16 +170,16 @@ export default function AnalysisInputScreen() {
                 <View className="flex-row gap-4">
                    <TouchableOpacity 
                       onPress={() => onChange('female')}
-                      className={`flex-1 py-3 rounded-full border items-center ${value === 'female' ? 'bg-black border-black' : 'bg-transparent border-neutral-300'}`}
+                      className={`flex-1 py-3 rounded-full border items-center ${value === 'female' ? 'bg-black dark:bg-white border-black dark:border-white' : 'bg-transparent border-neutral-300 dark:border-neutral-700'}`}
                    >
-                      <Text className={value === 'female' ? 'text-white font-bold' : 'text-neutral-500'} tx="analysis.gender_female" />
+                      <Text className={value === 'female' ? 'text-white dark:text-black font-bold' : 'text-neutral-500'} tx="analysis.gender_female" />
                    </TouchableOpacity>
 
                    <TouchableOpacity 
                       onPress={() => onChange('male')}
-                      className={`flex-1 py-3 rounded-full border items-center ${value === 'male' ? 'bg-black border-black' : 'bg-transparent border-neutral-300'}`}
+                      className={`flex-1 py-3 rounded-full border items-center ${value === 'male' ? 'bg-black dark:bg-white border-black dark:border-white' : 'bg-transparent border-neutral-300 dark:border-neutral-700'}`}
                    >
-                      <Text className={value === 'male' ? 'text-white font-bold' : 'text-neutral-500'} tx="analysis.gender_male" />
+                      <Text className={value === 'male' ? 'text-white dark:text-black font-bold' : 'text-neutral-500'} tx="analysis.gender_male" />
                    </TouchableOpacity>
                 </View>
               )}
@@ -207,10 +202,6 @@ export default function AnalysisInputScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5F5F0',
-  },
   content: {
     padding: 24,
     paddingTop: 10,

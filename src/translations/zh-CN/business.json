@@ -1,30 +1,4 @@
 {
-  "auth": {
-    "login": "登录",
-    "sign_up": "注册",
-    "name": "姓名",
-    "email": "邮箱",
-    "password": "密码",
-    "login_failed": "登录失败",
-    "dont_have_account": "还没有账号？去注册",
-    "already_have_account": "已有账号？去登录",
-    "continue_with": "或者使用以下方式登录",
-    "required_email": "邮箱为必填项",
-    "invalid_email": "邮箱格式不正确",
-    "required_password": "密码为必填项",
-    "min_length_password": "密码至少需要 6 个字符",
-    "fortune_subtitle": "基于你独特的命运画像",
-    "account_created": "账号已创建",
-    "verify_email": "请检查您的邮箱以验证账号。",
-    "registration_failed": "注册失败",
-    "continue_with_email": "使用邮箱继续",
-    "continue_with_google": "使用 Google 继续",
-    "continue_with_apple": "使用 Apple 继续",
-    "legal_disclaimer": "继续即表示您同意我们的服务条款和隐私政策。",
-    "agree_to": "我已阅读并同意",
-    "agree_required": "请先同意服务条款和隐私政策",
-    "not_logged_in": "未登录"
-  },
   "insight": {
     "title": "核心分析",
     "subtitle": "解码你内在的真实自我。",
@@ -57,9 +31,6 @@
     "time_machine_desc": "解锁未来 5-10 年的洞察。",
     "settings_title": "我的"
   },
-  "onboarding": {
-    "message": "欢迎使用 obytes app site"
-  },
   "you": {
     "title": "关于你",
     "subtitle": "一个关于你人生故事的成长库",
@@ -74,39 +45,6 @@
     "impacting_you": "此刻的影响",
     "new_tag": "新"
   },
-  "settings": {
-    "about": "关于",
-    "app_name": "App Name",
-    "account_preferences": "账户与偏好",
-    "arabic": "阿拉伯语",
-    "english": "英语",
-    "zh_cn": "简体中文",
-    "zh_tw": "繁体中文",
-    "generale": "通用",
-    "github": "Github",
-    "language": "语言",
-    "legal": "法律信息",
-    "links": "链接",
-    "logout": "退出登录",
-    "more": "更多",
-    "privacy": "隐私政策",
-    "rate": "评分",
-    "share": "分享",
-    "support": "支持",
-    "support_us": "支持我们",
-    "terms": "服务条款",
-    "theme": {
-      "dark": "深色",
-      "light": "浅色",
-      "system": "系统",
-      "title": "主题"
-    },
-    "title": "设置",
-    "check_updates": "检查更新",
-    "version": "版本",
-    "website": "网站"
-  },
-  "welcome": "欢迎使用 obytes app site",
   "analysis": {
     "birth_date_label": "出生日期",
     "birth_time_label": "出生时间",
@@ -121,10 +59,9 @@
     "select_birth_time_error": "请选择出生时间",
     "select_gender_error": "请选择性别",
     "select_birth_date_title": "选择出生日期",
-    "select_birth_time_title": "选择出生时间"
-  },
-  "common": {
-    "confirm": "确定",
-    "cancel": "取消"
+    "select_birth_time_title": "选择出生时间",
+    "request_failed": "分析请求失败，请检查输入或网络",
+    "start_failed": "无法启动分析",
+    "decoding_in_progress": "更多深度分析正在解码中..."
   }
 }

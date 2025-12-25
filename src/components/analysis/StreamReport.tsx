@@ -1,16 +1,19 @@
 import React, { useEffect } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, Easing, withSequence, useAnimatedProps } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, Easing } from 'react-native-reanimated';
+import { useColorScheme } from 'nativewind';
 import { Text } from '@/components/ui/text';
 import Markdown from 'react-native-markdown-display';
+import { translate } from '@/lib';
 
 interface StreamReportProps {
   content: string;
   isEffectActive: boolean;
-  isLoading: boolean;
 }
 
 export const StreamReport = ({ content, isEffectActive }: StreamReportProps) => {
+  const { colorScheme } = useColorScheme();
+  const isDark = colorScheme === 'dark';
   const spin = useSharedValue(0);
 
   useEffect(() => {
@@ -20,6 +23,8 @@ export const StreamReport = ({ content, isEffectActive }: StreamReportProps) => 
         -1,
         false
       );
+    } else {
+      spin.value = 0;
     }
   }, [isEffectActive]);
 
@@ -28,23 +33,50 @@ export const StreamReport = ({ content, isEffectActive }: StreamReportProps) => 
       transform: [{ rotateZ: `${spin.value}deg` }],
       opacity: isEffectActive ? 1 : 0,
     };
-  });
+  }, [isEffectActive]);
+
+  const markdownStyles = {
+    body: {
+      color: isDark ? 'white' : 'black',
+      fontSize: 16,
+      lineHeight: 28,
+    },
+    heading1: {
+        fontSize: 28,
+        marginBottom: 16,
+        color: isDark ? 'white' : 'black',
+        fontWeight: 'bold',
+    },
+    heading2: {
+        fontSize: 22,
+        marginBottom: 12,
+        marginTop: 24,
+        color: isDark ? 'white' : 'black', 
+        fontWeight: '600',
+    },
+    paragraph: {
+        marginBottom: 16,
+    },
+    // Add other element styles if needed
+  };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-       {/* Use Markdown renderer if possible, or simple Text for starters */}
+    <ScrollView 
+       className="flex-1 bg-pattern-bg dark:bg-black" 
+       contentContainerStyle={styles.contentContainer}
+    >
        <Markdown style={markdownStyles}>
           {content}
        </Markdown>
 
        {isEffectActive && (
-         <View style={styles.loadingFooter}>
-            <View style={styles.cursorBlock} />
+         <View className="flex-row items-center mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-800">
+            <View className="w-2.5 h-4.5 bg-black dark:bg-white mr-2" /> 
             <Animated.View style={[styles.spinner, animatedStyle]}>
-               <View style={styles.spinnerLine} />
+               <View className="w-0.5 h-3 bg-black dark:bg-white" />
             </Animated.View>
-            <Text className="text-neutral-500 text-xs ml-2">
-               更多深度分析正在解码中...
+            <Text className="text-neutral-500 dark:text-neutral-400 text-base ml-2">
+               {translate('analysis.decoding_in_progress')}
             </Text>
          </View>
        )}
@@ -53,27 +85,9 @@ export const StreamReport = ({ content, isEffectActive }: StreamReportProps) => 
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5F5F0', // Beige background as per design rules
-  },
   contentContainer: {
     padding: 24,
     paddingBottom: 100,
-  },
-  loadingFooter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 16,
-    paddingTop: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#E5E5E0',
-  },
-  cursorBlock: {
-    width: 10,
-    height: 18,
-    backgroundColor: 'black',
-    marginRight: 8,
   },
   spinner: {
     width: 16,
@@ -81,34 +95,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  spinnerLine: {
-    width: 2,
-    height: 12,
-    backgroundColor: 'black', 
-  }
 });
-
-const markdownStyles = {
-  body: {
-    color: 'black',
-    fontSize: 16,
-    lineHeight: 28,
-    fontFamily: 'System', 
-  },
-  heading1: {
-      fontSize: 28,
-      marginBottom: 16,
-      color: 'black',
-      fontWeight: 'bold',
-  },
-  heading2: {
-      fontSize: 22,
-      marginBottom: 12,
-      marginTop: 24,
-      color: 'black', 
-      fontWeight: '600',
-  },
-  paragraph: {
-      marginBottom: 16,
-  }
-};

@@ -27,6 +27,12 @@ export function fetchStream(
   let processedLength = 0;
 
   xhr.onprogress = () => {
+    // Check status first. If it's an error (e.g. 500), don't stream the body as content.
+    // Wait for onload to handle the error parsing.
+    if (xhr.status !== 200 && xhr.status !== 0) { // 0 for local/sometimes initial
+       return;
+    }
+
     // xhr.responseText contains the FULL response accumulated so far
     const response = xhr.responseText || '';
     const newChunk = response.substring(processedLength);

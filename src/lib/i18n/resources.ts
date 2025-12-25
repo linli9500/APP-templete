@@ -1,6 +1,6 @@
-import en from '@/translations/en.json';
-import zhCN from '@/translations/zh-CN.json';
-import zhTW from '@/translations/zh-TW.json';
+import en from '@/translations/en';
+import zhCN from '@/translations/zh-CN';
+import zhTW from '@/translations/zh-TW';
 
 export const resources = {
   en: {

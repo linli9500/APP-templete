@@ -12,6 +12,7 @@ import testingLibrary from 'eslint-plugin-testing-library';
 // eslint-disable-next-line import/no-named-as-default, import/no-named-as-default-member, import/namespace
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 import unusedImports from 'eslint-plugin-unused-imports';
+import reactNativePlugin from 'eslint-plugin-react-native';
 import { configs, parser } from 'typescript-eslint';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -80,11 +81,17 @@ export default defineConfig([
   },
   {
     files: ['**/*.ts', '**/*.tsx'],
+    plugins: {
+      'react-native': reactNativePlugin,
+    },
     languageOptions: {
       parser: parser,
       parserOptions: {
         project: './tsconfig.json',
         sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true,
+        },
       },
     },
     rules: {
@@ -96,6 +103,28 @@ export default defineConfig([
           prefer: 'type-imports',
           fixStyle: 'inline-type-imports',
           disallowTypeAnnotations: true,
+        },
+      ],
+      // STRONG CONSTRAINTS:
+      // 1. Forbid direct import of Text, Image from react-native (Force use of UI components)
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'react-native',
+              importNames: ['Text', 'Image'],
+              message:
+                'Please use <Text> from "@/components/ui" and <Image> from "expo-image" instead.',
+            },
+          ],
+        },
+      ],
+      // 2. Forbid raw text (Force i18n)
+      'react-native/no-raw-text': [
+        'error',
+        {
+          skip: ['Heading', 'Subheading', 'Label'], // Don't skip Text. We want to catch raw text in Text components too.
         },
       ],
     },

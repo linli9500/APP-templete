@@ -1,16 +1,23 @@
 import { useRef, useState } from 'react';
 import { Env } from '@env';
+import { useRouter } from 'expo-router';
 
 import { supabase } from '@/lib/supabase';
 import { fetchStream } from '@/lib/fetch-stream';
+import { showErrorMessage } from '@/components/ui/utils';
+import { translate } from '@/lib';
 
 interface StreamAnalysisParams {
   birthDate: string;
+  birthTime: string;
   gender?: 'male' | 'female' | 'other';
+  language: string;
   key: string;
 }
 
 export const useStreamAnalysis = () => {
+  const router = useRouter(); 
+
   const [displayContent, setDisplayContent] = useState('');
   const [isDecoding, setIsDecoding] = useState(false); // True during the initial 8s animation
   const [isLoading, setIsLoading] = useState(false); // True while request is active
@@ -23,7 +30,7 @@ export const useStreamAnalysis = () => {
   const intervalIdRef = useRef<any>(null);
   const abortControllerRef = useRef<(() => void) | null>(null);
 
-  const startAnalysis = async ({ birthDate, gender, key }: StreamAnalysisParams) => {
+  const startAnalysis = async ({ birthDate, birthTime, gender, language, key }: StreamAnalysisParams) => {
     try {
       // Reset State
       setIsLoading(true);
@@ -55,9 +62,8 @@ export const useStreamAnalysis = () => {
           'Content-Type': 'application/json',
           'Authorization': token ? `Bearer ${token}` : '',
         },
-        body: JSON.stringify({ birthDate, gender, key }),
+        body: JSON.stringify({ birthDate, birthTime, gender, language, key }),
         onNext: (chunk) => {
-          // console.log(`XHR Chunk received: len=${chunk.length}`);
           // Just append content, don't update state yet (waiting for 8s animation)
           fullContentRef.current += chunk;
         },
@@ -65,6 +71,10 @@ export const useStreamAnalysis = () => {
           console.error('XHR Stream Error:', error);
           setIsLoading(false);
           setIsDecoding(false);
+          
+          // Show error and Go Back
+          showErrorMessage(translate('analysis.request_failed'));
+          router.back();
         },
         onComplete: () => {
           console.log('XHR Stream Completed');
@@ -79,9 +89,12 @@ export const useStreamAnalysis = () => {
       }, 8000);
 
     } catch (error) {
-      console.error('Start Analysis Error:', error);
-      setIsLoading(false);
-      setIsDecoding(false);
+       console.error('Start Analysis Error:', error);
+       setIsLoading(false);
+       setIsDecoding(false);
+       
+       showErrorMessage(translate('analysis.start_failed'));
+       router.back();
     }
   };
 
