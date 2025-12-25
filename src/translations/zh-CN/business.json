@@ -62,6 +62,8 @@
     "select_birth_time_title": "选择出生时间",
     "request_failed": "分析请求失败，请检查输入或网络",
     "start_failed": "无法启动分析",
-    "decoding_in_progress": "更多深度分析正在解码中..."
+    "decoding_in_progress": "更多深度分析正在解码中...",
+    "report_title": "分析报告",
+    "request_timeout": "分析请求超时，请重试"
   }
 }

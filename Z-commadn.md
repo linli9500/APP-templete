@@ -9,7 +9,7 @@ pnpm run android:development
 
 # github上传
 git add .
-git commit -m "APP-v1.0.9-改为不强制登录以及打通核心功能流式展示（待优化字段和UI）"
+git commit -m "APP-v1.1.0-传入接口增加字段等以及UI优化和开发规则强制约束拆分翻译文件"
 git push origin main
 
 

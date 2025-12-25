@@ -62,6 +62,8 @@
     "select_birth_time_title": "Select Birth Time",
     "request_failed": "Analysis request failed, please check input or network",
     "start_failed": "Failed to start analysis",
-    "decoding_in_progress": "Decoding more in-depth analysis..."
+    "decoding_in_progress": "Decoding more in-depth analysis...",
+    "report_title": "Analysis Report",
+    "request_timeout": "Analysis request timed out, please try again"
   }
 }

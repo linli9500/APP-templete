@@ -29,22 +29,40 @@ export const useStreamAnalysis = () => {
   const streamDoneRef = useRef(false);
   const intervalIdRef = useRef<any>(null);
   const abortControllerRef = useRef<(() => void) | null>(null);
+  const minDelayTimeoutRef = useRef<any>(null);
+  const hardTimeoutRef = useRef<any>(null);
+  const minDelaySatisfiedRef = useRef(false);
+  const isDecodingRef = useRef(false);
 
   const startAnalysis = async ({ birthDate, birthTime, gender, language, key }: StreamAnalysisParams) => {
     try {
       // Reset State
       setIsLoading(true);
       setIsDecoding(true);
+      isDecodingRef.current = true;
       setDisplayContent('');
       fullContentRef.current = '';
       displayedLengthRef.current = 0;
       streamDoneRef.current = false;
+      minDelaySatisfiedRef.current = false;
       setIsEffectActive(false);
 
-      // Cleanup previous request if any
+      // Cleanup previous request and timers if any
       if (abortControllerRef.current) {
         abortControllerRef.current();
         abortControllerRef.current = null;
+      }
+      if (minDelayTimeoutRef.current) {
+        clearTimeout(minDelayTimeoutRef.current);
+        minDelayTimeoutRef.current = null;
+      }
+      if (hardTimeoutRef.current) {
+        clearTimeout(hardTimeoutRef.current);
+        hardTimeoutRef.current = null;
+      }
+      if (intervalIdRef.current) {
+        clearInterval(intervalIdRef.current);
+        intervalIdRef.current = null;
       }
 
       const { data: { session } } = await supabase.auth.getSession();
@@ -64,49 +82,108 @@ export const useStreamAnalysis = () => {
         },
         body: JSON.stringify({ birthDate, birthTime, gender, language, key }),
         onNext: (chunk) => {
-          // Just append content, don't update state yet (waiting for 8s animation)
+          // Just append content
+          console.log(`[Stream] Received chunk: ${chunk.length} chars`);
           fullContentRef.current += chunk;
+
+          // If we have passed the minimum delay (8s) and are still in "decoding" mode,
+          // we should start showing content now that we have some.
+          if (minDelaySatisfiedRef.current && isDecodingRef.current) {
+             startDisplayingContent();
+          }
         },
         onError: (error) => {
-          console.error('XHR Stream Error:', error);
+          console.error('[Stream] XHR Stream Error:', error);
+          cleanupTimers();
+          
           setIsLoading(false);
           setIsDecoding(false);
+          isDecodingRef.current = false;
           
           // Show error and Go Back
           showErrorMessage(translate('analysis.request_failed'));
-          router.back();
+          if (router.canGoBack()) {
+            router.back();
+          } else {
+             router.replace('/analysis/input');
+          }
         },
         onComplete: () => {
-          console.log('XHR Stream Completed');
+          console.log('[Stream] XHR Stream Completed. Total len:', fullContentRef.current.length);
           streamDoneRef.current = true;
           abortControllerRef.current = null;
+          cleanupTimers(); // Clear hard timeout if we finish early
         }
       });
 
-      // Start the 8s countdown for the "Decoding" animation
-      setTimeout(() => {
-        finishDecodingPhase();
+      // 1. Minimum "Decoding" Animation Time (8s)
+      minDelayTimeoutRef.current = setTimeout(() => {
+        minDelaySatisfiedRef.current = true;
+        console.log('[Stream] Min delay (8s) finished. Content len:', fullContentRef.current.length);
+        
+        // If we already have content, start showing it.
+        // If not, we wait for onNext to trigger it.
+        if (fullContentRef.current.length > 0) {
+            startDisplayingContent();
+        }
       }, 8000);
+
+      // 2. Hard Timeout (30s) - If still no content or completion by 30s
+      hardTimeoutRef.current = setTimeout(() => {
+         if (fullContentRef.current.length === 0) {
+            console.error('[Stream] Hard timeout (30s) reached with no content.');
+            if (abortControllerRef.current) abortControllerRef.current();
+            cleanupTimers();
+            setIsLoading(false);
+            setIsDecoding(false);
+            isDecodingRef.current = false;
+            showErrorMessage(translate('analysis.request_timeout'));
+            if (router.canGoBack()) {
+                router.back();
+            } else {
+                router.replace('/analysis/input');
+            }
+         }
+      }, 30000);
 
     } catch (error) {
        console.error('Start Analysis Error:', error);
+       cleanupTimers();
        setIsLoading(false);
        setIsDecoding(false);
+       isDecodingRef.current = false;
        
        showErrorMessage(translate('analysis.start_failed'));
-       router.back();
+       if (router.canGoBack()) {
+         router.back();
+       } else {
+         router.replace('/analysis/input');
+       }
     }
   };
 
-  const finishDecodingPhase = () => {
+  const cleanupTimers = () => {
+      if (minDelayTimeoutRef.current) clearTimeout(minDelayTimeoutRef.current);
+      if (hardTimeoutRef.current) clearTimeout(hardTimeoutRef.current);
+  };
+
+  const startDisplayingContent = () => {
+    // Prevent multiple calls
+    if (!isDecodingRef.current && isEffectActive) return;
+
+    console.log('[Stream] Starting Display Content');
+    
+    // Clear the hard timeout as we have successfully started
+    if (hardTimeoutRef.current) clearTimeout(hardTimeoutRef.current);
+
     setIsDecoding(false);
+    isDecodingRef.current = false;
     setIsEffectActive(true);
     
     // Immediately update display with what we have
     updateDisplay();
 
-    // Start the 2-second interval updater to mimic "bursts" of thought or periodic updates
-    // Clear existing if any
+    // Start the interval updater
     if (intervalIdRef.current) clearInterval(intervalIdRef.current);
 
     intervalIdRef.current = setInterval(() => {
@@ -118,8 +195,9 @@ export const useStreamAnalysis = () => {
          setIsEffectActive(false);
          setIsLoading(false);
       }
-    }, 2000); // Update every 2 seconds
+    }, 2000); // Pulse effect
   };
+
 
   const updateDisplay = () => {
     // Sync the display content with the accumulated buffer
