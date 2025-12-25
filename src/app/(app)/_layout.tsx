@@ -41,9 +41,10 @@ export default function TabLayout() {
   if (isFirstTime) {
     return <Redirect href="/onboarding" />;
   }
-  if (isLoaded && !session) {
-    return <Redirect href="/login" />;
-  }
+  // Remove mandatory login check to allow guest access
+  // if (isLoaded && !session) {
+  //   return <Redirect href="/login" />;
+  // }
   return (
     <Tabs
       screenOptions={{

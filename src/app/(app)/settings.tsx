@@ -21,14 +21,16 @@ const TargetIcon = ({ color }: { color: string }) => (
   </View>
 );
 
+// Add useSupabase import
+import { useSupabase } from '@/hooks/use-supabase';
+
 export default function YouPage() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { colorScheme } = useColorScheme();
+  const { session } = useSupabase();
   const iconColor = colorScheme === 'dark' ? '#000000' : '#000000'; // Keep black for now as card background is light/colored
-  const settingsIconColor = colorScheme === 'dark' ? '#FFFFFF' : '#000000'; {
-// Using white for dark mode settings icon
-  }
+  const settingsIconColor = colorScheme === 'dark' ? '#FFFFFF' : '#000000'; 
 
   return (
     <View className="flex-1 bg-[#F5F5F0] dark:bg-neutral-900">
@@ -43,6 +45,15 @@ export default function YouPage() {
             <View className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 justify-center items-center">
                <PatternLogo width={48} height={48} color="black" />
             </View>
+            {!session && (
+              <Link href="/login" asChild>
+                <TouchableOpacity>
+                  <Text className="text-2xl font-bold text-black dark:text-white ml-2">
+                    {translate('auth.not_logged_in') || '未登录'}
+                  </Text>
+                </TouchableOpacity>
+              </Link>
+            )}
             {/* <Text className="text-lg font-medium text-black dark:text-white">@user.name</Text> */}
           </View>
           <View className="flex-row space-x-4">

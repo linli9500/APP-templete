@@ -16,7 +16,8 @@
     "fortune_subtitle": "基於你獨特的命運畫像",
     "account_created": "帳號已建立",
     "verify_email": "請檢查您的電子郵件以驗證帳號。",
-    "registration_failed": "註冊失敗"
+    "registration_failed": "註冊失敗",
+    "not_logged_in": "未登入"
   },
   "insight": {
     "title": "核心分析",

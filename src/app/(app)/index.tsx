@@ -1,6 +1,7 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Link } from 'expo-router';
 import { Text, FocusAwareStatusBar } from '@/components/ui';
 import { translate } from '@/lib';
 
@@ -41,11 +42,13 @@ export default function Insight() {
             {translate('insight.architect_desc')}
           </Text>
            {/* Decorative Button */}
-          <View className="bg-black dark:bg-white rounded-full py-4 items-center">
-            <Text className="text-white dark:text-black font-bold text-sm tracking-wider uppercase">
-              {translate('insight.view_report')}
-            </Text>
-          </View>
+          <Link href="/analysis/input" asChild>
+            <TouchableOpacity className="bg-black dark:bg-white rounded-full py-4 items-center active:opacity-90">
+              <Text className="text-white dark:text-black font-bold text-sm tracking-wider uppercase">
+                {translate('insight.view_report')}
+              </Text>
+            </TouchableOpacity>
+          </Link>
         </View>
 
         {/* Emotion Detector Section */}

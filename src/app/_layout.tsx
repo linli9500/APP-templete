@@ -1,4 +1,4 @@
-// Import  global CSS file
+// Import global CSS file
 import '../../global.css';
 
 import { Env } from '@env';

@@ -9,7 +9,7 @@ pnpm run android:development
 
 # github上传
 git add .
-git commit -m "v1.0.7-APP-增加ios防跟踪和隐私服务协议勾选"
+git commit -m "APP-v1.0.8-修改所有的通知为center胶囊模式通知"
 git push origin main
 
 

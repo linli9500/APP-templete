@@ -22,7 +22,8 @@
     "continue_with_apple": "使用 Apple 继续",
     "legal_disclaimer": "继续即表示您同意我们的服务条款和隐私政策。",
     "agree_to": "我已阅读并同意",
-    "agree_required": "请先同意服务条款和隐私政策"
+    "agree_required": "请先同意服务条款和隐私政策",
+    "not_logged_in": "未登录"
   },
   "insight": {
     "title": "核心分析",
@@ -105,5 +106,25 @@
     "version": "版本",
     "website": "网站"
   },
-  "welcome": "欢迎使用 obytes app site"
+  "welcome": "欢迎使用 obytes app site",
+  "analysis": {
+    "birth_date_label": "出生日期",
+    "birth_time_label": "出生时间",
+    "gender_label": "性别",
+    "select_date_placeholder": "选择日期",
+    "select_time_placeholder": "选择时间",
+    "gender_male": "男",
+    "gender_female": "女",
+    "start_analysis": "开始解码",
+    "input_instruction": "输入你的生辰信息以解锁完整解码。",
+    "select_birth_date_error": "请选择出生日期",
+    "select_birth_time_error": "请选择出生时间",
+    "select_gender_error": "请选择性别",
+    "select_birth_date_title": "选择出生日期",
+    "select_birth_time_title": "选择出生时间"
+  },
+  "common": {
+    "confirm": "确定",
+    "cancel": "取消"
+  }
 }

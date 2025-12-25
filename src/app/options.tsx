@@ -21,7 +21,7 @@ const BackIcon = () => (
 );
 
 export default function Options() {
-  const { signOut } = useSupabase();
+  const { signOut, session } = useSupabase();
   const { colorScheme } = useColorScheme();
   const iconColor = colorScheme === 'dark' ? 'white' : 'black';
   const insets = useSafeAreaInsets();
@@ -66,18 +66,21 @@ export default function Options() {
             <Item text="settings.support" icon={<Support color={iconColor} />} />
           </ItemsContainer>
 
-          <View className="mt-8 mb-4 items-center">
-             <TouchableOpacity 
-                onPress={async () => {
-                   await signOut();
-                   // Force navigation to ensure immediate feedback
-                   router.replace('/login');
-                }}
-                className="bg-black dark:bg-white rounded-full py-3 px-8 min-w-[150px] items-center"
-             >
-                <Text className="text-white font-bold text-base">{translate('settings.logout')}</Text>
-             </TouchableOpacity>
-          </View>
+
+          {session && (
+            <View className="mt-8 mb-4 items-center">
+               <TouchableOpacity 
+                  onPress={async () => {
+                     await signOut();
+                     // Force navigation to ensure immediate feedback
+                     router.replace('/login');
+                  }}
+                  className="bg-black dark:bg-white rounded-full py-3 px-8 min-w-[150px] items-center"
+               >
+                  <Text className="text-white font-bold text-base">{translate('settings.logout')}</Text>
+               </TouchableOpacity>
+            </View>
+          )}
 
           <View className="items-center mb-8">
             <Text className="text-sm text-gray-400 dark:text-neutral-500 font-medium">

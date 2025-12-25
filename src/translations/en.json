@@ -22,7 +22,8 @@
     "continue_with_apple": "Continue with Apple",
     "legal_disclaimer": "By continuing you agree to our Terms of Service and Privacy Policy.",
     "agree_to": "I agree to the",
-    "agree_required": "Please agree to the Terms and Privacy Policy"
+    "agree_required": "Please agree to the Terms and Privacy Policy",
+    "not_logged_in": "Not Logged In"
   },
   "insight": {
     "title": "Insight",
@@ -104,5 +105,25 @@
     "version": "Version",
     "website": "Website"
   },
-  "welcome": "Welcome to obytes app site"
+  "welcome": "Welcome to obytes app site",
+  "analysis": {
+    "birth_date_label": "Birth Date",
+    "birth_time_label": "Birth Time",
+    "gender_label": "Gender",
+    "select_date_placeholder": "Select Date",
+    "select_time_placeholder": "Select Time",
+    "gender_male": "Male",
+    "gender_female": "Female",
+    "start_analysis": "Start Analysis",
+    "input_instruction": "Enter your birth details to unlock the full analysis.",
+    "select_birth_date_error": "Please select birth date",
+    "select_birth_time_error": "Please select birth time",
+    "select_gender_error": "Please select gender",
+    "select_birth_date_title": "Select Birth Date",
+    "select_birth_time_title": "Select Birth Time"
+  },
+  "common": {
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  }
 }
