@@ -56,7 +56,12 @@
     "title": "设置",
     "check_updates": "检查更新",
     "version": "版本",
-    "website": "网站"
+    "website": "网站",
+    "screenshot_test": "截图检测测试",
+    "screenshot_test_hint": "请在此页面截图，观察下方按钮颜色变化",
+    "screenshot_detected": "已检测",
+    "screenshot_waiting": "等待中",
+    "screenshot_success": "截图检测成功!"
   },
   "common": {
     "confirm": "确定",

@@ -66,6 +66,7 @@ export default function Options() {
             <Item text="settings.support" icon={<Support color={iconColor} />} />
             <Item text="settings.support" icon={<Support color={iconColor} />} />
             <Item text="settings.test_animation" onPress={() => router.push('/test-animation')} />
+            <Item text="settings.screenshot_test" onPress={() => router.push('/screenshot-test')} />
           </ItemsContainer>
 
 

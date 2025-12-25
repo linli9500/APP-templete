@@ -15,13 +15,17 @@ git push origin main
 
 # 投射到手机
 adb reverse tcp:8081 tcp:8081
-手机浏览器打开/localhost:8081
+手机浏览器打开http://localhost:8081
 
 
+# 真机测试
+# 先关掉当前模拟器（避免 multiple devices）
+# 然后运行：
+pnpm run android:development
 
-
-
-
+# 真机测试2
+eas build --profile development --platform android --local
+然后把生成的 APK 文件传到手机上安装。
 
 -------
 

@@ -49,7 +49,12 @@
     "title": "設置",
     "check_updates": "檢查更新",
     "version": "版本",
-    "website": "網站"
+    "website": "網站",
+    "screenshot_test": "截圖檢測測試",
+    "screenshot_test_hint": "請在此頁面截圖，觀察下方按鈕顏色變化",
+    "screenshot_detected": "已檢測",
+    "screenshot_waiting": "等待中",
+    "screenshot_success": "截圖檢測成功!"
   },
   "welcome": "歡迎使用 obytes app site",
   "onboarding": {

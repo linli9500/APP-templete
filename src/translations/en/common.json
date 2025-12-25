@@ -55,7 +55,12 @@
     "title": "Settings",
     "check_updates": "Check for Updates",
     "version": "Version",
-    "website": "Website"
+    "website": "Website",
+    "screenshot_test": "Screenshot Detection Test",
+    "screenshot_test_hint": "Take a screenshot on this page and watch the button color change",
+    "screenshot_detected": "Detected",
+    "screenshot_waiting": "Waiting",
+    "screenshot_success": "Screenshot detected!"
   },
   "common": {
     "confirm": "Confirm",
