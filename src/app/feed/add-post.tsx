@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Stack } from 'expo-router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { showMessage } from 'react-native-flash-message';
+
 import { z } from 'zod';
 
 import { useAddPost } from '@/api';
@@ -10,6 +10,7 @@ import {
   Button,
   ControlledInput,
   showErrorMessage,
+  showSuccessMessage,
   View,
 } from '@/components/ui';
 
@@ -32,10 +33,7 @@ export default function AddPost() {
       { ...data, userId: 1 },
       {
         onSuccess: () => {
-          showMessage({
-            message: 'Post added successfully',
-            type: 'success',
-          });
+          showSuccessMessage('Post added successfully');
           // here you can navigate to the post list and refresh the list data
           //queryClient.invalidateQueries(usePosts.getKey());
         },

@@ -1,9 +1,8 @@
 import React from 'react';
 import { TouchableOpacity, ActivityIndicator } from 'react-native';
-import { Text, View } from '@/components/ui';
+import { Text, View, showErrorMessage, showSuccessMessage } from '@/components/ui';
 import { useSignIn } from '@/hooks/use-sign-in';
 import { useRouter } from 'expo-router';
-import { showMessage } from 'react-native-flash-message';
 
 export const QuickLogin = () => {
   const { signInWithPassword } = useSignIn();
@@ -21,18 +20,11 @@ export const QuickLogin = () => {
     try {
       setLoading(true);
       await signInWithPassword({ email: TEST_EMAIL, password: TEST_PASS });
-      showMessage({
-        message: 'Dev Login Success',
-        type: 'success',
-      });
+      showSuccessMessage('Dev Login Success');
       router.replace('/');
     } catch (error: any) {
       console.error("Dev Login Error:", error);
-       showMessage({
-        message: 'Dev Login Failed',
-        description: error.message,
-        type: 'danger',
-      });
+       showErrorMessage(`Dev Login Failed: ${error.message}`);
     } finally {
       setLoading(false);
     }

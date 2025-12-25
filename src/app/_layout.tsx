@@ -3,7 +3,7 @@ import '../../global.css';
 
 import { Env } from '@env';
 import * as Sentry from '@sentry/react-native';
-import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+import { requestTrackingPermissionsAsync } from '@/lib/tracking';
 import { useCallback, useEffect } from 'react';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
@@ -100,7 +100,7 @@ function Providers({ children }: { children: React.ReactNode }) {
               <SupabaseProvider>
                 <RevenueCatProvider>
                   {children}
-                  <FlashMessage position="top" />
+                  <FlashMessage position="center" floating={true} />
                 </RevenueCatProvider>
               </SupabaseProvider>
             </BottomSheetModalProvider>

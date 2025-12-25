@@ -1,6 +1,6 @@
 import { useRouter, Link } from 'expo-router';
 import React from 'react';
-import { showMessage } from 'react-native-flash-message';
+import { showErrorMessage } from '@/components/ui/utils';
 import { translate } from '@/lib';
 
 import type { LoginFormProps } from '@/components/login-form';
@@ -21,11 +21,7 @@ export default function Login() {
       await signInWithPassword({ email: data.email, password: data.password });
       router.replace('/');
     } catch (error: any) {
-      showMessage({
-        message: translate('auth.login_failed'),
-        description: error.message,
-        type: 'danger',
-      });
+      showErrorMessage(`${translate('auth.login_failed')}: ${error.message}`);
     }
   };
   return (

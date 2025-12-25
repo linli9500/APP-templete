@@ -1,6 +1,6 @@
 import { useRouter, Link } from 'expo-router';
 import React from 'react';
-import { showMessage } from 'react-native-flash-message';
+import { showErrorMessage, showSuccessMessage } from '@/components/ui';
 import { translate } from '@/lib';
 
 import type { LoginFormProps } from '@/components/login-form';
@@ -15,19 +15,11 @@ export default function SignUp() {
   const onSubmit: LoginFormProps['onSubmit'] = async (data) => {
     try {
       await signUp({ email: data.email, password: data.password, name: data.name });
-      showMessage({
-        message: translate('auth.account_created'),
-        description: translate('auth.verify_email'),
-        type: 'success',
-      });
+      showSuccessMessage(`${translate('auth.account_created')}: ${translate('auth.verify_email')}`);
       // Optionally redirect to login or wait for verification
       router.replace('/login');
     } catch (error: any) {
-      showMessage({
-        message: translate('auth.registration_failed'),
-        description: error.message,
-        type: 'danger',
-      });
+      showErrorMessage(`${translate('auth.registration_failed')}: ${error.message}`);
     }
   };
   return (

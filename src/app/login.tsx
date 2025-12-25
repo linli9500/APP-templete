@@ -53,7 +53,20 @@ export default function LoginSelection() {
         const { showMessage } = require('react-native-flash-message');
         showMessage({
             message: translate('auth.agree_required'),
-            type: "warning",
+            type: "default",
+            backgroundColor: "rgba(0,0,0,0.8)",
+            color: "#ffffff",
+            position: "center",
+            floating: true,
+            style: { 
+                borderRadius: 99, 
+                paddingHorizontal: 20, 
+                paddingVertical: 4 
+            },
+            titleStyle: { 
+                fontSize: 14, 
+                fontWeight: '500' 
+            },
         });
         return false;
     }

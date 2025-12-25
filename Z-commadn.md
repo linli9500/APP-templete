@@ -9,7 +9,7 @@ pnpm run android:development
 
 # github上传
 git add .
-git commit -m "v1.0.4-通知功能打通前后端"
+git commit -m "v1.0.7-APP-增加ios防跟踪和隐私服务协议勾选"
 git push origin main
 
 

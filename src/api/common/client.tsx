@@ -1,7 +1,7 @@
 import { Env } from '@env';
 import axios from 'axios';
 import { supabase } from '@/lib/supabase';
-import { showMessage } from 'react-native-flash-message';
+import { showErrorMessage } from '@/components/ui/utils';
 
 export const client = axios.create({
   baseURL: Env.API_URL,
@@ -23,21 +23,13 @@ client.interceptors.response.use(
     // 1. Handle 401 Unauthorized (Kick out)
     if (error.response?.status === 401) {
       await supabase.auth.signOut();
-      showMessage({
-        message: 'Session Expired',
-        description: 'Please sign in again.',
-        type: 'danger',
-      });
+      showErrorMessage('Session Expired: Please sign in again.');
       return Promise.reject(error);
     }
 
     // 2. Handle 500 or Network Errors
     const message = error.response?.data?.message || error.message || 'Something went wrong';
-    showMessage({
-      message: 'Error',
-      description: message,
-      type: 'danger',
-    });
+    showErrorMessage(message);
 
     return Promise.reject(error);
   }
