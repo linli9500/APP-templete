@@ -90,8 +90,11 @@ export default function YouPage() {
           <TouchableOpacity className="bg-black dark:bg-white rounded-full px-5 py-2.5">
             <Text className="text-white dark:text-black font-medium text-sm">{translate('you.view_friends')}</Text>
           </TouchableOpacity>
-          <TouchableOpacity className="bg-black dark:bg-white rounded-full px-5 py-2.5">
-            <Text className="text-white dark:text-black font-medium text-sm">{translate('you.run_bond')}</Text>
+          <TouchableOpacity 
+            className="bg-black dark:bg-white rounded-full px-5 py-2.5"
+            onPress={() => router.push('/analysis/history')}
+          >
+            <Text className="text-white dark:text-black font-medium text-sm">{translate('you.history_reports')}</Text>
           </TouchableOpacity>
           <TouchableOpacity className="bg-black dark:bg-white rounded-full px-5 py-2.5">
             <Text className="text-white dark:text-black font-medium text-sm">{translate('you.add_custom_friend')}</Text>

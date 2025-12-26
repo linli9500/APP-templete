@@ -1,4 +1,5 @@
 import { useSupabase } from './use-supabase';
+import { Env } from '@/lib/env';
 
 export const useSignUp = () => {
   const { isLoaded, supabase } = useSupabase();
@@ -13,7 +14,7 @@ export const useSignUp = () => {
     name?: string;
   }) => {
     // Call Web Bridge API for registration
-    const response = await fetch(`${process.env.EXPO_PUBLIC_WEB_API_URL || 'https://mfexai-v2.workers.dev'}/api/app/signup`, {
+    const response = await fetch(`${Env.EXPO_PUBLIC_API_URL}/api/app/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

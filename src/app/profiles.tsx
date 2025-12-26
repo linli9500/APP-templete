@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { View, ScrollView, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
 import { useRouter, Stack } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
@@ -8,7 +8,8 @@ import { format } from 'date-fns';
 
 import { Text, FocusAwareStatusBar } from '@/components/ui';
 import { translate } from '@/lib';
-import { usePendingProfile, PendingProfile } from '@/hooks/usePendingProfile';
+import { useProfileManager } from '@/hooks/useProfileManager';
+import { Profile } from '@/api/profiles';
 import { ArrowRight } from '@/components/ui/icons';
 import { CitySearchInput } from '@/components/city-search-input';
 import { CityResult, preloadCitiesData } from '@/hooks/useCitySearch';
@@ -24,10 +25,8 @@ export default function ProfilesScreen() {
   const insets = useSafeAreaInsets();
   const { colorScheme } = useColorScheme();
   
-  const { addProfile, removeProfile, updateProfile, getProfiles } = usePendingProfile();
-  
-  // 档案列表状态
-  const [profiles, setProfiles] = useState<PendingProfile[]>([]);
+  // 使用统一的 ProfileManager Hook
+  const { profiles, isLoading, isMutating, addProfile, removeProfile, updateProfile, refresh } = useProfileManager();
   
   // 页面模式: 'list' | 'new' | 'edit'
   const [mode, setMode] = useState<'list' | 'new' | 'edit'>('list');
@@ -47,15 +46,15 @@ export default function ProfilesScreen() {
 
   // 页面加载时获取档案列表并预加载城市数据
   useEffect(() => {
-    preloadCitiesData();
-    refreshProfiles();
+    refresh();
+    
+    // 延迟加载城市数据，避免阻塞页面转场动画
+    const timer = setTimeout(() => {
+      preloadCitiesData();
+    }, 500);
+    
+    return () => clearTimeout(timer);
   }, []);
-
-  // 刷新档案列表
-  const refreshProfiles = () => {
-    const latestProfiles = getProfiles();
-    setProfiles(latestProfiles);
-  };
 
   // 重置表单并返回列表
   const backToList = () => {
@@ -80,12 +79,21 @@ export default function ProfilesScreen() {
   };
 
   // 点击编辑档案
-  const handleEdit = (profile: PendingProfile) => {
+  const handleEdit = (profile: Profile) => {
     setEditingId(profile.id);
     setLabel(profile.label || '');
     setBirthCity(profile.city || '');
     setSelectedDate(new Date(profile.birthDate));
-    setSelectedTime(profile.birthTime ? new Date(`2000-01-01T${profile.birthTime}`) : null);
+    // 处理 birthTime 可能为空的情况
+    if (profile.birthTime) {
+      if (profile.birthTime.includes(':')) {
+        setSelectedTime(new Date(`2000-01-01T${profile.birthTime}`));
+      } else {
+        setSelectedTime(null);
+      }
+    } else {
+      setSelectedTime(null);
+    }
     setGender(profile.gender);
     setMode('edit');
   };
@@ -96,33 +104,39 @@ export default function ProfilesScreen() {
   };
 
   // 保存档案
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!selectedDate || !label) return;
     
     const profileData = {
       label,
       birthDate: format(selectedDate, 'yyyy-MM-dd'),
-      birthTime: selectedTime ? format(selectedTime, 'HH:mm') : undefined,
+      birthTime: selectedTime ? format(selectedTime, 'HH:mm') : '00:00', // 默认时间
       gender,
       city: birthCity || undefined,
     };
     
-    if (mode === 'edit' && editingId) {
-      // 更新已有档案
-      updateProfile(editingId, profileData);
-    } else {
-      // 添加新档案
-      addProfile(profileData);
+    try {
+      if (mode === 'edit' && editingId) {
+        // 更新已有档案
+        await updateProfile(editingId, profileData);
+      } else {
+        // 添加新档案
+        await addProfile(profileData);
+      }
+      backToList();
+    } catch (error) {
+      console.error('Save profile failed:', error);
+      // 可以添加错误提示
     }
-    
-    refreshProfiles();
-    backToList();
   };
 
   // 删除档案
-  const handleDelete = (id: string) => {
-    removeProfile(id);
-    refreshProfiles();
+  const handleDelete = async (id: string) => {
+    try {
+      await removeProfile(id);
+    } catch (error) {
+      console.error('Delete profile failed:', error);
+    }
   };
 
   // 根据模式获取标题
@@ -171,6 +185,13 @@ export default function ProfilesScreen() {
           <View className="w-8" />
         </View>
 
+        {/* 覆盖全屏的加载指示器 (当通过 API 操作时) */}
+        {(isLoading) && (
+          <View className="absolute inset-0 z-50 bg-black/10 dark:bg-white/10 justify-center items-center">
+             <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        )}
+
         <ScrollView className="flex-1 px-4">
           {/* ========== 列表模式 ========== */}
           {mode === 'list' && (
@@ -186,7 +207,7 @@ export default function ProfilesScreen() {
               </TouchableOpacity>
 
               {/* 已保存的档案列表 */}
-              {profiles.map((profile: PendingProfile) => (
+              {profiles.map((profile: Profile) => (
                 <View 
                   key={profile.id}
                   className="bg-white dark:bg-neutral-900 rounded-2xl p-4 mb-4"
@@ -207,15 +228,18 @@ export default function ProfilesScreen() {
                       )}
                     </View>
                     <View className="flex-row gap-2">
+                       {/* 只有非 Mutating 状态下才允许操作 */}
                       <TouchableOpacity 
                         onPress={() => handleEdit(profile)}
                         className="p-2"
+                        disabled={isMutating}
                       >
                         <Text className="text-blue-500 text-sm">{translate('profiles.edit')}</Text>
                       </TouchableOpacity>
                       <TouchableOpacity 
                         onPress={() => handleDelete(profile.id)}
                         className="p-2"
+                        disabled={isMutating}
                       >
                         <Text className="text-red-500 text-sm">{translate('common.delete')}</Text>
                       </TouchableOpacity>
@@ -225,7 +249,7 @@ export default function ProfilesScreen() {
               ))}
 
               {/* 空状态提示 */}
-              {profiles.length === 0 && (
+              {!isLoading && profiles.length === 0 && (
                 <View className="items-center py-8">
                   <Text className="text-neutral-400 dark:text-neutral-500">
                     {translate('profiles.empty_hint')}
@@ -361,9 +385,15 @@ export default function ProfilesScreen() {
               {/* 保存按钮（无 Cancel 按钮） */}
               <TouchableOpacity 
                 onPress={handleSave}
-                className="w-full py-3 rounded-full bg-black dark:bg-white items-center"
+                disabled={isMutating}
+                className={`w-full py-3 rounded-full items-center ${isMutating ? 'bg-neutral-400' : 'bg-black dark:bg-white'}`}
               >
-                <Text className="text-white dark:text-black font-bold">{translate('common.save')}</Text>
+                {isMutating ? (
+                   <ActivityIndicator color="white" />
+                ) : (
+                   <Text className="text-white dark:text-black font-bold">{translate('common.save')}</Text>
+                )}
+                
               </TouchableOpacity>
             </View>
           )}

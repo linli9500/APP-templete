@@ -190,7 +190,7 @@ export const usePendingProfile = () => {
       try {
         // 从环境变量获取 API URL
         const { Env } = await import('@/lib/env');
-        const apiUrl = Env.API_URL?.replace(/\/api$/, '') || '';
+        const apiUrl = Env.EXPO_PUBLIC_API_URL || '';
         
         const response = await fetch(`${apiUrl}/api/app/profile/sync`, {
           method: 'POST',
@@ -210,7 +210,8 @@ export const usePendingProfile = () => {
         });
 
         if (!response.ok) {
-          console.error('[PendingProfile] 同步失败:', response.status);
+          const errorText = await response.text();
+          console.error('[PendingProfile] 同步失败:', response.status, errorText);
           return { success: false, synced: 0 };
         }
 

@@ -35,7 +35,7 @@
     "title": "All About You",
     "subtitle": "An ever-growing library on the story of you",
     "view_friends": "View Friends",
-    "run_bond": "Run Bond",
+    "history_reports": "History Reports",
     "add_custom_friend": "Add Custom Friend",
     "wound_title": "The Wounded Healer",
     "wound_subtitle": "Natal Chiron Complex",
@@ -65,6 +65,12 @@
     "decoding_in_progress": "Decoding more in-depth analysis...",
     "report_title": "Analysis Report",
     "request_timeout": "Analysis request timed out, please try again",
-    "birth_time_hint": "Enter birth time for 50%+ accuracy improvement"
+    "birth_time_hint": "Enter birth time for 50%+ accuracy improvement",
+    "history_title": "Analysis History",
+    "no_history": "No history reports yet",
+    "delete_confirm": "Delete this report?",
+    "delete_desc": "This action cannot be undone.",
+    "cancel": "Cancel",
+    "delete": "Delete"
   }
 }

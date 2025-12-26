@@ -35,7 +35,7 @@
     "title": "关于你",
     "subtitle": "一个关于你人生故事的成长库",
     "view_friends": "查看好友",
-    "run_bond": "开始连结",
+    "history_reports": "历史报告",
     "add_custom_friend": "添加自定义好友",
     "wound_title": "强力疗愈者",
     "wound_subtitle": "本命凯龙星情结",
@@ -65,6 +65,12 @@
     "decoding_in_progress": "更多深度分析正在解码中...",
     "report_title": "分析报告",
     "request_timeout": "分析请求超时，请重试",
-    "birth_time_hint": "填入出生时间，准确度提升50%以上"
+    "birth_time_hint": "填入出生时间，准确度提升50%以上",
+    "history_title": "分析历史",
+    "no_history": "暂无历史报告",
+    "delete_confirm": "删除此报告？",
+    "delete_desc": "此操作无法撤销。",
+    "cancel": "取消",
+    "delete": "删除"
   }
 }

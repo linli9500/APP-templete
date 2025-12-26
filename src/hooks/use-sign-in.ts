@@ -1,5 +1,6 @@
 import { useSupabase } from './use-supabase';
 import { usePendingProfile } from './usePendingProfile';
+import { Env } from '@/lib/env';
 
 export const useSignIn = () => {
   const { isLoaded, supabase } = useSupabase();
@@ -13,7 +14,7 @@ export const useSignIn = () => {
     password: string;
   }) => {
     // 1. Call Web Bridge API
-    const response = await fetch(`${process.env.EXPO_PUBLIC_WEB_API_URL || 'https://mfexai-v2.workers.dev'}/api/app/login`, {
+    const response = await fetch(`${Env.EXPO_PUBLIC_API_URL}/api/app/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

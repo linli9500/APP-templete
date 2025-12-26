@@ -80,7 +80,7 @@ export default function Options() {
                   }}
                   className="bg-black dark:bg-white rounded-full py-3 px-8 min-w-[150px] items-center"
                >
-                  <Text className="text-white font-bold text-base">{translate('settings.logout')}</Text>
+                  <Text className="text-white dark:text-black font-bold text-base">{translate('settings.logout')}</Text>
                </TouchableOpacity>
             </View>
           )}

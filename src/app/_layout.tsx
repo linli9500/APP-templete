@@ -22,6 +22,7 @@ import { RevenueCatProvider } from '@/providers/revenue-cat-provider';
 import { loadSelectedTheme, useIsFirstTime } from '@/lib'; // Check if useIsFirstTime is exported from @/lib
 import { useThemeConfig } from '@/lib/use-theme-config';
 import { useSupabase } from '@/hooks/use-supabase'; // Check imports for TabLayout vs RootLayout
+import { hydrateAuth } from '@/lib/auth';
 // RootLayout seemed to just wrap Providers around Stack. 
 // Step 155 showed RootLayout content. 
 // Wait, Step 155 showed RootLayout wrapping Stack.
@@ -40,7 +41,7 @@ export const unstable_settings = {
   initialRouteName: '(app)',
 };
 
-// hydrateAuth();
+hydrateAuth();
 loadSelectedTheme();
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

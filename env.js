@@ -80,8 +80,7 @@ const client = z.object({
   VERSION: z.string(),
 
   // ADD YOUR CLIENT ENV VARS HERE
-  API_URL: z.string(),
-  WEB_API_URL: z.string(),
+  EXPO_PUBLIC_API_URL: z.string(),
   VAR_NUMBER: z.number(),
   VAR_BOOL: z.boolean(),
   SENTRY_DSN: z.string().optional(), // Optional so it doesn't break if not set initially
@@ -109,8 +108,7 @@ const _clientEnv = {
   VERSION: packageJSON.version,
 
   // ADD YOUR ENV VARS HERE TOO
-  API_URL: process.env.API_URL,
-  WEB_API_URL: process.env.WEB_API_URL || 'https://mfexai-v2.workers.dev', // Default fallback
+  EXPO_PUBLIC_API_URL: process.env.EXPO_PUBLIC_API_URL || 'http://10.0.2.2:3000',
   VAR_NUMBER: Number(process.env.VAR_NUMBER),
   VAR_BOOL: process.env.VAR_BOOL === 'true',
   SENTRY_DSN: process.env.SENTRY_DSN,

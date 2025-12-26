@@ -3,12 +3,14 @@ import { View, TouchableOpacity, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FocusAwareStatusBar, Text, PatternLogo } from '@/components/ui';
 import { translate } from '@/lib';
+import { Env } from '@/lib/env';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { useSupabase } from '@/hooks/use-supabase';
 import { usePendingProfile } from '@/hooks/usePendingProfile';
 import { useColorScheme } from 'nativewind';
 import { Svg, Path } from 'react-native-svg';
+
 
 // --- SVG Icons ---
 
@@ -142,7 +144,7 @@ export default function LoginSelection() {
         });
         if (credential.identityToken) {
             // Call Bridge API
-            const response = await fetch(`${process.env.EXPO_PUBLIC_WEB_API_URL || 'https://mfexai-v2.workers.dev'}/api/app/social-login`, {
+            const response = await fetch(`${Env.EXPO_PUBLIC_API_URL}/api/app/social-login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

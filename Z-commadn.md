@@ -9,7 +9,7 @@ pnpm run android:development
 
 # github上传
 git add .
-git commit -m "APP-v1.1.2-增加分析报告复制和分享功能以及未登录保存生日信息"
+git commit -m "APP-v1.1.3-增加城市以及可以搜索城市"
 git push origin main
 
 

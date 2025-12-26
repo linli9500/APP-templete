@@ -6,6 +6,8 @@ import { supabase } from '@/lib/supabase';
 import { fetchStream } from '@/lib/fetch-stream';
 import { showErrorMessage } from '@/components/ui/utils';
 import { translate } from '@/lib';
+import { useHistoryStore } from '@/stores/history-store';
+import { v4 as uuidv4 } from 'uuid';
 
 interface StreamAnalysisParams {
   birthDate: string;
@@ -17,6 +19,7 @@ interface StreamAnalysisParams {
 
 export const useStreamAnalysis = () => {
   const router = useRouter(); 
+  const { addReport } = useHistoryStore(); 
 
   const [displayContent, setDisplayContent] = useState('');
   const [isDecoding, setIsDecoding] = useState(false); // True during the initial 8s animation
@@ -69,9 +72,12 @@ export const useStreamAnalysis = () => {
       const token = session?.access_token;
 
       // Start the fetches
-      const url = `${Env.API_URL.replace(/\/api$/, '')}/api/app/analyze`; // Ensure no double /api
+      const url = `${Env.EXPO_PUBLIC_API_URL}/api/app/analyze`;
 
       console.log('Starting XHR Stream Request to:', url);
+
+      // 用于存储后端返回的 logId
+      let serverLogId: string | null = null;
 
       // Use XHR Stream wrapper
       abortControllerRef.current = fetchStream(url, {
@@ -81,6 +87,11 @@ export const useStreamAnalysis = () => {
           'Authorization': token ? `Bearer ${token}` : '',
         },
         body: JSON.stringify({ birthDate, birthTime, gender, language, key }),
+        onLogId: (logId) => {
+          // 后端在流开始时返回的 logId
+          serverLogId = logId;
+          console.log('[Stream] Received logId from server:', logId);
+        },
         onNext: (chunk) => {
           // 累积内容（移除详细日志，只在开始和结束打印）
           fullContentRef.current += chunk;
@@ -107,12 +118,27 @@ export const useStreamAnalysis = () => {
              router.replace('/analysis/input');
           }
         },
-        onComplete: () => {
-          console.log('[Stream] XHR Stream Completed. Total len:', fullContentRef.current.length);
-          streamDoneRef.current = true;
-          abortControllerRef.current = null;
-          cleanupTimers(); // Clear hard timeout if we finish early
-        }
+          onComplete: () => {
+            console.log('[Stream] XHR Stream Completed. Total len:', fullContentRef.current.length);
+            streamDoneRef.current = true;
+            abortControllerRef.current = null;
+            cleanupTimers(); // Clear hard timeout if we finish early
+            
+            // Save to History
+            // 优先使用后端返回的 logId，确保客户端和服务端使用相同 ID
+            // 如果后端没有返回（如未登录用户），则生成本地 UUID
+            const reportId = serverLogId || uuidv4();
+            addReport({
+              id: reportId,
+              createdAt: new Date().toISOString(),
+              content: fullContentRef.current,
+              birthDate,
+              birthTime,
+              gender,
+              summary: fullContentRef.current.slice(0, 100) // Simple summary
+            });
+            console.log('[Stream] Report saved locally with id:', reportId, serverLogId ? '(from server)' : '(local UUID)');
+          }
       });
 
       // 1. Minimum "Decoding" Animation Time (8s)

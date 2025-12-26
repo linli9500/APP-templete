@@ -3,6 +3,7 @@ import React from 'react';
 import { Platform } from 'react-native';
 
 import { useSupabase } from '@/hooks/use-supabase';
+import { Env } from '@/lib/env';
 
 export function AppleSignInButton() {
   const { supabase } = useSupabase();
@@ -26,7 +27,7 @@ export function AppleSignInButton() {
           // Sign in via Supabase Auth.
           if (credential.identityToken) {
             // 1. Call Web Bridge API
-            const response = await fetch(`${process.env.EXPO_PUBLIC_WEB_API_URL || 'https://mfexai-v2.workers.dev'}/api/app/social-login`, {
+            const response = await fetch(`${Env.EXPO_PUBLIC_API_URL}/api/app/social-login`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({

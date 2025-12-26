@@ -14,4 +14,6 @@ export * from './style';
 export * from './support';
 export * from './website';
 export * from './user';
+export * from './arrow-left';
+export * from './trash';
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
+import { View, TextInput, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import { useColorScheme } from 'nativewind';
 
 import { Text } from '@/components/ui';
@@ -103,13 +103,17 @@ export const CitySearchInput: React.FC<CitySearchInputProps> = ({
 
           {/* 搜索结果 */}
           {!isLoading && results.length > 0 && (
-            <FlatList
-              data={results}
-              renderItem={renderItem}
-              keyExtractor={(item, index) => `${item.name}-${item.state}-${item.country}-${index}`}
-              scrollEnabled={true}
+            <ScrollView
+              className="w-full"
               nestedScrollEnabled={true}
-            />
+              keyboardShouldPersistTaps="handled"
+            >
+              {results.map((item, index) => (
+                <View key={`${item.name}-${item.state}-${item.country}-${index}`}>
+                   {renderItem({ item })}
+                </View>
+              ))}
+            </ScrollView>
           )}
 
           {/* 无结果提示 */}
