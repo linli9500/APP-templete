@@ -59,7 +59,30 @@
   "common": {
     "confirm": "確定",
     "cancel": "取消",
-    "dont_show_again": "不再提示"
+    "dont_show_again": "不再提示",
+    "error": "錯誤"
+  },
+  "profiles": {
+    "title": "我的檔案",
+    "subtitle": "管理您保存的生日資訊",
+    "empty": "暫無檔案",
+    "empty_hint": "點擊下方按鈕添加您的第一個檔案",
+    "add": "新增檔案",
+    "edit": "編輯檔案",
+    "delete": "刪除",
+    "delete_confirm_title": "確認刪除",
+    "delete_confirm_message": "確定要刪除這個檔案嗎？此操作不可恢復。",
+    "label": "標籤",
+    "label_placeholder": "例如：我自己、媽媽",
+    "birth_date": "出生日期",
+    "birth_date_required": "請填寫出生日期",
+    "birth_time": "出生時間",
+    "gender": "性別",
+    "city": "出生城市",
+    "city_placeholder": "輸入城市名稱",
+    "save": "儲存",
+    "saved": "檔案已儲存",
+    "default_label": "檔案"
   },
   "share": {
     "copy": "複製",

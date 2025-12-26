@@ -64,6 +64,7 @@
     "start_failed": "无法启动分析",
     "decoding_in_progress": "更多深度分析正在解码中...",
     "report_title": "分析报告",
-    "request_timeout": "分析请求超时，请重试"
+    "request_timeout": "分析请求超时，请重试",
+    "birth_time_hint": "填入出生时间，准确度提升50%以上"
   }
 }

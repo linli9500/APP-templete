@@ -8,9 +8,11 @@ import { storage } from '@/lib/storage';
 export interface PendingProfile {
   id: string;                           // 唯一标识（时间戳 + 随机数）
   birthDate: string;                    // 格式: yyyy-MM-dd
-  birthTime: string;                    // 格式: HH:mm
-  gender: 'male' | 'female' | 'other';  // 性别
+  birthTime?: string;                   // 格式: HH:mm（可选）
+  gender: 'male' | 'female';            // 性别
   createdAt: number;                    // 创建时间戳（毫秒）
+  label?: string;                       // 档案标签（如"我自己"、"妈妈"等）
+  city?: string;                        // 出生城市
 }
 
 // 存储键
@@ -130,6 +132,32 @@ export const usePendingProfile = () => {
   }, []);
 
   /**
+   * 更新指定档案的信息
+   * @param id 档案 ID
+   * @param updates 需要更新的字段
+   * @returns 更新后的档案，如果档案不存在则返回 null
+   */
+  const updateProfile = useCallback(
+    (id: string, updates: Partial<Omit<PendingProfile, 'id' | 'createdAt'>>): PendingProfile | null => {
+      const profiles = getAllProfiles();
+      const index = profiles.findIndex((p) => p.id === id);
+      
+      if (index === -1) {
+        console.log('[PendingProfile] 档案不存在:', id);
+        return null;
+      }
+      
+      const updatedProfile = { ...profiles[index], ...updates };
+      profiles[index] = updatedProfile;
+      saveAllProfiles(profiles);
+      
+      console.log('[PendingProfile] 已更新档案:', id);
+      return updatedProfile;
+    },
+    []
+  );
+
+  /**
    * 清空所有待同步档案
    */
   const clearAllProfiles = useCallback((): void => {
@@ -175,6 +203,8 @@ export const usePendingProfile = () => {
               birthDate: p.birthDate,
               birthTime: p.birthTime,
               gender: p.gender,
+              label: p.label,
+              city: p.city,
             })),
           }),
         });
@@ -208,6 +238,7 @@ export const usePendingProfile = () => {
     getProfiles,
     removeProfile,
     removeProfiles,
+    updateProfile,
     clearAllProfiles,
     getProfileCount,
     syncToServer,

@@ -20,7 +20,7 @@ import { usePendingProfile } from '@/hooks/usePendingProfile';
 const schema = z.object({
   birthDate: z.date({ required_error: "请选择出生日期" }),
   birthTime: z.date({ required_error: "请选择出生时间" }),
-  gender: z.enum(['male', 'female', 'other'], { required_error: "请选择性别" }),
+  gender: z.enum(['male', 'female'], { required_error: "请选择性别" }),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -162,6 +162,9 @@ export default function AnalysisInputScreen() {
              {errors.birthTime && (
                <Text className="text-red-500 text-sm mt-1">{translate('analysis.select_birth_time_error')}</Text>
             )}
+            <Text className="text-xs text-neutral-400 dark:text-neutral-500 mt-1">
+              {translate('analysis.birth_time_hint') || '填入出生时间，准确度提升50%以上'}
+            </Text>
 
             <DatePicker
               modal

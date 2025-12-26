@@ -9,7 +9,7 @@ pnpm run android:development
 
 # github上传
 git add .
-git commit -m "APP-v1.1.0-传入接口增加字段等以及UI优化和开发规则强制约束拆分翻译文件"
+git commit -m "APP-v1.1.2-增加分析报告复制和分享功能以及未登录保存生日信息"
 git push origin main
 
 

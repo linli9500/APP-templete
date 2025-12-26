@@ -6,7 +6,7 @@ import { Text, FocusAwareStatusBar } from '@/components/ui';
 import { translate } from '@/lib';
 import { PatternLogo } from '@/components/ui/pattern-logo';
 import { Link, useRouter } from 'expo-router';
-import { Settings as SettingsIcon } from '@/components/ui/icons';
+import { Settings as SettingsIcon, Profiles as ProfilesIcon } from '@/components/ui/icons';
 
 // Placeholder icons for Bookmark and Target
 const BookmarkIcon = ({ color }: { color: string }) => (
@@ -45,18 +45,30 @@ export default function YouPage() {
             <View className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 justify-center items-center">
                <PatternLogo width={48} height={48} color="black" />
             </View>
-            {!session && (
+            {session?.user?.email ? (
+              <Text 
+                className="text-sm text-neutral-600 dark:text-neutral-400 ml-2"
+                numberOfLines={1}
+                style={{ maxWidth: 150 }}
+              >
+                {session.user.email.split('@')[0].slice(0, 20)}
+              </Text>
+            ) : (
               <Link href="/login" asChild>
                 <TouchableOpacity>
-                  <Text className="text-2xl font-bold text-black dark:text-white ml-2">
+                  <Text className="text-sm text-neutral-500 dark:text-neutral-400 ml-2">
                     {translate('auth.not_logged_in') || '未登录'}
                   </Text>
                 </TouchableOpacity>
               </Link>
             )}
-            {/* <Text className="text-lg font-medium text-black dark:text-white">@user.name</Text> */}
           </View>
-          <View className="flex-row space-x-4">
+          <View className="flex-row space-x-2">
+            <Link href="/profiles" asChild>
+              <TouchableOpacity className="p-2 bg-white dark:bg-neutral-800 rounded-full shadow-sm">
+                 <ProfilesIcon color={colorScheme === 'dark' ? 'white' : 'black'} width={20} height={20} />
+              </TouchableOpacity>
+            </Link>
             <Link href="/options" asChild>
               <TouchableOpacity className="p-2 bg-white dark:bg-neutral-800 rounded-full shadow-sm">
                  <SettingsIcon color={colorScheme === 'dark' ? 'white' : 'black'} width={20} height={20} /> 

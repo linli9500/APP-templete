@@ -64,6 +64,7 @@
     "start_failed": "Failed to start analysis",
     "decoding_in_progress": "Decoding more in-depth analysis...",
     "report_title": "Analysis Report",
-    "request_timeout": "Analysis request timed out, please try again"
+    "request_timeout": "Analysis request timed out, please try again",
+    "birth_time_hint": "Enter birth time for 50%+ accuracy improvement"
   }
 }

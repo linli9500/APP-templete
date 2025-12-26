@@ -44,5 +44,27 @@
     "your_pattern": "你的模式",
     "impacting_you": "此刻的影響",
     "new_tag": "新"
+  },
+  "analysis": {
+    "birth_date_label": "出生日期",
+    "birth_time_label": "出生時間",
+    "gender_label": "性別",
+    "select_date_placeholder": "選擇日期",
+    "select_time_placeholder": "選擇時間",
+    "gender_male": "男",
+    "gender_female": "女",
+    "start_analysis": "開始解碼",
+    "input_instruction": "輸入你的生辰資訊以解鎖完整解碼。",
+    "select_birth_date_error": "請選擇出生日期",
+    "select_birth_time_error": "請選擇出生時間",
+    "select_gender_error": "請選擇性別",
+    "select_birth_date_title": "選擇出生日期",
+    "select_birth_time_title": "選擇出生時間",
+    "request_failed": "分析請求失敗，請檢查輸入或網路",
+    "start_failed": "無法啟動分析",
+    "decoding_in_progress": "更多深度分析正在解碼中...",
+    "report_title": "分析報告",
+    "request_timeout": "分析請求超時，請重試",
+    "birth_time_hint": "填入出生時間，準確度提升50%以上"
   }
 }
