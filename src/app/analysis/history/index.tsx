@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { View, TouchableOpacity, Alert } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { View, TouchableOpacity } from 'react-native';
 import { useRouter, Stack } from 'expo-router';
 import { FlashList } from '@shopify/flash-list';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -12,6 +12,7 @@ import { translate } from '@/lib';
 import { useHistoryStore, ReportData } from '@/stores/history-store';
 import { deleteHistoryReport } from '@/api/history';
 import { showErrorMessage } from '@/components/ui/utils'; 
+import { ConfirmModal } from '@/components/ui/confirm-modal';
 
 
 export default function HistoryListScreen() {
@@ -22,37 +23,39 @@ export default function HistoryListScreen() {
   
   const { reports, removeReport } = useHistoryStore();
   
+  // 删除确认弹窗状态
+  const [deleteModal, setDeleteModal] = useState<{
+    visible: boolean;
+    id: string | null;
+  }>({ visible: false, id: null });
+  const [isDeleting, setIsDeleting] = useState(false);
+  
   // Convert map to array and sort by date descending
   const reportList = Object.values(reports).sort((a: ReportData, b: ReportData) => 
     new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
   const handleDelete = useCallback((id: string) => {
-    Alert.alert(
-      translate('analysis.delete_confirm'),
-      translate('analysis.delete_desc'),
-      [
-        { text: translate('analysis.cancel'), style: 'cancel' },
-        {
-          text: translate('analysis.delete'),
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              // 1. 本地删除 UI 立即更新
-              removeReport(id);
-              // 2. 远程删除
-              await deleteHistoryReport(id);
-            } catch (error) {
-              console.error('Delete failed', error);
-              showErrorMessage('Failed to delete report');
-              // Optional: revert local deletion if critical, but for now soft-fail is okay 
-              // as sync will fix it or it will stay deleted locally.
-            }
-          },
-        },
-      ]
-    );
-  }, [removeReport]);
+    setDeleteModal({ visible: true, id });
+  }, []);
+
+  const executeDelete = async () => {
+    if (!deleteModal.id) return;
+    
+    setIsDeleting(true);
+    try {
+      // 1. 本地删除 UI 立即更新
+      removeReport(deleteModal.id);
+      // 2. 远程删除
+      await deleteHistoryReport(deleteModal.id);
+      setDeleteModal({ visible: false, id: null });
+    } catch (error) {
+      console.error('Delete failed', error);
+      showErrorMessage('Failed to delete report');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   const renderItem = ({ item }: { item: ReportData }) => (
     <TouchableOpacity
@@ -137,6 +140,19 @@ export default function HistoryListScreen() {
           contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
         />
       </View>
+
+      {/* 删除确认弹窗 */}
+      <ConfirmModal
+        visible={deleteModal.visible}
+        title={translate('analysis.delete_confirm')}
+        message={translate('analysis.delete_desc')}
+        confirmText={translate('analysis.delete')}
+        cancelText={translate('analysis.cancel')}
+        isDestructive={true}
+        isLoading={isDeleting}
+        onConfirm={executeDelete}
+        onCancel={() => setDeleteModal({ visible: false, id: null })}
+      />
     </View>
   );
 }

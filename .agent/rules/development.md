@@ -18,3 +18,7 @@ trigger: always_on
 
 ## 数据库表设计
 -涉及到APP端用到的表，表明用app来开头，例如app_xxx
+
+## 数据库操作
+-涉及到数据库新增表或者新增字段，给出sql用户去supabase手动操作即可
+-supabse的schea是cfbase，操作的用户是cfbase_user

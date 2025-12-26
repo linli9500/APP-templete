@@ -1,15 +1,18 @@
 import * as React from 'react';
+import { useColorScheme } from 'nativewind';
 
 import type { OptionType } from '@/components/ui';
 import { Options, useModal } from '@/components/ui';
 import { useSelectedLanguage } from '@/lib';
 import { translate } from '@/lib';
 import type { Language } from '@/lib/i18n/resources';
+import { Language as LanguageIcon } from '@/components/ui/icons';
 
 import { Item } from './item';
 
 export const LanguageItem = () => {
   const { language, setLanguage } = useSelectedLanguage();
+  const { colorScheme } = useColorScheme();
   const modal = useModal();
   const onSelect = React.useCallback(
     (option: OptionType) => {
@@ -33,11 +36,14 @@ export const LanguageItem = () => {
     [language, langs]
   );
 
+  const iconColor = colorScheme === 'dark' ? 'white' : 'black';
+
   return (
     <>
       <Item
         text="settings.language"
         value={selectedLanguage?.label}
+        icon={<LanguageIcon color={iconColor} width={20} height={20} />}
         onPress={modal.present}
       />
       <Options

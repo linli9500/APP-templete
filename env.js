@@ -85,6 +85,10 @@ const client = z.object({
   VAR_BOOL: z.boolean(),
   SENTRY_DSN: z.string().optional(), // Optional so it doesn't break if not set initially
   APP_NAME: z.string().optional(), // APP 显示名称，用于分享卡片
+  WEBSITE_URL: z.string().optional(),
+  PRIVACY_URL: z.string().optional(),
+  TERMS_URL: z.string().optional(),
+  APPLE_STORE_ID: z.string().optional(),
 });
 
 const buildTime = z.object({
@@ -113,6 +117,10 @@ const _clientEnv = {
   VAR_BOOL: process.env.VAR_BOOL === 'true',
   SENTRY_DSN: process.env.SENTRY_DSN,
   APP_NAME: process.env.APP_NAME || 'Fortune', // APP 显示名称，默认 Fortune
+  WEBSITE_URL: process.env.WEBSITE_URL,
+  PRIVACY_URL: process.env.PRIVACY_URL,
+  TERMS_URL: process.env.TERMS_URL,
+  APPLE_STORE_ID: process.env.APPLE_STORE_ID,
 };
 
 /**

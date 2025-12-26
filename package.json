@@ -101,6 +101,7 @@
     "react-native-markdown-display": "^7.0.2",
     "react-native-mmkv": "~3.1.0",
     "react-native-purchases": "^9.6.9",
+    "react-native-qrcode-svg": "^6.3.21",
     "react-native-reanimated": "~3.17.5",
     "react-native-restart": "0.0.27",
     "react-native-safe-area-context": "5.4.0",

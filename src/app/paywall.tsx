@@ -1,14 +1,41 @@
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Alert, ScrollView, TouchableOpacity } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native';
 import Purchases, { PurchasesPackage } from 'react-native-purchases';
 
 import { FocusAwareStatusBar, Text, View, Button } from '@/components/ui';
+import { InfoModal } from '@/components/ui/confirm-modal';
+import { translate } from '@/lib';
 
 export default function Paywall() {
   const router = useRouter();
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [isPurchasing, setIsPurchasing] = useState(false);
+  
+  // 弹窗状态
+  const [infoModal, setInfoModal] = useState<{
+    visible: boolean;
+    type: 'success' | 'error' | 'info';
+    title: string;
+    message: string;
+    onClose?: () => void;
+  }>({ visible: false, type: 'info', title: '', message: '' });
+
+  // 显示弹窗的辅助函数
+  const showModal = (
+    type: 'success' | 'error' | 'info', 
+    title: string, 
+    message: string,
+    onClose?: () => void
+  ) => {
+    setInfoModal({ visible: true, type, title, message, onClose });
+  };
+
+  const handleCloseModal = () => {
+    const callback = infoModal.onClose;
+    setInfoModal({ ...infoModal, visible: false });
+    if (callback) callback();
+  };
 
   useEffect(() => {
     const getOfferings = async () => {
@@ -18,7 +45,7 @@ export default function Paywall() {
           setPackages(offerings.current.availablePackages);
         }
       } catch (e: any) {
-        Alert.alert('Error getting offerings', e.message);
+        showModal('error', translate('common.error'), e.message);
       }
     };
 
@@ -30,12 +57,13 @@ export default function Paywall() {
     try {
       const { customerInfo } = await Purchases.purchasePackage(pack);
       if (typeof customerInfo.entitlements.active['pro'] !== 'undefined') {
-        Alert.alert('Success', 'You are now a Pro member!');
-        router.back();
+        showModal('success', translate('subscription.restore_success'), translate('subscription.restore_success'), () => {
+          router.back();
+        });
       }
     } catch (e: any) {
       if (!e.userCancelled) {
-        Alert.alert('Error', e.message);
+        showModal('error', translate('common.error'), e.message);
       }
     } finally {
       setIsPurchasing(false);
@@ -47,13 +75,14 @@ export default function Paywall() {
     try {
       const customerInfo = await Purchases.restorePurchases();
       if (typeof customerInfo.entitlements.active['pro'] !== 'undefined') {
-        Alert.alert('Success', 'Purchases restored!');
-        router.back();
+        showModal('success', translate('subscription.restore_success'), translate('subscription.restore_success'), () => {
+          router.back();
+        });
       } else {
-        Alert.alert('Info', 'No active subscriptions found.');
+        showModal('info', translate('common.error'), translate('subscription.restore_failed'));
       }
     } catch (e: any) {
-      Alert.alert('Error', e.message);
+      showModal('error', translate('common.error'), e.message);
     } finally {
       setIsPurchasing(false);
     }
@@ -101,6 +130,15 @@ export default function Paywall() {
            <Text className="text-red-400">Cancel</Text>
         </TouchableOpacity>
       </View>
+
+      {/* 信息弹窗 */}
+      <InfoModal
+        visible={infoModal.visible}
+        title={infoModal.title}
+        message={infoModal.message}
+        type={infoModal.type}
+        onClose={handleCloseModal}
+      />
     </View>
   );
 }
