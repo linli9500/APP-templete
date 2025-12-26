@@ -6,6 +6,7 @@ interface AppConfigState {
   features: AppBootstrapData['features'];
   ui: AppBootstrapData['ui'];
   announcement: AppBootstrapData['announcement'];
+  ads: AppBootstrapData['ads'];
   isLoading: boolean;
   error: string | null;
   
@@ -26,6 +27,9 @@ export const useAppConfig = create<AppConfigState>((set) => ({
     enabled: false,
     content: '',
   },
+  ads: {
+    enabled: false,
+  },
   isLoading: true,
   error: null,
 
@@ -38,6 +42,7 @@ export const useAppConfig = create<AppConfigState>((set) => ({
         features: data.features,
         ui: data.ui,
         announcement: data.announcement,
+        ads: data.ads,
         isLoading: false,
       });
     } catch (e) {
@@ -48,3 +53,4 @@ export const useAppConfig = create<AppConfigState>((set) => ({
     }
   },
 }));
+

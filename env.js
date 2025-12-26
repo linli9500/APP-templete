@@ -38,8 +38,8 @@ require('dotenv').config({
 const BUNDLE_ID = 'com.vibefox.app'; // ios bundle id
 const PACKAGE = 'com.vibefox.app'; // android package name
 const NAME = 'ObytesApp'; // app name
-const EXPO_ACCOUNT_OWNER = 'obytes'; // expo account owner
-const EAS_PROJECT_ID = 'c3e1075b-6fe7-4686-aa49-35b46a229044'; // eas project id
+const EXPO_ACCOUNT_OWNER = 'yoona587'; // expo的用户名
+const EAS_PROJECT_ID = 'ee9f9abf-5256-4d39-baed-ade6fb35e224'; // eas project id
 const SCHEME = 'obytesApp'; // app scheme
 
 /**

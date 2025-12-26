@@ -3,13 +3,22 @@
 # 启动
 pnpm run web
 
+# 如果添加/删除了原声插件后需要重新生成
+# npx expo prebuild --clean指令会删除android或ios下的google-services.json
+npx expo prebuild --clean
 # 安卓构建指令
+pnpm run android:development
+
+# 真机推送
+# 1. 重新生成原生代码（涉及到原生插件的添加/删除）
+npx expo prebuild --clean
+# 2. 构建并安装到真机
 pnpm run android:development
 
 
 # github上传
 git add .
-git commit -m "APP-v1.1.4-新增生日信息记录以及查询报告"
+git commit -m "APP-v1.1.5-更新my profile为本地存储为主"
 git push origin main
 
 

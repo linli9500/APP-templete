@@ -55,21 +55,59 @@ import { checkAppUpdate } from '@/lib/updates';
 import { registerForPushNotificationsAsync } from '@/lib/notifications';
 import { useAppConfig } from '@/lib/use-app-config'; 
 import { UpdateChecker } from '@/components/update-checker';
+import { initializeAdMob, preloadAppOpenAd, showAppOpenAd } from '@/lib/admob';
 
 export default function RootLayout() {
   useEffect(() => {
-    (async () => {
-      // Small delay to ensure the app is ready/visible
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      if (Platform.OS === 'ios') {
-        await requestTrackingPermissionsAsync();
-      }
-      await checkAppUpdate(); // Silent check
-      await registerForPushNotificationsAsync(); // Register for Push
+    // 行业标准模式：广告与其他初始化并行进行
+    const initializeApp = async () => {
+      // 1. 先快速获取远程配置（检查广告开关）
+      await useAppConfig.getState().initApp();
+      const adsConfig = useAppConfig.getState().ads;
       
-      // Initialize remote config
-      useAppConfig.getState().initApp();
-    })();
+      // 2. 广告初始化（如果开启）
+      const adPromise = adsConfig.enabled ? (async () => {
+        try {
+          await initializeAdMob();
+          const loaded = await preloadAppOpenAd(adsConfig.app_open_id);
+          if (loaded) {
+            await showAppOpenAd();
+          }
+        } catch (error) {
+          // 静默处理广告错误
+        }
+      })() : Promise.resolve();
+      
+      // 3. 其他初始化任务（与广告并行）
+      const otherInitPromise = (async () => {
+        // 权限请求（iOS ATT）
+        if (Platform.OS === 'ios') {
+          await requestTrackingPermissionsAsync();
+        }
+        
+        // 更新检查
+        await checkAppUpdate();
+        
+        // 推送注册
+        await registerForPushNotificationsAsync();
+      })();
+      
+      // 4. 等待广告显示完成（最多5秒超时）
+      if (adsConfig.enabled) {
+        await Promise.race([
+          adPromise,
+          new Promise(resolve => setTimeout(resolve, 5000))
+        ]);
+      }
+      
+      // 5. 确保其他初始化也完成
+      await otherInitPromise;
+    };
+    
+    // 短暂延迟确保 App 可见
+    setTimeout(() => {
+      initializeApp();
+    }, 300);
   }, []);
 
   return (

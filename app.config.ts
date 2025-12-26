@@ -122,6 +122,15 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         isAccessMediaLocationEnabled: false,
       },
     ],
+    // Google AdMob 广告
+    [
+      'react-native-google-mobile-ads',
+      {
+        // 使用 Google 官方测试 App ID（生产环境需替换为真实 ID）
+        androidAppId: process.env.ADMOB_ANDROID_APP_ID,
+        iosAppId: process.env.ADMOB_IOS_APP_ID,
+      },
+    ],
   ],
   extra: {
     ...ClientEnv,
