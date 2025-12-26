@@ -26,14 +26,8 @@ export const useHistorySync = () => {
                 // @ts-ignore
                 const customToken = supabase.rest?.headers?.['Authorization'];
 
-                console.log('[HistorySync] Debug token sources:', {
-                    hasSupabaseSession: !!data.session?.access_token,
-                    hasCustomToken: !!customToken,
-                    tokenPreview: data.session?.access_token?.slice(0, 20) || customToken?.slice(0, 30)
-                });
-
                 if (!data.session?.access_token && !customToken) {
-                    console.log('[HistorySync] No valid access token found in Supabase client. Skipping sync.');
+                    // 没有有效的 token，跳过同步
                     return;
                 }
 

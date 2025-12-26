@@ -19,6 +19,7 @@ import { AnnouncementModal } from '@/components/announcement-modal';
 
 import { useAppConfig } from '@/lib/use-app-config';
 import { useHistorySync } from '@/hooks/use-history-sync';
+import { useProfileSync } from '@/hooks/use-profile-sync';
 
 export default function TabLayout() {
   const { session, isLoaded } = useSupabase();
@@ -26,8 +27,9 @@ export default function TabLayout() {
   const { initApp } = useAppConfig();
   const { colorScheme } = useColorScheme();
   
-  // 启用历史记录同步
+  // 启用同步 Hooks
   useHistorySync();
+  useProfileSync();
   const isDark = colorScheme === 'dark';
   
   const hideSplash = useCallback(async () => {

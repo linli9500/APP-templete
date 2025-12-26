@@ -75,8 +75,8 @@ export default function Options() {
                <TouchableOpacity 
                   onPress={async () => {
                      await signOut();
-                     // Force navigation to ensure immediate feedback
-                     router.replace('/login');
+                     // 登出后回到首页 (Insight 页面)
+                     router.replace('/');
                   }}
                   className="bg-black dark:bg-white rounded-full py-3 px-8 min-w-[150px] items-center"
                >

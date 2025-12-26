@@ -1,71 +1,48 @@
 import { useCallback } from 'react';
-import { useAuth } from '@/lib/auth';
-import { usePendingProfile } from './usePendingProfile';
-import { 
-  useProfiles as useRemoteProfiles, 
-  useAddProfile as useRemoteAddProfile,
-  useUpdateProfile as useRemoteUpdateProfile,
-  useDeleteProfile as useRemoteDeleteProfile,
-  Profile
-} from '@/api/profiles';
+import { useProfileStore, ProfileData } from '@/stores/profile-store';
+import { useSupabase } from '@/hooks/use-supabase';
+import { client } from '@/api/common/client';
+import type { Profile } from '@/api/profiles';
 
 /**
- * 统一的档案管理 Hook
- * 根据登录状态自动切换存储策略：
- * - 未登录：使用本地存储 (usePendingProfile)
- * - 已登录：使用后端 API (useProfiles)
+ * 统一的档案管理 Hook - Local-First 架构
+ * 
+ * 核心原则：
+ * - 始终从本地 Store 读取数据（即时显示）
+ * - 本地变更立即更新 UI
+ * - 已登录时后台同步到云端
  */
 export const useProfileManager = () => {
-  const token = useAuth.use.token();
-  const isLoggedIn = !!token;
+  const { session } = useSupabase();
+  const isLoggedIn = !!session?.user;
 
-  console.log('[ProfileManager] State Check:', { 
-    hasToken: !!token, 
-    // token is TokenType { access: string, refresh: string }, not string
-    tokenAccess: token?.access ? '***' + token.access.slice(-4) : 'null',
-    isLoggedIn 
-  });
-
-  // Local Storage Hooks
+  // Local Store
   const { 
-    getProfiles: getLocalProfiles, 
+    profiles: localProfiles, 
     addProfile: addLocalProfile, 
     updateProfile: updateLocalProfile, 
     removeProfile: removeLocalProfile 
-  } = usePendingProfile();
-
-  // Remote API Hooks
-  const { data: remoteData, isLoading: isRemoteLoading, refetch: refetchRemote } = useRemoteProfiles({
-    variables: undefined,
-    enabled: isLoggedIn,
-  });
-  
-  const { mutateAsync: addRemoteProfile, isPending: isAdding } = useRemoteAddProfile();
-  const { mutateAsync: updateRemoteProfile, isPending: isUpdating } = useRemoteUpdateProfile();
-  const { mutateAsync: deleteRemoteProfile, isPending: isDeleting } = useRemoteDeleteProfile();
+  } = useProfileStore();
 
   /**
-   * 获取档案列表
+   * 获取档案列表 - 始终从本地读取
    */
   const getProfiles = useCallback((): Profile[] => {
-    if (isLoggedIn) {
-      return remoteData?.profiles || [];
-    } else {
-      // 适配本地数据结构到 Profile 接口
-      return getLocalProfiles().map(p => ({
-        id: p.id,
-        birthDate: p.birthDate,
-        birthTime: p.birthTime || '', // 本地可能为 undefined，远程为 string
-        gender: p.gender,
-        city: p.city,
-        label: p.label,
-        createdAt: new Date(p.createdAt).toISOString(),
-      }));
-    }
-  }, [isLoggedIn, remoteData, getLocalProfiles]);
+    return Object.values(localProfiles).map(p => ({
+      id: p.id,
+      birthDate: p.birthDate,
+      birthTime: p.birthTime || '',
+      gender: p.gender,
+      city: p.city,
+      label: p.label,
+      createdAt: p.createdAt,
+    }));
+  }, [localProfiles]);
 
   /**
    * 添加档案
+   * 1. 立即更新本地 Store
+   * 2. 已登录时后台推送到 API
    */
   const addProfile = useCallback(async (data: {
     birthDate: string;
@@ -74,25 +51,23 @@ export const useProfileManager = () => {
     city?: string;
     label?: string;
   }) => {
+    // 1. 立即保存到本地
+    const newProfile = addLocalProfile(data);
+    
+    // 2. 已登录时后台同步到云端
     if (isLoggedIn) {
-      const res = await addRemoteProfile(data);
-      // refetchRemote(); // React Query通常会自动处理，或者在mutation onSuccess中处理 invalidate
-      // 这里为了保险起见，可以手动刷新，但更推荐 reliance on query invalidation
-      // 因为 react-query-kit hooks 没有直接暴露 invalidation，需要 verify standard behavior.
-      // 暂时假设需要手动刷新或依赖 cache key change.
-      // 实际上 createMutation 默认不自动 invalidate，需要在 mutation options 里配置 onSuccess
-      // 这里我们简单返回结果，UI 层可能需要 refetch
-      refetchRemote();
-      return res.profile;
-    } else {
-      const localProfile = addLocalProfile(data);
-      return {
-        ...localProfile,
-        birthTime: localProfile.birthTime || '', // Ensure string
-        createdAt: new Date(localProfile.createdAt).toISOString()
-      };
+      try {
+        await client.post('app/profile', data);
+      } catch (err) {
+        // 静默失败，下次登录时会同步
+      }
     }
-  }, [isLoggedIn, addRemoteProfile, addLocalProfile, refetchRemote]);
+    
+    return {
+      ...newProfile,
+      birthTime: newProfile.birthTime || '',
+    };
+  }, [isLoggedIn, addLocalProfile]);
 
   /**
    * 更新档案
@@ -104,40 +79,49 @@ export const useProfileManager = () => {
     city?: string;
     label?: string;
   }) => {
+    // 1. 立即更新本地
+    updateLocalProfile(id, data);
+    
+    // 2. 已登录时后台同步
     if (isLoggedIn) {
-      const res = await updateRemoteProfile({ id, ...data });
-      refetchRemote();
-      return res.profile;
-    } else {
-      const updated = updateLocalProfile(id, data);
-      if (!updated) return null;
-      return {
-        ...updated,
-        birthTime: updated.birthTime || '',
-        createdAt: new Date(updated.createdAt).toISOString()
-      };
+      try {
+        await client.put(`app/profile/${id}`, data);
+      } catch (err) {
+        // 静默失败
+      }
     }
-  }, [isLoggedIn, updateRemoteProfile, updateLocalProfile, refetchRemote]);
+    
+    const updated = localProfiles[id];
+    return updated ? {
+      ...updated,
+      birthTime: updated.birthTime || '',
+    } : null;
+  }, [isLoggedIn, updateLocalProfile, localProfiles]);
 
   /**
    * 删除档案
    */
   const removeProfile = useCallback(async (id: string) => {
+    // 1. 立即从本地删除
+    removeLocalProfile(id);
+    
+    // 2. 已登录时后台删除
     if (isLoggedIn) {
-      await deleteRemoteProfile({ id });
-      refetchRemote();
-    } else {
-      removeLocalProfile(id);
+      try {
+        await client.delete(`app/profile/${id}`);
+      } catch (err) {
+        // 静默失败
+      }
     }
-  }, [isLoggedIn, deleteRemoteProfile, removeLocalProfile, refetchRemote]);
+  }, [isLoggedIn, removeLocalProfile]);
 
   return {
     profiles: getProfiles(),
-    isLoading: isLoggedIn ? isRemoteLoading : false,
-    isMutating: isAdding || isUpdating || isDeleting,
+    isLoading: false, // Local-First 无需等待加载
+    isMutating: false,
     addProfile,
     updateProfile,
     removeProfile,
-    refresh: isLoggedIn ? refetchRemote : () => {},
+    refresh: () => {}, // 本地优先，无需手动刷新
   };
 };

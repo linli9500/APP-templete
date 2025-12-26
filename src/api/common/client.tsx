@@ -20,7 +20,6 @@ client.interceptors.request.use(async (config) => {
         config.headers.Authorization = customToken;
     }
   }
-  console.log('[API Client] Request Auth Header:', config.headers.Authorization);
   return config;
 });
 
@@ -34,7 +33,6 @@ client.interceptors.response.use(
     if (error.response?.status === 401) {
       // 静默处理 401，不显示错误消息，不自动登出
       // 让各个 API 调用方自己决定如何处理
-      console.log('[API Client] 401 Unauthorized - 让调用方处理');
       return Promise.reject(error);
     }
 
