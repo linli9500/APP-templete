@@ -43,6 +43,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     bundleIdentifier: Env.BUNDLE_ID,
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
+      // 相册保存权限说明（用于分享卡片保存）
+      NSPhotoLibraryAddUsageDescription: 'We need access to save your energy report card to your photo library for sharing on social media.',
     },
   },
   experiments: {
@@ -109,6 +111,15 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       {
         icon: './assets/icon.png',
         color: '#ffffff',
+      },
+    ],
+    // 相册保存权限（用于分享卡片保存）
+    [
+      'expo-media-library',
+      {
+        photosPermission: 'Allow $(PRODUCT_NAME) to save your energy report cards to your photo library.',
+        savePhotosPermission: 'Allow $(PRODUCT_NAME) to save your energy report cards to your photo library.',
+        isAccessMediaLocationEnabled: false,
       },
     ],
   ],

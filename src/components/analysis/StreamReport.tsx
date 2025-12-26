@@ -1,18 +1,52 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, Easing } from 'react-native-reanimated';
 import { useColorScheme } from 'nativewind';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as Clipboard from 'expo-clipboard';
+
 import { Text } from '@/components/ui/text';
+import { Share, Copy } from '@/components/ui/icons';
 import Markdown from 'react-native-markdown-display';
 import { translate } from '@/lib';
 import { useRouter } from 'expo-router';
 import { ArrowRight } from '@/components/ui/icons/arrow-right';
+import { SharePreviewModal } from './SharePreviewModal';
+import { extractReportSummary } from '@/lib/markdown-parser';
+import { showSuccessMessage } from '@/components/ui/utils';
 
 interface StreamReportProps {
   content: string;
   isEffectActive: boolean;
 }
+
+// 操作按钮组组件
+interface ActionButtonsProps {
+  onCopy: () => void;
+  onShare: () => void;
+  isDark: boolean;
+}
+
+const ActionButtons = ({ onCopy, onShare, isDark }: ActionButtonsProps) => (
+  <View className="flex-row items-center justify-end gap-4 py-2">
+    <TouchableOpacity
+      onPress={onCopy}
+      className="w-9 h-9 rounded-full bg-neutral-100 dark:bg-neutral-800 justify-center items-center"
+      activeOpacity={0.7}
+      accessibilityLabel={translate('share.copy')}
+    >
+      <Copy color={isDark ? '#FFFFFF' : '#000000'} width={18} height={18} />
+    </TouchableOpacity>
+    <TouchableOpacity
+      onPress={onShare}
+      className="w-9 h-9 rounded-full bg-neutral-100 dark:bg-neutral-800 justify-center items-center"
+      activeOpacity={0.7}
+      accessibilityLabel={translate('share.share')}
+    >
+      <Share color={isDark ? '#FFFFFF' : '#000000'} width={18} height={18} />
+    </TouchableOpacity>
+  </View>
+);
 
 export const StreamReport = ({ content, isEffectActive }: StreamReportProps) => {
   const { colorScheme } = useColorScheme();
@@ -20,6 +54,9 @@ export const StreamReport = ({ content, isEffectActive }: StreamReportProps) => 
   const spin = useSharedValue(0);
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  
+  // 分享模态框状态
+  const [isShareModalVisible, setIsShareModalVisible] = useState(false);
 
   useEffect(() => {
     if (isEffectActive) {
@@ -65,6 +102,34 @@ export const StreamReport = ({ content, isEffectActive }: StreamReportProps) => 
     // 其他元素样式在需要时添加
   }), [isDark]);
 
+  // 从报告中提取摘要信息（用于分享卡片）
+  const reportSummary = useMemo(() => {
+    return extractReportSummary(content);
+  }, [content]);
+
+  // 复制报告内容到剪贴板
+  const handleCopy = useCallback(async () => {
+    try {
+      await Clipboard.setStringAsync(content);
+      showSuccessMessage(translate('share.copied'));
+    } catch (error) {
+      console.error('复制失败:', error);
+    }
+  }, [content]);
+
+  // 打开分享模态框
+  const handleShare = useCallback(() => {
+    setIsShareModalVisible(true);
+  }, []);
+
+  // 关闭分享模态框
+  const handleCloseShareModal = useCallback(() => {
+    setIsShareModalVisible(false);
+  }, []);
+
+  // 是否显示操作按钮（仅在生成完成后显示）
+  const showActions = !isEffectActive && content.length > 0;
+
   return (
     <View className="flex-1 bg-pattern-bg dark:bg-black">
         <ScrollView 
@@ -73,7 +138,7 @@ export const StreamReport = ({ content, isEffectActive }: StreamReportProps) => 
             showsVerticalScrollIndicator={false}
         >
             {/* 头部区域 - 在ScrollView内部，可滚动 */}
-            <View className="flex-row items-center justify-between mb-6">
+            <View className="flex-row items-center justify-between mb-4">
                 <TouchableOpacity onPress={() => router.back()}>
                     <View 
                         className="w-8 h-8 rounded-full bg-black dark:bg-neutral-800 justify-center items-center" 
@@ -86,6 +151,20 @@ export const StreamReport = ({ content, isEffectActive }: StreamReportProps) => 
                     {translate('analysis.report_title')}
                 </Text>
             </View>
+
+            {/* 操作按钮区域 1 - 标题下方、正文上方 */}
+            {showActions && (
+              <ActionButtons 
+                onCopy={handleCopy} 
+                onShare={handleShare} 
+                isDark={isDark} 
+              />
+            )}
+
+            {/* 分隔线 */}
+            {showActions && (
+              <View className="h-px bg-neutral-200 dark:bg-neutral-800 mb-4" />
+            )}
 
             {/* 报告内容 */}
             <Markdown style={markdownStyles}>
@@ -104,7 +183,27 @@ export const StreamReport = ({ content, isEffectActive }: StreamReportProps) => 
                     </Text>
                 </View>
             )}
+
+            {/* 操作按钮区域 2 - 报告底部 */}
+            {showActions && (
+              <View className="mt-8 pt-4 border-t border-neutral-200 dark:border-neutral-800">
+                <ActionButtons 
+                  onCopy={handleCopy} 
+                  onShare={handleShare} 
+                  isDark={isDark} 
+                />
+              </View>
+            )}
         </ScrollView>
+
+        {/* 分享预览模态框 */}
+        <SharePreviewModal
+          visible={isShareModalVisible}
+          onClose={handleCloseShareModal}
+          title={reportSummary.title}
+          keywords={reportSummary.keywords}
+          highlight={reportSummary.highlight}
+        />
     </View>
   );
 };

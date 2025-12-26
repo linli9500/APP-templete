@@ -13,6 +13,8 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from '@/components/ui/icons';
 import { useTranslation } from 'react-i18next';
 import { translate } from '@/lib';
+import { useAuth } from '@/lib/auth';
+import { usePendingProfile } from '@/hooks/usePendingProfile';
 
 
 const schema = z.object({
@@ -32,6 +34,13 @@ export default function AnalysisInputScreen() {
   const insets = useSafeAreaInsets();
   const { t, i18n } = useTranslation(); 
   
+  // 获取登录状态
+  const token = useAuth.use.token();
+  const isLoggedIn = !!token;
+  
+  // 本地档案存储 hook
+  const { addProfile } = usePendingProfile();
+  
   const [openDate, setOpenDate] = useState(false);
   const [openTime, setOpenTime] = useState(false);
   
@@ -46,13 +55,27 @@ export default function AnalysisInputScreen() {
   const selectedTime = watch('birthTime');
 
   const onSubmit = (data: FormData) => {
+    const birthDateStr = format(data.birthDate, 'yyyy-MM-dd');
+    const birthTimeStr = format(data.birthTime, 'HH:mm');
+    
+    // 如果用户未登录，将数据保存到本地（等待注册后同步）
+    if (!isLoggedIn) {
+      addProfile({
+        birthDate: birthDateStr,
+        birthTime: birthTimeStr,
+        gender: data.gender,
+      });
+      console.log('[Analysis] 用户未登录，已保存分析数据到本地');
+    }
+    
+    // 无论是否登录都继续跳转到报告页面
     router.push({
       pathname: '/analysis/report',
       params: {
-        birthDate: format(data.birthDate, 'yyyy-MM-dd'),
-        birthTime: format(data.birthTime, 'HH:mm'),
+        birthDate: birthDateStr,
+        birthTime: birthTimeStr,
         gender: data.gender,
-        language: i18n.language, // Pass current language
+        language: i18n.language,
         key: 'test_analysis', 
       }
     });

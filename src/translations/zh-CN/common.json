@@ -68,6 +68,17 @@
     "cancel": "取消",
     "dont_show_again": "不再提示"
   },
+  "share": {
+    "copy": "复制",
+    "share": "分享",
+    "download": "保存到相册",
+    "copied": "已复制！",
+    "saved": "已保存到相册！",
+    "save_failed": "保存失败，请检查权限设置",
+    "saving": "保存中...",
+    "permission_required": "需要权限",
+    "album_permission_message": "请授予相册访问权限以保存图片。"
+  },
   "welcome": "欢迎使用 obytes app site",
   "onboarding": {
     "message": "欢迎使用 obytes app site"

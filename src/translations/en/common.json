@@ -67,6 +67,17 @@
     "cancel": "Cancel",
     "dont_show_again": "Don't show again"
   },
+  "share": {
+    "copy": "Copy",
+    "share": "Share",
+    "download": "Download to Album",
+    "copied": "Copied!",
+    "saved": "Saved to Album!",
+    "save_failed": "Save failed, please check permissions",
+    "saving": "Saving...",
+    "permission_required": "Permission Required",
+    "album_permission_message": "Please grant album access to save the image."
+  },
   "welcome": "Welcome to obytes app site",
   "onboarding": {
     "message": "Welcome to obytes app site"

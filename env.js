@@ -85,6 +85,7 @@ const client = z.object({
   VAR_NUMBER: z.number(),
   VAR_BOOL: z.boolean(),
   SENTRY_DSN: z.string().optional(), // Optional so it doesn't break if not set initially
+  APP_NAME: z.string().optional(), // APP 显示名称，用于分享卡片
 });
 
 const buildTime = z.object({
@@ -113,6 +114,7 @@ const _clientEnv = {
   VAR_NUMBER: Number(process.env.VAR_NUMBER),
   VAR_BOOL: process.env.VAR_BOOL === 'true',
   SENTRY_DSN: process.env.SENTRY_DSN,
+  APP_NAME: process.env.APP_NAME || 'Fortune', // APP 显示名称，默认 Fortune
 };
 
 /**

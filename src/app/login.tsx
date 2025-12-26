@@ -6,6 +6,7 @@ import { translate } from '@/lib';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { useSupabase } from '@/hooks/use-supabase';
+import { usePendingProfile } from '@/hooks/usePendingProfile';
 import { useColorScheme } from 'nativewind';
 import { Svg, Path } from 'react-native-svg';
 
@@ -39,6 +40,7 @@ export default function LoginSelection() {
   const router = useRouter();
   const { colorScheme } = useColorScheme();
   const { supabase } = useSupabase();
+  const { syncToServer, getProfileCount } = usePendingProfile();
 
   const isDark = colorScheme === 'dark';
   const logoColor = isDark ? '#FFFFFF' : '#000000';
@@ -110,6 +112,14 @@ export default function LoginSelection() {
         if (error) {
              console.error('Supabase Session Error:', error);
         } else {
+             // 登录成功后，同步本地待同步的档案
+             const pendingCount = getProfileCount();
+             if (pendingCount > 0) {
+               console.log(`[GoogleLogin] 检测到 ${pendingCount} 条待同步档案，开始同步...`);
+               syncToServer(data.access_token).catch((err) => {
+                 console.error('[GoogleLogin] 档案同步失败:', err);
+               });
+             }
              router.replace('/');
         }
       }
@@ -153,6 +163,14 @@ export default function LoginSelection() {
             if (error) {
                 console.error('Supabase Session Error:', error);
             } else {
+                // 登录成功后，同步本地待同步的档案
+                const pendingCount = getProfileCount();
+                if (pendingCount > 0) {
+                  console.log(`[AppleLogin] 检测到 ${pendingCount} 条待同步档案，开始同步...`);
+                  syncToServer(data.access_token).catch((err) => {
+                    console.error('[AppleLogin] 档案同步失败:', err);
+                  });
+                }
                 router.replace('/');
             }
         }

@@ -82,8 +82,7 @@ export const useStreamAnalysis = () => {
         },
         body: JSON.stringify({ birthDate, birthTime, gender, language, key }),
         onNext: (chunk) => {
-          // Just append content
-          console.log(`[Stream] Received chunk: ${chunk.length} chars`);
+          // 累积内容（移除详细日志，只在开始和结束打印）
           fullContentRef.current += chunk;
 
           // If we have passed the minimum delay (8s) and are still in "decoding" mode,
@@ -119,7 +118,7 @@ export const useStreamAnalysis = () => {
       // 1. Minimum "Decoding" Animation Time (8s)
       minDelayTimeoutRef.current = setTimeout(() => {
         minDelaySatisfiedRef.current = true;
-        console.log('[Stream] Min delay (8s) finished. Content len:', fullContentRef.current.length);
+        // 最小延迟完成，准备显示内容
         
         // If we already have content, start showing it.
         // If not, we wait for onNext to trigger it.
@@ -168,10 +167,10 @@ export const useStreamAnalysis = () => {
   };
 
   const startDisplayingContent = () => {
-    // Prevent multiple calls
+    // 防止多次调用
     if (!isDecodingRef.current && isEffectActive) return;
 
-    console.log('[Stream] Starting Display Content');
+    // 开始显示内容（清除硬超时）
     
     // Clear the hard timeout as we have successfully started
     if (hardTimeoutRef.current) clearTimeout(hardTimeoutRef.current);

@@ -1,7 +1,9 @@
 import { useSupabase } from './use-supabase';
+import { usePendingProfile } from './usePendingProfile';
 
 export const useSignIn = () => {
   const { isLoaded, supabase } = useSupabase();
+  const { syncToServer, getProfileCount } = usePendingProfile();
 
   const signInWithPassword = async ({
     email,
@@ -37,14 +39,23 @@ export const useSignIn = () => {
          console.log('ℹ️ Supabase Auth warning (expected): Custom Token detected. Manually setting headers.');
          const { setGlobalAuthToken } = require('@/lib/supabase');
          setGlobalAuthToken(data.access_token);
-         // Manually trigger a "signed in" state if needed, or let the RLS data fetch prove it.
-         return; 
+       } else {
+         throw error;
        }
-       throw error;
     } else {
         // Even if successful, ensure headers (extra safety)
          const { setGlobalAuthToken } = require('@/lib/supabase');
          setGlobalAuthToken(data.access_token);
+    }
+
+    // 3. 登录成功后，同步本地待同步的档案
+    const pendingCount = getProfileCount();
+    if (pendingCount > 0) {
+      console.log(`[SignIn] 检测到 ${pendingCount} 条待同步档案，开始同步...`);
+      // 异步执行同步，不阻塞登录流程
+      syncToServer(data.access_token).catch((err) => {
+        console.error('[SignIn] 档案同步失败:', err);
+      });
     }
   };
 
@@ -53,3 +64,4 @@ export const useSignIn = () => {
     signInWithPassword,
   };
 };
+
