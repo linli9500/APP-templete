@@ -42,7 +42,7 @@ export function AppSplash({ onFinish, shouldHide }: AppSplashProps) {
     };
   });
 
-  const logoSource = require('../../assets/logo-fortune.png');
+  const logoSource = require('../../assets/logo.png');
 
   // 标签配置
 

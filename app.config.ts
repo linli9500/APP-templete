@@ -29,7 +29,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   slug: 'obytesapp',
   version: Env.VERSION.toString(),
   orientation: 'portrait',
-  icon: './assets/icon.png',
+  icon: './assets/icon-fortune-bg.png',
   userInterfaceStyle: 'automatic',
   newArchEnabled: true,
   updates: {
@@ -52,8 +52,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: './assets/adaptive-icon.png',
-      backgroundColor: '#2E3C4B',
+      foregroundImage: './assets/icon-fortune-bg.png',
+      backgroundColor: '#F5F5F0',
     },
     package: Env.PACKAGE,
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON ?? './google-services.json',
@@ -68,7 +68,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       'expo-splash-screen',
       {
         "backgroundColor": "#F5F5F0",
-        "image": "./assets/logo-fortune.png",
+        "image": "./assets/logo.png",
         "imageWidth": 150
       },
     ],
@@ -109,7 +109,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-notifications',
       {
-        icon: './assets/icon.png',
+        icon: './assets/logo.png',
         color: '#ffffff',
       },
     ],
