@@ -18,7 +18,7 @@ import { Text, FocusAwareStatusBar } from '@/components/ui';
 import { ConfirmModal, InfoModal } from '@/components/ui/confirm-modal';
 import { 
   Share, Support, Website, Rate, ArrowRight, 
-  Crown, Info, Shield, Document, Palette, Language, Logout, Trash
+  Crown, Info, Shield, Document, Palette, Language, Logout, Trash, Feedback
 } from '@/components/ui/icons';
 import { translate } from '@/lib';
 import { useSupabase } from '@/hooks/use-supabase';
@@ -246,6 +246,11 @@ export default function Options() {
 
           {/* 支持 */}
           <ItemsContainer title="settings.support">
+            <Item 
+                text="settings.feedback" 
+                icon={<Feedback color={iconColor} width={20} height={20} />} 
+                onPress={() => router.push('/feedback')}
+            />
             <Item 
                 text="settings.support" 
                 icon={<Support color={iconColor} width={20} height={20} />} 

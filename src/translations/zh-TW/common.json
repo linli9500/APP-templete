@@ -54,7 +54,21 @@
     "screenshot_test_hint": "請在此頁面截圖，觀察下方按鈕顏色變化",
     "screenshot_detected": "已檢測",
     "screenshot_waiting": "等待中",
-    "screenshot_success": "截圖檢測成功!"
+    "screenshot_success": "截圖檢測成功!",
+    "feedback": "意見回饋"
+  },
+  "feedback": {
+    "title": "意見回饋",
+    "content_placeholder": "請告訴我們您的想法、建議或遇到的問題...",
+    "rating_label": "您對我們的體驗評價如何？",
+    "contact_label": "聯絡電郵（可選）",
+    "contact_placeholder": "your@email.com",
+    "submit": "提交回饋",
+    "submitting": "提交中...",
+    "success_title": "感謝您！",
+    "success_message": "您的回饋已成功提交。",
+    "error_message": "提交失敗，請稍後重試。",
+    "content_required": "請輸入回饋內容"
   },
   "common": {
     "confirm": "確定",

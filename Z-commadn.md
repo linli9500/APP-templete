@@ -2,7 +2,8 @@
 
 # 启动
 pnpm run web
-
+-（增加一个feedback功能在app）
+-真机测试下城市录入是否会卡
 
 # 缓存清理与重置（解决 Compiling JS failed / Invalid UTF-8 等报错）
 # 1. 停止所有正在运行的终端
@@ -22,13 +23,10 @@ pnpm run android:development
 
 # github上传
 git add .
-git commit -m "APP-v1.1.6-优化了底部导航栏"
+git commit -m "APP-v1.1.7-更换app的logo"
 git push origin main
 
 
-您的项目意味着什么？ 既然我们已经接管了 
-AppSplash.tsx
-，这个页面现在完全可以在您的掌控之中：
 
 现在：我们放的是“品牌Slogan”（性格基因...），用来建立用户心智，这显得很高级、很专业（类似“知乎·发现更大的世界”）。
 未来：您完全可以在 src/api 的 bootstrap 接口里下发一个 splash_image_url 和 splash_link。

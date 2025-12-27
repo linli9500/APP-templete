@@ -28,4 +28,5 @@ export * from './connections';
 export * from './insight';
 export * from './mood-wave';
 export * from './you';
+export * from './feedback';
 

@@ -81,7 +81,21 @@
         "restart": "立即重启",
         "later": "稍后"
     },
-    "subscription": "订阅管理"
+    "subscription": "订阅管理",
+    "feedback": "意见反馈"
+  },
+  "feedback": {
+    "title": "意见反馈",
+    "content_placeholder": "请告诉我们您的想法、建议或遇到的问题...",
+    "rating_label": "您对我们的体验评价如何？",
+    "contact_label": "联系邮箱（可选）",
+    "contact_placeholder": "your@email.com",
+    "submit": "提交反馈",
+    "submitting": "提交中...",
+    "success_title": "感谢您！",
+    "success_message": "您的反馈已成功提交。",
+    "error_message": "提交失败，请稍后重试。",
+    "content_required": "请输入反馈内容"
   },
   "subscription": {
     "title": "订阅管理",

@@ -18,10 +18,11 @@ interface ProfileApiResponse {
 /**
  * Profile 双向同步 Hook
  * 在 _layout.tsx 中调用，登录后自动执行同步
+ * 
+ * 修复：使用 getState() 避免 React 闭包问题
  */
 export const useProfileSync = () => {
   const { session } = useSupabase();
-  const { profiles, upsertProfile } = useProfileStore();
 
   useEffect(() => {
     // 未登录不同步
@@ -37,6 +38,11 @@ export const useProfileSync = () => {
         if (!data.session?.access_token && !customToken) {
           return;
         }
+
+        // 【重要】在同步开始时获取本地数据快照
+        // 使用 getState() 获取当前最新状态，避免闭包问题
+        const currentProfiles = useProfileStore.getState().profiles;
+        const localIdsBeforeSync = Object.keys(currentProfiles);
 
         // 1. 下行同步：从 API 拉取云端数据
         const response = await client.get('app/profile');
@@ -55,20 +61,21 @@ export const useProfileSync = () => {
             createdAt: remote.createdAt,
             updatedAt: remote.createdAt, // API 暂无 updatedAt，用 createdAt
           };
-          upsertProfile(localProfile);
+          useProfileStore.getState().upsertProfile(localProfile);
         }
 
-        // 3. 上行同步：将本地有但云端没有的推送到 API
-        const localIds = Object.keys(profiles);
-        const missingOnServer = localIds.filter(id => !remoteIds.includes(id));
+        // 3. 上行同步：将同步前本地有但云端没有的推送到 API
+        // 【关键】使用同步开始前的快照，而非 upsert 后的数据
+        const missingOnServer = localIdsBeforeSync.filter(id => !remoteIds.includes(id));
 
         if (missingOnServer.length > 0) {
-          const profilesToUpload = missingOnServer.map(id => profiles[id]);
+          const profilesToUpload = missingOnServer.map(id => currentProfiles[id]).filter(Boolean);
           
-          // 逐个上传到服务器（使用现有的 POST 接口）
+          // 逐个上传到服务器（传递本地 ID，让服务器做 upsert）
           for (const profile of profilesToUpload) {
             try {
               await client.post('app/profile', {
+                id: profile.id, // 传递本地生成的 ID
                 birthDate: profile.birthDate,
                 birthTime: profile.birthTime,
                 gender: profile.gender,
@@ -77,6 +84,7 @@ export const useProfileSync = () => {
               });
             } catch (err) {
               // 静默失败，下次同步再试
+              console.warn('[ProfileSync] Upload failed for profile:', profile.id);
             }
           }
         }

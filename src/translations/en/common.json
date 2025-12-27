@@ -80,7 +80,21 @@
         "restart": "Restart",
         "later": "Later"
     },
-    "subscription": "Subscription"
+    "subscription": "Subscription",
+    "feedback": "Feedback"
+  },
+  "feedback": {
+    "title": "Feedback",
+    "content_placeholder": "Tell us your thoughts, suggestions, or issues...",
+    "rating_label": "How would you rate your experience?",
+    "contact_label": "Contact Email (Optional)",
+    "contact_placeholder": "your@email.com",
+    "submit": "Submit Feedback",
+    "submitting": "Submitting...",
+    "success_title": "Thank You!",
+    "success_message": "Your feedback has been submitted successfully.",
+    "error_message": "Failed to submit feedback. Please try again.",
+    "content_required": "Please enter your feedback"
   },
   "subscription": {
     "title": "Subscription",
