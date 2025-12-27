@@ -72,5 +72,24 @@
     "delete_desc": "This action cannot be undone.",
     "cancel": "Cancel",
     "delete": "Delete"
+  },
+  "mood": {
+    "title": "Mood",
+    "subtitle": "Understand and manage your emotions.",
+    "emotional_state": "Emotional State",
+    "core_tag": "MOOD",
+    "mood_title": "The Emotional Navigator",
+    "mood_desc": "Explore the depths of your emotional landscape. Your patterns reveal how energy flows through your inner world.",
+    "view_analysis": "View Mood Analysis",
+    "mood_station": "Mood Station",
+    "mood_detector": "Emotion Check-in",
+    "current_mood": "Current Mood:",
+    "mood_value": "Restless",
+    "suggested_remedy": "Suggested Remedy:",
+    "remedy_value": "Mindful Meditation",
+    "recharge": "Recharge",
+    "reflect": "Reflect",
+    "daily_affirmation": "Daily Affirmation",
+    "affirmation_quote": "\"Your emotions are messengers. Listen to them with compassion.\""
   }
 }

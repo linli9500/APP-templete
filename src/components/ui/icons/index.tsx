@@ -22,3 +22,10 @@ export * from './support';
 export * from './trash';
 export * from './user';
 export * from './website';
+export * from './mood';
+export * from './journey';
+export * from './connections';
+export * from './insight';
+export * from './mood-wave';
+export * from './you';
+

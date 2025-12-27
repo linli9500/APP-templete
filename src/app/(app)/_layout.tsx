@@ -6,11 +6,11 @@ import { useColorScheme } from 'nativewind';
 
 import { Pressable, Text, colors } from '@/components/ui';
 import {
-  Feed as FeedIcon,
-  Home as HomeIcon,
-  Settings as SettingsIcon,
-  Style as StyleIcon,
-  User as UserIcon,
+  Journey as JourneyIcon,
+  Connections as ConnectionsIcon,
+  Insight as InsightIcon,
+  MoodWave as MoodIcon,
+  You as YouIcon,
 } from '@/components/ui/icons';
 import { useIsFirstTime } from '@/lib';
 import { useSupabase } from '@/hooks/use-supabase';
@@ -84,39 +84,53 @@ export default function TabLayout() {
           },
         }}
       >
-        <Tabs.Screen
-          name="index"
-          options={{
-            title: translate('insight.title'),
-            tabBarIcon: ({ color }) => <HomeIcon color={color} />,
-            tabBarButtonTestID: 'insight-tab',
-          }}
-        />
-
-        <Tabs.Screen
-          name="bonds"
-          options={{
-            title: translate('bonds.title'),
-            tabBarIcon: ({ color }) => <StyleIcon color={color} />, // Placeholder icon
-            tabBarButtonTestID: 'bonds-tab',
-          }}
-        />
-
+        {/* 1. Journey - 旅程 */}
         <Tabs.Screen
           name="journey"
           options={{
             title: translate('journey.title'), 
-            tabBarIcon: ({ color }) => <FeedIcon color={color} />, // Placeholder icon
+            tabBarIcon: ({ color }) => <JourneyIcon color={color} />,
             tabBarButtonTestID: 'journey-tab',
           }}
         />
 
+        {/* 2. Connections - 连结 */}
+        <Tabs.Screen
+          name="bonds"
+          options={{
+            title: translate('bonds.title'),
+            tabBarIcon: ({ color }) => <ConnectionsIcon color={color} />,
+            tabBarButtonTestID: 'bonds-tab',
+          }}
+        />
+
+        {/* 3. Insight - 核心分析 (默认首页，中间位置) */}
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: translate('insight.title'),
+            tabBarIcon: ({ color }) => <InsightIcon color={color} />,
+            tabBarButtonTestID: 'insight-tab',
+          }}
+        />
+
+        {/* 4. Mood - 情绪 (新增) */}
+        <Tabs.Screen
+          name="mood"
+          options={{
+            title: translate('mood.title'),
+            tabBarIcon: ({ color }) => <MoodIcon color={color} />,
+            tabBarButtonTestID: 'mood-tab',
+          }}
+        />
+
+        {/* 5. You - 我的 */}
         <Tabs.Screen
           name="settings"
           options={{
             title: translate('journey.settings_title'),
             headerShown: false,
-            tabBarIcon: ({ color }) => <UserIcon color={color} />,
+            tabBarIcon: ({ color }) => <YouIcon color={color} />,
             tabBarButtonTestID: 'settings-tab',
           }}
         />

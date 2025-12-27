@@ -1,6 +1,6 @@
 {
   "insight": {
-    "title": "核心分析",
+    "title": "分析",
     "subtitle": "解码你内在的真实自我。",
     "true_self": "真实自我",
     "core_tag": "核心",
@@ -72,5 +72,24 @@
     "delete_desc": "此操作无法撤销。",
     "cancel": "取消",
     "delete": "删除"
+  },
+  "mood": {
+    "title": "情绪",
+    "subtitle": "理解并管理你的情绪。",
+    "emotional_state": "情绪状态",
+    "core_tag": "情绪",
+    "mood_title": "情绪导航者",
+    "mood_desc": "探索你内心情绪的深层世界。你的情绪模式揭示了能量如何在你的内心流动。",
+    "view_analysis": "查看情绪分析",
+    "mood_station": "情绪站",
+    "mood_detector": "情绪签到",
+    "current_mood": "当前情绪：",
+    "mood_value": "焦躁",
+    "suggested_remedy": "建议疗愈：",
+    "remedy_value": "正念冥想",
+    "recharge": "充电",
+    "reflect": "反思",
+    "daily_affirmation": "每日肯定",
+    "affirmation_quote": "「你的情绪是信使。用慈悲去倾听它们。」"
   }
 }
