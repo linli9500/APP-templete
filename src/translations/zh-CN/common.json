@@ -183,5 +183,12 @@
   "welcome": "欢迎使用 obytes app site",
   "onboarding": {
     "message": "欢迎使用 obytes app site"
+  },
+  "splash": {
+    "slogan_1": "探索从出生就自带的性格基因",
+    "slogan_2": "还原最真实的你",
+    "tag_1": "深层性格",
+    "tag_2": "情侣合盘",
+    "tag_3": "坏情绪根源"
   }
 }

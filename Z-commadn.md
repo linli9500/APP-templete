@@ -22,15 +22,16 @@ pnpm run android:development
 
 # github上传
 git add .
-git commit -m "APP-v1.1.6-增加开屏广告并测试成功&推送通知功能（待测试）"
+git commit -m "APP-v1.1.6-优化了底部导航栏"
 git push origin main
 
 
-# 方式 1：只是日常开发（不需要 prebuild）
-pnpm exec expo start --clear --android
-# 方式 2：需要重新构建原生代码时
-npx expo prebuild --clean
-pnpm run android:development   # 这会自动构建并安装新的 APK
+您的项目意味着什么？ 既然我们已经接管了 
+AppSplash.tsx
+，这个页面现在完全可以在您的掌控之中：
 
-
- Metro 并清理缓存：
+现在：我们放的是“品牌Slogan”（性格基因...），用来建立用户心智，这显得很高级、很专业（类似“知乎·发现更大的世界”）。
+未来：您完全可以在 src/api 的 bootstrap 接口里下发一个 splash_image_url 和 splash_link。
+App 启动获取配置时，如果发现有活动图，直接把中间的 Logo 或者底部的文字替换成这张活动图。
+用户点击图片，直接跳转到 App 内部的购买页或活动页。
+结论： 这种做法非常明智且常见。它不需要把流量卖给别人（赚微薄的广告费），而是把最宝贵的“第一眼”留给自己的产品核心价值或付费转化。您现在的设计（Logo + 核心价值文案）是非常标准的“品牌启动页”做法，既提升了格调，又教育了用户。

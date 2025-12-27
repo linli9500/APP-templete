@@ -182,5 +182,12 @@
   "welcome": "Welcome to obytes app site",
   "onboarding": {
     "message": "Welcome to obytes app site"
+  },
+  "splash": {
+    "slogan_1": "Discover your innate personality traits",
+    "slogan_2": "Reveal the real you",
+    "tag_1": "Deep Personality",
+    "tag_2": "Relationship Match",
+    "tag_3": "Emotional Roots"
   }
 }
