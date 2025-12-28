@@ -1,4 +1,25 @@
 {
+  "about": {
+    "title": "关于我们",
+    "mission_title": "我们的使命",
+    "mission_content": "我们致力于帮助每个人了解最真实的自己，成为您口袋里的能量补充站。",
+    "product_title": "产品介绍",
+    "product_content": "基于底层八字的能量分析，使用 APP 来分析您最底层的人生密码，帮助您解决所有遇到的情绪类问题。",
+    "features_title": "核心功能",
+    "feature_1_title": "深度自我探索",
+    "feature_1_desc": "了解最真实的自己",
+    "feature_2_title": "情绪解决方案",
+    "feature_2_desc": "拖延、焦虑、自我否定、不自信等",
+    "feature_3_title": "能量补充站",
+    "feature_3_desc": "情感治愈与心理支持",
+    "feature_4_title": "专业分析报告",
+    "feature_4_desc": "基于科学的心理学分析",
+    "contact_title": "联系我们",
+    "contact_content": "如果您有任何问题或建议，欢迎通过以下方式联系我们：",
+    "email_label": "邮箱",
+    "website_label": "官网",
+    "thanks": "感谢您选择我们的产品！"
+  },
   "auth": {
     "login": "登录",
     "sign_up": "注册",
@@ -141,6 +162,7 @@
     "error": "错误",
     "save": "保存",
     "delete": "删除",
+    "loading": "加载中...",
     "page_not_found": "页面不存在",
     "page_not_found_desc": "您访问的页面可能已被移除或暂时不可用",
     "go_home": "返回首页"
@@ -181,6 +203,7 @@
     "save": "保存",
     "saved": "档案已保存",
     "default_label": "档案",
+    "default": "默认",
     "unnamed": "未命名"
   },
   "share": {

@@ -9,43 +9,42 @@ import { Text, View, FocusAwareStatusBar } from '@/components/ui';
 import { ArrowRight } from '@/components/ui/icons';
 import { translate } from '@/lib';
 
-// About Us 的 Markdown 内容
-// 您可以直接在这里修改内容
-const ABOUT_CONTENT = `
-# 关于我们
-
-## 我们的使命
-
-我们致力于帮助每个人了解最真实的自己，成为您口袋里的能量补充站。
-
-## 产品介绍
-
-基于底层八字的能量分析，使用 APP 来分析您最底层的人生密码，帮助您解决所有遇到的情绪类问题。
-
-### 核心功能
-
-- 🔮 **深度自我探索** - 了解最真实的自己
-- 💆 **情绪解决方案** - 拖延、焦虑、自我否定、不自信等
-- 🌟 **能量补充站** - 情感治愈与心理支持
-- 📊 **专业分析报告** - 基于科学的心理学分析
-
-## 联系我们
-
-如果您有任何问题或建议，欢迎通过以下方式联系我们：
-
-- 📧 邮箱：support@example.com
-- 🌐 官网：https://example.com
-
----
-
-*感谢您选择我们的产品！*
-`;
-
 export default function AboutScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === 'dark';
+
+  // 使用翻译动态生成 Markdown 内容
+  const aboutContent = `
+# ${translate('about.title')}
+
+## ${translate('about.mission_title')}
+
+${translate('about.mission_content')}
+
+## ${translate('about.product_title')}
+
+${translate('about.product_content')}
+
+### ${translate('about.features_title')}
+
+- 🔮 **${translate('about.feature_1_title')}** - ${translate('about.feature_1_desc')}
+- 💆 **${translate('about.feature_2_title')}** - ${translate('about.feature_2_desc')}
+- 🌟 **${translate('about.feature_3_title')}** - ${translate('about.feature_3_desc')}
+- 📊 **${translate('about.feature_4_title')}** - ${translate('about.feature_4_desc')}
+
+## ${translate('about.contact_title')}
+
+${translate('about.contact_content')}
+
+- 📧 ${translate('about.email_label')}：support@example.com
+- 🌐 ${translate('about.website_label')}：https://example.com
+
+---
+
+*${translate('about.thanks')}*
+`;
 
   // Markdown 样式
   const markdownStyles = {
@@ -143,7 +142,7 @@ export default function AboutScreen() {
         >
           <View className="bg-white dark:bg-neutral-800 rounded-3xl p-6 shadow-sm">
             <Markdown style={markdownStyles}>
-              {ABOUT_CONTENT}
+              {aboutContent}
             </Markdown>
           </View>
         </ScrollView>

@@ -25,15 +25,18 @@ let loadingPromise: Promise<CityData[]> | null = null;
 
 /**
  * 预加载城市数据
- * 在页面加载时调用，用户填写其他信息时后台加载
- * 这样用户到城市输入框时数据已准备好
+ * 在需要城市搜索时调用，返回 Promise 以便等待加载完成
+ * 如果已加载或正在加载，直接返回现有的 Promise
  */
-export const preloadCitiesData = (): void => {
-  // 如果已加载或正在加载，跳过
-  if (citiesCache || loadingPromise) return;
+export const preloadCitiesData = (): Promise<void> => {
+  // 如果已加载，直接返回 resolved Promise
+  if (citiesCache) {
+    return Promise.resolve();
+  }
 
   console.log('[CitySearch] 开始预加载城市数据...');
-  loadCitiesData();
+  // 调用 loadCitiesData 并返回其 Promise（void 化）
+  return loadCitiesData().then(() => {});
 };
 
 /**

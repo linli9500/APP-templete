@@ -1,4 +1,25 @@
 {
+  "about": {
+    "title": "About Us",
+    "mission_title": "Our Mission",
+    "mission_content": "We are dedicated to helping everyone discover their true self, becoming your pocket energy station.",
+    "product_title": "Product Introduction",
+    "product_content": "Based on deep energy analysis, our app decodes your life's underlying patterns, helping you resolve all emotional challenges.",
+    "features_title": "Core Features",
+    "feature_1_title": "Deep Self-Exploration",
+    "feature_1_desc": "Discover your true self",
+    "feature_2_title": "Emotional Solutions",
+    "feature_2_desc": "Overcome procrastination, anxiety, self-doubt, and insecurity",
+    "feature_3_title": "Energy Station",
+    "feature_3_desc": "Emotional healing and psychological support",
+    "feature_4_title": "Professional Analysis",
+    "feature_4_desc": "Science-based psychological analysis",
+    "contact_title": "Contact Us",
+    "contact_content": "If you have any questions or suggestions, feel free to reach out:",
+    "email_label": "Email",
+    "website_label": "Website",
+    "thanks": "Thank you for choosing our product!"
+  },
   "auth": {
     "login": "Login",
     "sign_up": "Sign Up",
@@ -140,6 +161,7 @@
     "error": "Error",
     "save": "Save",
     "delete": "Delete",
+    "loading": "Loading...",
     "page_not_found": "Page Not Found",
     "page_not_found_desc": "The page you're looking for may have been removed or is temporarily unavailable",
     "go_home": "Go Home"
@@ -180,6 +202,7 @@
     "save": "Save",
     "saved": "Profile Saved",
     "default_label": "Profile",
+    "default": "Default",
     "unnamed": "Unnamed"
   },
   "share": {

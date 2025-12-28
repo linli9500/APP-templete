@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, ScrollView, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
 import { useRouter, Stack } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -10,15 +10,19 @@ import { Text, FocusAwareStatusBar } from '@/components/ui';
 import { translate } from '@/lib';
 import { useProfileManager } from '@/hooks/useProfileManager';
 import { Profile } from '@/api/profiles';
-import { ArrowRight } from '@/components/ui/icons';
+import { ArrowRight, Edit, Trash, Star } from '@/components/ui/icons';
+import { ConfirmModal } from '@/components/ui/confirm-modal';
 import { CitySearchInput } from '@/components/city-search-input';
 import { CityResult, preloadCitiesData } from '@/hooks/useCitySearch';
+import { useProfileStore } from '@/stores/profile-store';
 
 /**
  * 档案管理页面
  * - 默认显示已保存档案列表（My Profiles）
  * - 点击 Add New Profile 进入新增表单（New Profile）
  * - 点击 Edit Profile 进入编辑表单（Edit Profile）
+ * 
+ * 性能优化：城市数据延迟加载，只在进入表单时加载
  */
 export default function ProfilesScreen() {
   const router = useRouter();
@@ -28,10 +32,26 @@ export default function ProfilesScreen() {
   // 使用统一的 ProfileManager Hook
   const { profiles, isLoading, isMutating, addProfile, removeProfile, updateProfile, refresh } = useProfileManager();
   
+  // 默认 profile 相关
+  const { defaultProfileId, setDefaultProfile } = useProfileStore();
+  
+  // 对 profiles 排序：默认的排在最前面
+  const sortedProfiles = [...profiles].sort((a, b) => {
+    if (a.id === defaultProfileId) return -1;
+    if (b.id === defaultProfileId) return 1;
+    return 0;
+  });
+  
   // 页面模式: 'list' | 'new' | 'edit'
   const [mode, setMode] = useState<'list' | 'new' | 'edit'>('list');
   // 当前编辑的档案 ID
   const [editingId, setEditingId] = useState<string | null>(null);
+  
+  // 城市数据加载状态（用于显示 Loading 遮罩）
+  const [isCityDataLoading, setIsCityDataLoading] = useState(false);
+  
+  // 删除确认弹窗状态
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   
   // 表单状态
   const [label, setLabel] = useState('');
@@ -44,16 +64,24 @@ export default function ProfilesScreen() {
   const [openDate, setOpenDate] = useState(false);
   const [openTime, setOpenTime] = useState(false);
 
-  // 页面加载时获取档案列表并预加载城市数据
+  // 页面加载时仅获取档案列表，不预加载城市数据（性能优化）
   useEffect(() => {
     refresh();
-    
-    // 延迟加载城市数据，避免阻塞页面转场动画
-    const timer = setTimeout(() => {
-      preloadCitiesData();
-    }, 500);
-    
-    return () => clearTimeout(timer);
+    // 移除城市数据预加载，改为按需加载
+  }, []);
+
+  /**
+   * 加载城市数据（带 Loading 状态）
+   * 返回 Promise，加载完成后 resolve
+   */
+  const loadCityDataWithLoading = useCallback(async () => {
+    setIsCityDataLoading(true);
+    try {
+      // 等待城市数据加载完成
+      await preloadCitiesData();
+    } finally {
+      setIsCityDataLoading(false);
+    }
   }, []);
 
   // 重置表单并返回列表
@@ -67,8 +95,12 @@ export default function ProfilesScreen() {
     setMode('list');
   };
 
-  // 点击添加新档案
-  const handleAddNew = () => {
+  // 点击添加新档案（先加载城市数据）
+  const handleAddNew = async () => {
+    // 先显示 Loading，加载城市数据
+    await loadCityDataWithLoading();
+    
+    // 重置表单
     setLabel('');
     setBirthCity('');
     setSelectedDate(null);
@@ -78,8 +110,12 @@ export default function ProfilesScreen() {
     setMode('new');
   };
 
-  // 点击编辑档案
-  const handleEdit = (profile: Profile) => {
+  // 点击编辑档案（先加载城市数据）
+  const handleEdit = async (profile: Profile) => {
+    // 先显示 Loading，加载城市数据
+    await loadCityDataWithLoading();
+    
+    // 填充表单
     setEditingId(profile.id);
     setLabel(profile.label || '');
     setBirthCity(profile.city || '');
@@ -185,10 +221,15 @@ export default function ProfilesScreen() {
           <View className="w-8" />
         </View>
 
-        {/* 覆盖全屏的加载指示器 (当通过 API 操作时) */}
-        {(isLoading) && (
+        {/* 覆盖全屏的加载指示器 (API 操作或城市数据加载时) */}
+        {(isLoading || isCityDataLoading) && (
           <View className="absolute inset-0 z-50 bg-black/10 dark:bg-white/10 justify-center items-center">
-             <ActivityIndicator size="large" color="#0000ff" />
+             <ActivityIndicator size="large" color={colorScheme === 'dark' ? '#FFFFFF' : '#000000'} />
+             {isCityDataLoading && (
+               <Text className="mt-4 text-neutral-600 dark:text-neutral-400 text-sm">
+                 {translate('common.loading') || 'Loading...'}
+               </Text>
+             )}
           </View>
         )}
 
@@ -206,18 +247,29 @@ export default function ProfilesScreen() {
                 </Text>
               </TouchableOpacity>
 
-              {/* 已保存的档案列表 */}
-              {profiles.map((profile: Profile) => (
+              {/* 已保存的档案列表（默认的排在前面） */}
+              {sortedProfiles.map((profile: Profile) => {
+                const isDefault = profile.id === defaultProfileId;
+                return (
                 <View 
                   key={profile.id}
-                  className="bg-white dark:bg-neutral-900 rounded-2xl p-4 mb-4"
+                  className={`bg-white dark:bg-neutral-900 rounded-2xl p-4 mb-4 ${isDefault ? 'border-2 border-amber-400' : ''}`}
                 >
                   <View className="flex-row justify-between items-start">
                     <View className="flex-1">
-                      <Text className="text-lg font-semibold text-black dark:text-white mb-1">
-                        {profile.label || translate('profiles.unnamed')}
-                      </Text>
-                      <Text className="text-neutral-500 dark:text-neutral-400 text-sm">
+                      <View className="flex-row items-center gap-2">
+                        <Text className="text-lg font-semibold text-black dark:text-white">
+                          {profile.label || translate('profiles.unnamed')}
+                        </Text>
+                        {isDefault && (
+                          <View className="bg-amber-100 dark:bg-amber-900/30 px-2 py-0.5 rounded-full">
+                            <Text className="text-amber-600 dark:text-amber-400 text-xs">
+                              {translate('profiles.default') || 'Default'}
+                            </Text>
+                          </View>
+                        )}
+                      </View>
+                      <Text className="text-neutral-500 dark:text-neutral-400 text-sm mt-1">
                         {profile.birthDate}
                         {profile.birthTime && ` ${profile.birthTime}`}
                       </Text>
@@ -227,26 +279,40 @@ export default function ProfilesScreen() {
                         </Text>
                       )}
                     </View>
-                    <View className="flex-row gap-2">
-                       {/* 只有非 Mutating 状态下才允许操作 */}
+                    <View className="flex-row gap-1">
+                       {/* 设为默认按钮 - 星标图标 */}
+                      <TouchableOpacity 
+                        onPress={() => setDefaultProfile(profile.id)}
+                        className="p-2"
+                        disabled={isMutating || isDefault}
+                      >
+                        <Star 
+                          color={isDefault ? '#F59E0B' : (colorScheme === 'dark' ? '#9CA3AF' : '#6B7280')} 
+                          filled={isDefault}
+                          width={20} 
+                          height={20} 
+                        />
+                      </TouchableOpacity>
+                       {/* 编辑按钮 - 图标 */}
                       <TouchableOpacity 
                         onPress={() => handleEdit(profile)}
                         className="p-2"
-                        disabled={isMutating}
+                        disabled={isMutating || isCityDataLoading}
                       >
-                        <Text className="text-blue-500 text-sm">{translate('profiles.edit')}</Text>
+                        <Edit color={colorScheme === 'dark' ? '#60A5FA' : '#3B82F6'} width={20} height={20} />
                       </TouchableOpacity>
+                       {/* 删除按钮 - 图标，点击弹出确认 */}
                       <TouchableOpacity 
-                        onPress={() => handleDelete(profile.id)}
+                        onPress={() => setDeleteConfirmId(profile.id)}
                         className="p-2"
                         disabled={isMutating}
                       >
-                        <Text className="text-red-500 text-sm">{translate('common.delete')}</Text>
+                        <Trash color={colorScheme === 'dark' ? '#F87171' : '#EF4444'} width={20} height={20} />
                       </TouchableOpacity>
                     </View>
                   </View>
                 </View>
-              ))}
+              );})}
 
               {/* 空状态提示 */}
               {!isLoading && profiles.length === 0 && (
@@ -399,6 +465,22 @@ export default function ProfilesScreen() {
           )}
         </ScrollView>
       </View>
+
+      {/* 删除确认弹窗 */}
+      <ConfirmModal
+        visible={!!deleteConfirmId}
+        title={translate('profiles.delete_confirm_title')}
+        message={translate('profiles.delete_confirm_message')}
+        confirmText={translate('common.delete')}
+        cancelText={translate('common.cancel')}
+        onConfirm={() => {
+          if (deleteConfirmId) {
+            handleDelete(deleteConfirmId);
+            setDeleteConfirmId(null);
+          }
+        }}
+        onCancel={() => setDeleteConfirmId(null)}
+      />
     </>
   );
 }

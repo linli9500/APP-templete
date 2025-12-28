@@ -71,7 +71,10 @@
     "delete_confirm": "Delete this report?",
     "delete_desc": "This action cannot be undone.",
     "cancel": "Cancel",
-    "delete": "Delete"
+    "delete": "Delete",
+    "using_profile": "Using",
+    "select_profile": "Select Profile",
+    "auto_saved": "Auto Saved"
   },
   "mood": {
     "title": "Mood",

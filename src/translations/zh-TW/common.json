@@ -1,4 +1,25 @@
 {
+  "about": {
+    "title": "關於我們",
+    "mission_title": "我們的使命",
+    "mission_content": "我們致力於幫助每個人了解最真實的自己，成為您口袋裡的能量補充站。",
+    "product_title": "產品介紹",
+    "product_content": "基於底層八字的能量分析，使用 APP 來分析您最底層的人生密碼，幫助您解決所有遇到的情緒類問題。",
+    "features_title": "核心功能",
+    "feature_1_title": "深度自我探索",
+    "feature_1_desc": "了解最真實的自己",
+    "feature_2_title": "情緒解決方案",
+    "feature_2_desc": "拖延、焦慮、自我否定、不自信等",
+    "feature_3_title": "能量補充站",
+    "feature_3_desc": "情感治癒與心理支持",
+    "feature_4_title": "專業分析報告",
+    "feature_4_desc": "基於科學的心理學分析",
+    "contact_title": "聯繫我們",
+    "contact_content": "如果您有任何問題或建議，歡迎通過以下方式聯繫我們：",
+    "email_label": "郵箱",
+    "website_label": "官網",
+    "thanks": "感謝您選擇我們的產品！"
+  },
   "auth": {
     "login": "登入",
     "sign_up": "註冊",
@@ -74,7 +95,8 @@
     "confirm": "確定",
     "cancel": "取消",
     "dont_show_again": "不再提示",
-    "error": "錯誤"
+    "error": "錯誤",
+    "loading": "載入中..."
   },
   "profiles": {
     "title": "我的檔案",
@@ -96,7 +118,8 @@
     "city_placeholder": "輸入城市名稱",
     "save": "儲存",
     "saved": "檔案已儲存",
-    "default_label": "檔案"
+    "default_label": "檔案",
+    "default": "預設"
   },
   "share": {
     "copy": "複製",

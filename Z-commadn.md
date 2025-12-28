@@ -5,15 +5,6 @@ pnpm run web
 -（增加一个feedback功能在app）
 -真机测试下城市录入是否会卡
 
-# 缓存清理与重置（解决 Compiling JS failed / Invalid UTF-8 等报错）
-# 1. 停止所有正在运行的终端
-# 2. 运行以下命令清理 Metro 缓存启动
-npx expo start --clear
-
-# 3. 如果想彻底强力清除 (Powershell)，请复制并运行下面这一整行：
-if (Test-Path "node_modules\.cache") { Remove-Item -Path "node_modules\.cache" -Recurse -Force; Write-Host "Cache deleted" } else { Write-Host "Cache already clean" }
-npx expo start --clear
-
 # 真机推送
 # 1. 重新生成原生代码（涉及到原生插件的添加/删除）
 npx expo prebuild --clean
@@ -23,7 +14,7 @@ pnpm run android:development
 
 # github上传
 git add .
-git commit -m "APP-v1.1.7-更换app的logo"
+git commit -m "APP-v1.1.8-修复profile的bug以及优化分析页面选择profile"
 git push origin main
 
 

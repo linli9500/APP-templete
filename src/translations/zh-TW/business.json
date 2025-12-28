@@ -71,7 +71,10 @@
     "delete_confirm": "刪除此報告？",
     "delete_desc": "此操作無法撤銷。",
     "cancel": "取消",
-    "delete": "刪除"
+    "delete": "刪除",
+    "using_profile": "使用檔案",
+    "select_profile": "選擇檔案",
+    "auto_saved": "自動儲存"
   },
   "mood": {
     "title": "情緒",

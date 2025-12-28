@@ -37,10 +37,13 @@ export interface ProfileData {
 // Store 状态接口
 interface ProfileState {
   profiles: Record<string, ProfileData>;
+  defaultProfileId: string | null; // 默认 profile ID
   // CRUD 操作
   addProfile: (data: Omit<ProfileData, 'id' | 'createdAt' | 'updatedAt'>) => ProfileData;
   updateProfile: (id: string, data: Partial<Omit<ProfileData, 'id' | 'createdAt'>>) => void;
   removeProfile: (id: string) => void;
+  // 默认设置
+  setDefaultProfile: (id: string | null) => void;
   // 批量操作
   setProfiles: (profiles: Record<string, ProfileData>) => void;
   upsertProfile: (profile: ProfileData) => void;
@@ -51,6 +54,7 @@ export const useProfileStore = create<ProfileState>()(
   persist(
     (set, get) => ({
       profiles: {},
+      defaultProfileId: null, // 默认无选中
       
       // 添加新的 Profile
       addProfile: (data) => {
@@ -62,9 +66,14 @@ export const useProfileStore = create<ProfileState>()(
           updatedAt: now,
         };
         
-        set((state) => ({
-          profiles: { ...state.profiles, [newProfile.id]: newProfile },
-        }));
+        set((state) => {
+          const isFirst = Object.keys(state.profiles).length === 0;
+          return {
+            profiles: { ...state.profiles, [newProfile.id]: newProfile },
+            // 如果是第一个 profile，自动设为默认
+            defaultProfileId: isFirst ? newProfile.id : state.defaultProfileId,
+          };
+        });
         
         return newProfile;
       },
@@ -93,8 +102,21 @@ export const useProfileStore = create<ProfileState>()(
         set((state) => {
           const newProfiles = { ...state.profiles };
           delete newProfiles[id];
-          return { profiles: newProfiles };
+          
+          // 如果删除的是默认 profile，清空默认或设为第一个
+          let newDefaultId = state.defaultProfileId;
+          if (state.defaultProfileId === id) {
+            const remainingIds = Object.keys(newProfiles);
+            newDefaultId = remainingIds.length > 0 ? remainingIds[0] : null;
+          }
+          
+          return { profiles: newProfiles, defaultProfileId: newDefaultId };
         });
+      },
+      
+      // 设置默认 Profile
+      setDefaultProfile: (id) => {
+        set({ defaultProfileId: id });
       },
       
       // 批量设置（覆盖）
@@ -108,7 +130,7 @@ export const useProfileStore = create<ProfileState>()(
       },
       
       // 清空所有
-      clear: () => set({ profiles: {} }),
+      clear: () => set({ profiles: {}, defaultProfileId: null }),
     }),
     {
       name: 'profile-storage',
