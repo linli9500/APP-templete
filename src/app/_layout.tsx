@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StyleSheet, Platform } from 'react-native';
 import FlashMessage from 'react-native-flash-message';
@@ -25,7 +25,7 @@ import { loadSelectedTheme } from '@/lib';
 import { useThemeConfig } from '@/lib/use-theme-config';
 import { hydrateAuth } from '@/lib/auth';
 import { checkAppUpdate } from '@/lib/updates';
-import { registerForPushNotificationsAsync } from '@/lib/notifications';
+import { registerForPushNotificationsAsync, setupNotificationListeners } from '@/lib/notifications';
 import { useAppConfig } from '@/lib/use-app-config'; 
 import { UpdateChecker } from '@/components/update-checker';
 import { initializeAdMob, preloadAppOpenAd, showAppOpenAd } from '@/lib/admob';
@@ -121,6 +121,15 @@ export default function RootLayout() {
     };
     
     initializeApp();
+
+    // 设置推送通知监听器（处理点击通知后的页面跳转）
+    const cleanupNotifications = setupNotificationListeners((path) => {
+      router.push(path as any);
+    });
+
+    return () => {
+      cleanupNotifications();
+    };
   }, []);
 
   // 阶段一：当 配置就绪 且 布局就绪时 -> 隐藏原生 Splash (让用户立刻看到 Web Splash)
