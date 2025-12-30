@@ -14,7 +14,7 @@ pnpm run android:development
 
 # github上传
 git add .
-git commit -m "APP-v1.1.8-修复profile的bug以及优化分析页面选择profile"
+git commit -m "APP-v1.2.0-修改后支持了ios的虚拟器（但是真机打包还有问题）"
 git push origin main
 
 

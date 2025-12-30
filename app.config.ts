@@ -31,7 +31,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   orientation: 'portrait',
   icon: './assets/icon-fortune-bg.png',
   userInterfaceStyle: 'automatic',
-  newArchEnabled: true,
+  newArchEnabled: false,
   updates: {
     fallbackToCacheTimeout: 0,
     url: `https://u.expo.dev/${Env.EAS_PROJECT_ID}`,
@@ -46,6 +46,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       // 相册保存权限说明（用于分享卡片保存）
       NSPhotoLibraryAddUsageDescription: 'We need access to save your energy report card to your photo library for sharing on social media.',
     },
+    googleServicesFile: process.env.GOOGLE_SERVICES_INFO_PLIST ?? './GoogleService-Info.plist',
   },
   experiments: {
     typedRoutes: true,
@@ -88,6 +89,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       {
         ios: {
           deploymentTarget: '15.1',
+          useFrameworks: 'static',
         },
       },
     ],
