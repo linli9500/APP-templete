@@ -8,7 +8,8 @@ import { DecodingOverlay } from '@/components/analysis/DecodingOverlay';
 import { StreamReport } from '@/components/analysis/StreamReport';
 
 export default function AnalysisReportScreen() {
-  const { startAnalysis, displayContent, isDecoding, isLoading, isEffectActive } = useStreamAnalysis();
+  const { startAnalysis, displayContent, isDecoding, isLoading, isEffectActive, reportId } = useStreamAnalysis();
+
   
   const localParams = useLocalSearchParams();
   
@@ -53,6 +54,7 @@ export default function AnalysisReportScreen() {
            <StreamReport 
               content={displayContent} 
               isEffectActive={isEffectActive || isLoading}
+              reportId={reportId}
            />
         )}
       </SafeAreaView>

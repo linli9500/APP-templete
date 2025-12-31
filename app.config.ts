@@ -31,7 +31,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   orientation: 'portrait',
   icon: './assets/icon-fortune-bg.png',
   userInterfaceStyle: 'automatic',
-  newArchEnabled: false,
+  newArchEnabled: true,
   updates: {
     fallbackToCacheTimeout: 0,
     url: `https://u.expo.dev/${Env.EAS_PROJECT_ID}`,
@@ -45,9 +45,17 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       ITSAppUsesNonExemptEncryption: false,
       // 相册保存权限说明（用于分享卡片保存）
       NSPhotoLibraryAddUsageDescription: 'We need access to save your energy report card to your photo library for sharing on social media.',
+      // 允许查询这些 APP 的 URL Scheme（用于社交分享）
+      LSApplicationQueriesSchemes: [
+        'instagram-stories',
+        'instagram',
+        'snapchat',
+        'tiktok',
+      ],
     },
     googleServicesFile: process.env.GOOGLE_SERVICES_INFO_PLIST ?? './GoogleService-Info.plist',
   },
+
   experiments: {
     typedRoutes: true,
   },
@@ -129,8 +137,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       'react-native-google-mobile-ads',
       {
         // 使用 Google 官方测试 App ID（生产环境需替换为真实 ID）
-        androidAppId: process.env.ADMOB_ANDROID_APP_ID,
-        iosAppId: process.env.ADMOB_IOS_APP_ID,
+        androidAppId: Env.ADMOB_ANDROID_APP_ID ?? 'ca-app-pub-3940256099942544~3347511713',
+        iosAppId: Env.ADMOB_IOS_APP_ID ?? 'ca-app-pub-3940256099942544~1458002511',
       },
     ],
   ],

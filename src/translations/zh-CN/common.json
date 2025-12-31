@@ -215,7 +215,22 @@
     "save_failed": "保存失败，请检查权限设置",
     "saving": "保存中...",
     "permission_required": "需要权限",
-    "album_permission_message": "请授予相册访问权限以保存图片。"
+    "album_permission_message": "请授予相册访问权限以保存图片。",
+    "share_to": "分享到",
+    "instagram_story": "Instagram",
+    "tiktok": "TikTok",
+    "snapchat": "Snapchat",
+    "more_options": "更多",
+    "copy_link": "复制链接",
+    "link_copied": "链接已复制！",
+    "copy_failed": "复制链接失败",
+    "app_not_installed": "未安装 {{app}}",
+    "install_app_hint": "请先安装该应用。",
+    "open_app_hint": "{{app}} 已打开，请从相册选择图片。",
+    "sharing_failed": "分享失败",
+    "share_intro": "我在用Fortune，探索人生的性格基因，很有趣，你也一起来玩玩。",
+    "copy_link_short": "复制",
+    "try_share": "试试分享"
   },
   "welcome": "欢迎使用 obytes app site",
   "onboarding": {

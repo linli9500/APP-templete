@@ -84,7 +84,7 @@ export const useProfileSync = () => {
               });
             } catch (err) {
               // 静默失败，下次同步再试
-              console.warn('[ProfileSync] Upload failed for profile:', profile.id);
+              console.warn(`[ProfileSync] Upload failed for profile: ${profile.id}`, err);
             }
           }
         }

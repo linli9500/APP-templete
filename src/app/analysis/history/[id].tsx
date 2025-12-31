@@ -69,6 +69,7 @@ export default function HistoryDetailScreen() {
          <StreamReport 
             content={content} 
             isEffectActive={false} // Disable typing effect for history
+            reportId={id}
          />
       </SafeAreaView>
     </>

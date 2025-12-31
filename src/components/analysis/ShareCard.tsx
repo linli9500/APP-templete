@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import Svg, { Path, Circle } from 'react-native-svg';
 
 import { Text } from '@/components/ui/text';
@@ -38,6 +38,7 @@ interface ShareCardProps {
   title: string;
   keywords: string[];
   highlight: string;
+  style?: StyleProp<ViewStyle>;
 }
 
 /**
@@ -46,12 +47,12 @@ interface ShareCardProps {
  * 风格：暖米色背景、Swiss Design 大字体、极简布局
  */
 export const ShareCard = forwardRef<View, ShareCardProps>(
-  ({ title, keywords, highlight }, ref) => {
+  ({ title, keywords, highlight, style }, ref) => {
     // 从环境变量获取 APP 名称，默认为 Fortune
     const appName = Env.APP_NAME || 'Fortune';
 
     return (
-      <View ref={ref} style={styles.container}>
+      <View ref={ref} style={[styles.container, style]}>
         {/* 背景渐变效果通过多层 View 模拟 */}
         <View style={styles.backgroundGradient} />
         
@@ -79,8 +80,7 @@ export const ShareCard = forwardRef<View, ShareCardProps>(
           <Text style={styles.highlightText}>{highlight}</Text>
         </View>
 
-        {/* 底部装饰线 */}
-        <View style={styles.divider} />
+
 
         {/* 底部 APP 信息 */}
         <View style={styles.footer}>

@@ -1,13 +1,13 @@
 {
 	"folders": [
-    {
-      "path": "."
-    },
-    {
-      "path": "../Application/mfexai-v2"
-    }
-  ],
-  "settings": {
-    "typescript.tsdk": "node_modules/typescript/lib"
-  }
+		{
+			"path": "."
+		},
+		{
+			"path": "../Application/mfexai-v2"
+		}
+	],
+	"settings": {
+		"typescript.tsdk": "node_modules/typescript/lib"
+	}
 }

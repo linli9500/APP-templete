@@ -25,6 +25,7 @@ export const useStreamAnalysis = () => {
   const [isDecoding, setIsDecoding] = useState(false); // True during the initial 8s animation
   const [isLoading, setIsLoading] = useState(false); // True while request is active
   const [isEffectActive, setIsEffectActive] = useState(false); // True when typewriter effect is running
+  const [reportId, setReportId] = useState<string | null>(null); // 报告 ID，用于分享
   
   // Refs to hold mutable state without triggering re-renders
   const fullContentRef = useRef('');
@@ -44,6 +45,7 @@ export const useStreamAnalysis = () => {
       setIsDecoding(true);
       isDecodingRef.current = true;
       setDisplayContent('');
+      setReportId(null); // 重置报告 ID
       fullContentRef.current = '';
       displayedLengthRef.current = 0;
       streamDoneRef.current = false;
@@ -127,9 +129,10 @@ export const useStreamAnalysis = () => {
             // Save to History
             // 优先使用后端返回的 logId，确保客户端和服务端使用相同 ID
             // 如果后端没有返回（如未登录用户），则生成本地 UUID
-            const reportId = serverLogId || uuidv4();
+            const finalReportId = serverLogId || uuidv4();
+            setReportId(finalReportId); // 设置报告 ID，用于分享
             addReport({
-              id: reportId,
+              id: finalReportId,
               createdAt: new Date().toISOString(),
               content: fullContentRef.current,
               birthDate,
@@ -137,7 +140,7 @@ export const useStreamAnalysis = () => {
               gender,
               summary: fullContentRef.current.slice(0, 100) // Simple summary
             });
-            console.log('[Stream] Report saved locally with id:', reportId, serverLogId ? '(from server)' : '(local UUID)');
+            console.log('[Stream] Report saved locally with id:', finalReportId, serverLogId ? '(from server)' : '(local UUID)');
           }
       });
 
@@ -236,5 +239,6 @@ export const useStreamAnalysis = () => {
     isDecoding,
     isLoading, // True until completely finished
     isEffectActive, // True while the "cursor" should be shown at the end
+    reportId, // 报告 ID，用于分享功能
   };
 };

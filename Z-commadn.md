@@ -14,9 +14,11 @@ pnpm run android:development
 
 # github上传
 git add .
-git commit -m "APP-v1.2.0-修改后支持了ios的虚拟器（但是真机打包还有问题）"
+git commit -m "APP-v1.2.1-增加分享功能&依赖包大范围改动"
 git push origin main
 
+# 拉取最新分支代码
+git pull
 
 
 现在：我们放的是“品牌Slogan”（性格基因...），用来建立用户心智，这显得很高级、很专业（类似“知乎·发现更大的世界”）。

@@ -89,6 +89,8 @@ const client = z.object({
   PRIVACY_URL: z.string().optional(),
   TERMS_URL: z.string().optional(),
   APPLE_STORE_ID: z.string().optional(),
+  EXPO_PUBLIC_REVENUECAT_APPLE_KEY: z.string().optional(),
+  EXPO_PUBLIC_REVENUECAT_GOOGLE_KEY: z.string().optional(),
 });
 
 const buildTime = z.object({
@@ -98,6 +100,9 @@ const buildTime = z.object({
   SECRET_KEY: z.string(),
   SENTRY_ORG: z.string().optional(),
   SENTRY_PROJECT: z.string().optional(),
+  // AdMob IDs
+  ADMOB_ANDROID_APP_ID: z.string().optional(),
+  ADMOB_IOS_APP_ID: z.string().optional(),
 });
 
 /**
@@ -121,6 +126,8 @@ const _clientEnv = {
   PRIVACY_URL: process.env.PRIVACY_URL,
   TERMS_URL: process.env.TERMS_URL,
   APPLE_STORE_ID: process.env.APPLE_STORE_ID,
+  EXPO_PUBLIC_REVENUECAT_APPLE_KEY: process.env.EXPO_PUBLIC_REVENUECAT_APPLE_KEY,
+  EXPO_PUBLIC_REVENUECAT_GOOGLE_KEY: process.env.EXPO_PUBLIC_REVENUECAT_GOOGLE_KEY,
 };
 
 /**
@@ -133,6 +140,8 @@ const _buildTimeEnv = {
   SECRET_KEY: process.env.SECRET_KEY,
   SENTRY_ORG: process.env.SENTRY_ORG,
   SENTRY_PROJECT: process.env.SENTRY_PROJECT,
+  ADMOB_ANDROID_APP_ID: process.env.ADMOB_ANDROID_APP_ID,
+  ADMOB_IOS_APP_ID: process.env.ADMOB_IOS_APP_ID,
 };
 
 /**

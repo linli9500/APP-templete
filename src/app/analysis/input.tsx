@@ -19,9 +19,9 @@ import { usePendingProfile } from '@/hooks/usePendingProfile';
 import { useProfileStore, ProfileData } from '@/stores/profile-store';
 
 const schema = z.object({
-  birthDate: z.date({ required_error: "请选择出生日期" }),
-  birthTime: z.date().optional(),
-  gender: z.enum(['male', 'female'], { required_error: "请选择性别" }),
+  birthDate: z.date({ required_error: translate('analysis.select_birth_date_error') }),
+  birthTime: z.date({ required_error: translate('analysis.select_birth_time_error') }),
+  gender: z.enum(['male', 'female'], { required_error: translate('analysis.select_gender_error') }),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -108,7 +108,7 @@ export default function AnalysisInputScreen() {
 
   const onSubmit = (data: FormData) => {
     const birthDateStr = format(data.birthDate, 'yyyy-MM-dd');
-    const birthTimeStr = data.birthTime ? format(data.birthTime, 'HH:mm') : '';
+    const birthTimeStr = format(data.birthTime, 'HH:mm');
     
     // 检查是否已有相同数据的 profile（按 birthDate + gender 匹配）
     const exists = profileList.some(p => 
@@ -254,6 +254,9 @@ export default function AnalysisInputScreen() {
             <Text className="text-xs text-neutral-400 dark:text-neutral-500 mt-1">
               {translate('analysis.birth_time_hint') || '填入出生时间，准确度提升50%以上'}
             </Text>
+            {errors.birthTime && (
+               <Text className="text-red-500 text-sm mt-1">{translate('analysis.select_birth_time_error') || '请选择出生时间'}</Text>
+            )}
 
             <DatePicker
               modal

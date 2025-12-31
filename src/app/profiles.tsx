@@ -141,12 +141,15 @@ export default function ProfilesScreen() {
 
   // 保存档案
   const handleSave = async () => {
-    if (!selectedDate || !label) return;
+    if (!selectedDate || !label || !selectedTime) {
+      // TODO: Show toast error
+      return;
+    }
     
     const profileData = {
       label,
       birthDate: format(selectedDate, 'yyyy-MM-dd'),
-      birthTime: selectedTime ? format(selectedTime, 'HH:mm') : '00:00', // 默认时间
+      birthTime: format(selectedTime, 'HH:mm'),
       gender,
       city: birthCity || undefined,
     };

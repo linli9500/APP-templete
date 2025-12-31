@@ -1,6 +1,13 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, Easing } from 'react-native-reanimated';
+import Animated, { 
+  useSharedValue, 
+  useAnimatedStyle, 
+  withRepeat, 
+  withTiming, 
+  withSequence,
+  Easing 
+} from 'react-native-reanimated';
 import { useColorScheme } from 'nativewind';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Clipboard from 'expo-clipboard';
@@ -18,37 +25,57 @@ import { showSuccessMessage } from '@/components/ui/utils';
 interface StreamReportProps {
   content: string;
   isEffectActive: boolean;
+  /** 报告 ID，用于分享短链接 */
+  reportId?: string | null;
 }
+
+// 分享引导组件 (静态版本，避免动画影响 Modal)
+const ShareHint = ({ isDark }: { isDark: boolean }) => {
+  return (
+    <View style={styles.shareHintContainer} pointerEvents="none">
+      <Text style={[styles.shareHintText, { color: isDark ? '#9CA3AF' : '#6B7280' }]}>
+        {translate('share.try_share') || 'Try sharing'}
+      </Text>
+      <Text style={[styles.shareHintArrow, { color: isDark ? '#9CA3AF' : '#6B7280' }]}>
+        ↑
+      </Text>
+    </View>
+  );
+};
 
 // 操作按钮组组件
 interface ActionButtonsProps {
   onCopy: () => void;
   onShare: () => void;
   isDark: boolean;
+  showHint?: boolean;
 }
 
-const ActionButtons = ({ onCopy, onShare, isDark }: ActionButtonsProps) => (
-  <View className="flex-row items-center justify-end gap-4 py-2">
-    <TouchableOpacity
-      onPress={onCopy}
-      className="w-9 h-9 rounded-full bg-neutral-100 dark:bg-neutral-800 justify-center items-center"
-      activeOpacity={0.7}
-      accessibilityLabel={translate('share.copy')}
-    >
-      <Copy color={isDark ? '#FFFFFF' : '#000000'} width={18} height={18} />
-    </TouchableOpacity>
-    <TouchableOpacity
-      onPress={onShare}
-      className="w-9 h-9 rounded-full bg-neutral-100 dark:bg-neutral-800 justify-center items-center"
-      activeOpacity={0.7}
-      accessibilityLabel={translate('share.share')}
-    >
-      <Share color={isDark ? '#FFFFFF' : '#000000'} width={18} height={18} />
-    </TouchableOpacity>
+const ActionButtons = ({ onCopy, onShare, isDark, showHint = false }: ActionButtonsProps) => (
+  <View className="items-end">
+    <View className="flex-row items-center justify-end gap-4 py-2">
+      <TouchableOpacity
+        onPress={onCopy}
+        className="w-9 h-9 rounded-full bg-neutral-100 dark:bg-neutral-800 justify-center items-center"
+        activeOpacity={0.7}
+        accessibilityLabel={translate('share.copy')}
+      >
+        <Copy color={isDark ? '#FFFFFF' : '#000000'} width={18} height={18} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={onShare}
+        className="w-9 h-9 rounded-full bg-neutral-100 dark:bg-neutral-800 justify-center items-center"
+        activeOpacity={0.7}
+        accessibilityLabel={translate('share.share')}
+      >
+        <Share color={isDark ? '#FFFFFF' : '#000000'} width={18} height={18} />
+      </TouchableOpacity>
+    </View>
+    {showHint && <ShareHint isDark={isDark} />}
   </View>
 );
 
-export const StreamReport = ({ content, isEffectActive }: StreamReportProps) => {
+export const StreamReport = ({ content, isEffectActive, reportId }: StreamReportProps) => {
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === 'dark';
   const spin = useSharedValue(0);
@@ -131,6 +158,7 @@ export const StreamReport = ({ content, isEffectActive }: StreamReportProps) => 
   const showActions = !isEffectActive && content.length > 0;
 
   return (
+  <>
     <View className="flex-1 bg-pattern-bg dark:bg-black">
         <ScrollView 
             className="flex-1 px-6" 
@@ -157,7 +185,8 @@ export const StreamReport = ({ content, isEffectActive }: StreamReportProps) => 
               <ActionButtons 
                 onCopy={handleCopy} 
                 onShare={handleShare} 
-                isDark={isDark} 
+                isDark={isDark}
+                showHint={true}
               />
             )}
 
@@ -190,21 +219,40 @@ export const StreamReport = ({ content, isEffectActive }: StreamReportProps) => 
                 <ActionButtons 
                   onCopy={handleCopy} 
                   onShare={handleShare} 
-                  isDark={isDark} 
+                  isDark={isDark}
+                  showHint={true}
                 />
               </View>
             )}
         </ScrollView>
 
-        {/* 分享预览模态框 */}
-        <SharePreviewModal
-          visible={isShareModalVisible}
-          onClose={handleCloseShareModal}
-          title={reportSummary.title}
-          keywords={reportSummary.keywords}
-          highlight={reportSummary.highlight}
-        />
+        {/* 当分享模态框打开时，显示底部遮罩层，覆盖透明导航栏区域 */}
+        {isShareModalVisible && (
+          <View 
+            style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: insets.bottom + 60, // 覆盖导航栏区域及额外空间
+              backgroundColor: isDark ? '#000000' : '#F5F5F0', // 和报告背景色一致
+            }}
+            pointerEvents="none"
+          />
+        )}
     </View>
+
+    {/* 分享预览模态框 - 放在根 View 外面确保正常渲染 */}
+    <SharePreviewModal
+      visible={isShareModalVisible}
+      onClose={handleCloseShareModal}
+      title={reportSummary.title}
+      keywords={reportSummary.keywords}
+      highlight={reportSummary.highlight}
+      contentId={reportId || undefined}
+      contentType="report"
+    />
+  </>
   );
 };
 
@@ -218,5 +266,21 @@ const styles = StyleSheet.create({
     height: 16,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  shareHintContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    gap: 4,
+    paddingRight: 4,
+    marginTop: 4,
+  },
+  shareHintText: {
+    fontSize: 12,
+    fontWeight: '500',
+  },
+  shareHintArrow: {
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });

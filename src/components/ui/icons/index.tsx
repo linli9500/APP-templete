@@ -32,3 +32,7 @@ export * from './feedback';
 export * from './edit';
 export * from './star';
 
+// 社交平台图标
+export * from './instagram';
+export * from './tiktok';
+export * from './snapchat';
