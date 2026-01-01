@@ -4,7 +4,6 @@ import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 import { supabase } from '@/lib/supabase';
 import { client } from '@/api/common/client';
-import { getLanguage } from '@/lib/i18n/utils';
 
 // Configure how notifications behave when the app is in foreground
 Notifications.setNotificationHandler({
@@ -64,15 +63,13 @@ async function saveTokenToBackend(token: string) {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session?.user) return;
 
-    // 获取当前用户语言设置
-    const locale = getLanguage() || 'en';
-
+    // 仅更新推送 Token，设备信息已在 bootstrap 时上报
+    // 使用专用的 device 接口避免重复调用 bootstrap
     await client.post('/app/device', {
       token,
       platform: Platform.OS,
-      locale, // 上报用户语言偏好
     });
-    console.log('✅ Push token saved to backend with locale:', locale);
+    console.log('✅ Push token saved to backend');
   } catch (error) {
     console.error('❌ Error saving push token:', error);
   }

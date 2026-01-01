@@ -17,14 +17,12 @@ import { useSupabase } from '@/hooks/use-supabase';
 import { translate } from '@/lib';
 import { AnnouncementModal } from '@/components/announcement-modal';
 
-import { useAppConfig } from '@/lib/use-app-config';
 import { useHistorySync } from '@/hooks/use-history-sync';
 import { useProfileSync } from '@/hooks/use-profile-sync';
 
 export default function TabLayout() {
   const { session, isLoaded } = useSupabase();
   const [isFirstTime] = useIsFirstTime();
-  const { initApp } = useAppConfig();
   const { colorScheme } = useColorScheme();
   
   // 启用同步 Hooks
@@ -37,17 +35,13 @@ export default function TabLayout() {
   }, []);
 
   useEffect(() => {
-    // Start bootstrap when layout mounts
-    // We allow navigation to proceed even if bootstrap isn't finished to avoid blocking UI too long,
-    // or we can await it if critical. Here we fire-and-forget but log.
-    initApp();
-
+    // 注意：initApp() 已在根 _layout.tsx 中调用，这里不再重复调用
     if (isLoaded) {
       setTimeout(() => {
         hideSplash();
       }, 1000);
     }
-  }, [hideSplash, isLoaded, initApp]);
+  }, [hideSplash, isLoaded]);
 
   if (isFirstTime) {
     return <Redirect href="/onboarding" />;

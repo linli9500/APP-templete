@@ -14,7 +14,7 @@ pnpm run android:development
 
 # github上传
 git add .
-git commit -m "APP-v1.2.1-增加分享功能&依赖包大范围改动"
+git commit -m "APP-v1.2.2-增加设备上送"
 git push origin main
 
 # 拉取最新分支代码
