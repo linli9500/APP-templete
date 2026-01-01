@@ -37,7 +37,7 @@ require('dotenv').config({
 
 const BUNDLE_ID = 'com.vibefox.app'; // ios bundle id
 const PACKAGE = 'com.vibefox.app'; // android package name
-const NAME = 'Fortune'; // app name
+const NAME = 'AItheaOS'; // app name
 const EXPO_ACCOUNT_OWNER = 'yoona587'; // expo的用户名
 const EAS_PROJECT_ID = 'ee9f9abf-5256-4d39-baed-ade6fb35e224'; // eas project id
 const SCHEME = 'obytesApp'; // app scheme
@@ -121,7 +121,7 @@ const _clientEnv = {
   VAR_NUMBER: Number(process.env.VAR_NUMBER),
   VAR_BOOL: process.env.VAR_BOOL === 'true',
   SENTRY_DSN: process.env.SENTRY_DSN,
-  APP_NAME: process.env.APP_NAME || 'Fortune', // APP 显示名称，默认 Fortune
+  APP_NAME: process.env.APP_NAME || 'AItheaOS', // APP 显示名称，默认 Fortune
   WEBSITE_URL: process.env.WEBSITE_URL,
   PRIVACY_URL: process.env.PRIVACY_URL,
   TERMS_URL: process.env.TERMS_URL,

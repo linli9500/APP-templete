@@ -6,6 +6,10 @@ pnpm run web
 -真机测试下城市录入是否会卡
 
 # 真机推送
+# 0. 如果有gradle缓存要清理的
+cd android
+.\gradlew clean
+
 # 1. 重新生成原生代码（涉及到原生插件的添加/删除）
 npx expo prebuild --clean
 # 2. 构建并安装到真机
@@ -14,7 +18,7 @@ pnpm run android:development
 
 # github上传
 git add .
-git commit -m "APP-v1.2.2-增加设备上送"
+git commit -m "APP-v1.2.3-APP整体页面优化"
 git push origin main
 
 # 拉取最新分支代码

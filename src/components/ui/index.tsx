@@ -14,6 +14,7 @@ export * from './select';
 export * from './text';
 export * from './utils';
 export * from './pattern-logo';
+export * from './Logo';
 
 // export base components from react-native
 export {

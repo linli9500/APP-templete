@@ -275,6 +275,7 @@ export default function Options() {
                   text="settings.test_animation" 
                   onPress={() => router.push('/test-animation')} 
               />
+
               <Item 
                   text="settings.screenshot_test" 
                   onPress={() => router.push('/screenshot-test')} 

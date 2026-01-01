@@ -1,0 +1,44 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 
+    Design Concept: "The Digital Eye of Wisdom" (AItheaOS)
+  -->
+  
+  <!-- Outer Ring / Orbit - Broken line for tech feel -->
+  <path 
+    d="M50 5 
+       A 45 45 0 0 1 95 50 
+       A 45 45 0 0 1 50 95 
+       A 45 45 0 0 1 5 50 
+       A 45 45 0 0 1 50 5" 
+    stroke="black" 
+    stroke-width="2" 
+    stroke-linecap="round" 
+    stroke-dasharray="10 10" 
+    opacity="0.5"
+  />
+
+  <!-- The "A" / Pyramid Structure -->
+  <path 
+    d="M50 20 L80 80 H20 L50 20Z" 
+    stroke="black" 
+    stroke-width="3" 
+    stroke-linejoin="round" 
+    stroke-linecap="round" 
+  />
+
+  <!-- Internal Circuitry / The "Eye" Crossbar -->
+  <path 
+    d="M35 50 L65 50" 
+    stroke="black" 
+    stroke-width="3" 
+    stroke-linecap="round" 
+  />
+  
+  <!-- Central "Pupil" / Data Point -->
+  <circle cx="50" cy="42" r="4" fill="black" />
+
+  <!-- Connecting Node - Bottom Center -->
+  <path d="M50 80 V90" stroke="black" stroke-width="2" stroke-linecap="round" />
+  <circle cx="50" cy="92" r="2" fill="black" />
+
+</svg>

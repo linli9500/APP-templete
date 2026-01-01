@@ -28,7 +28,7 @@ export const changeLanguage = (lang: Language) => {
   i18n.changeLanguage(lang);
   I18nManager.forceRTL(false);
   if (Platform.OS === 'ios' || Platform.OS === 'android') {
-    if (__DEV__) NativeModules.DevSettings.reload();
+    if (__DEV__ && NativeModules.DevSettings) NativeModules.DevSettings.reload();
     else RNRestart.restart();
   } else if (Platform.OS === 'web') {
     window.location.reload();

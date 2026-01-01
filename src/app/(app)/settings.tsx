@@ -90,7 +90,7 @@ export default function YouPage() {
           <TouchableOpacity className="bg-black dark:bg-white rounded-full px-5 py-2.5">
             <Text className="text-white dark:text-black font-medium text-sm">{translate('you.view_friends')}</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
+        <TouchableOpacity 
             className="bg-black dark:bg-white rounded-full px-5 py-2.5"
             onPress={() => router.push('/analysis/history')}
           >
@@ -99,6 +99,7 @@ export default function YouPage() {
           <TouchableOpacity className="bg-black dark:bg-white rounded-full px-5 py-2.5">
             <Text className="text-white dark:text-black font-medium text-sm">{translate('you.add_custom_friend')}</Text>
           </TouchableOpacity>
+
         </View>
 
         {/* Feature Card */}

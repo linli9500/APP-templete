@@ -1,12 +1,34 @@
 {
   "insight": {
-    "title": "分析",
+    "title": "洞察",
     "subtitle": "解碼你內在的真實自我。",
+    "subtitle_new": "解碼你內在的真實自我。",
+    "slogan": "融合東西方智慧。洞悉能量，掌控人生。",
     "true_self": "真實自我",
-    "core_tag": "核心",
+    "core_tag": "CORE / 核心",
+    "architect": "建築師",
+    "core_desc": "你的底層人生密碼",
+    "order": "# 秩序",
+    "logic": "# 邏輯",
+    "view_report": "查看完整報告",
+    
+    "mood_title": "MOOD / 情緒治癒",
+    "scan_tag": "深度掃描",
+    "mood_question": "為何感到焦慮迷茫？",
+    "mood_desc": "精準定位抑鬱或低落的深層根源，獲取你的專屬治癒方案。",
+    
+    "connect_title": "愛情{nl}合盤",
+    "connect_tag": "CONNECT",
+    "connect_desc": "契合度分析",
+    
+    "wealth_title": "財富{nl}洞察",
+    "wealth_tag": "WEALTH",
+    "wealth_index": "指數",
+    
+    "daily_wisdom": "Daily Wisdom",
+
     "architect_title": "命運架構師",
     "architect_desc": "你擁有構建混亂的天賦。你的心理畫像顯示你內心深處渴望秩序與目標。",
-    "view_report": "查看完整報告",
     "energy_station": "能量站",
     "emotion_detector": "情緒探測器",
     "current_vibe": "當前狀態：",
@@ -19,10 +41,28 @@
     "quote": "“擁抱不確定性。那是你力量生長的土壤。”"
   },
   "bonds": {
-    "title": "連結",
-    "subtitle": "分析你與他人的羈絆。",
+    "title": "羈絆",
+    "subtitle": "解析你與世界的能量連接。",
     "daily_resonance": "每日共鳴",
-    "resonance_desc": "查看今天的契合度與能量共鳴。"
+    "resonance_desc": "解鎖今天的契合度與能量共鳴。",
+    "partner_title": "核心伴侶",
+    "compatibility_score": "開始解碼",
+    "compatibility_label": "點擊開始靈魂契合度測試",
+    "love_view_title": "愛情觀",
+    "love_view_desc": "揭秘你們愛情底色的差異與共鳴",
+    "interaction_title": "相處模式",
+    "interaction_desc": "深度解析你們的互動能量場",
+    "intimacy_title": "親密與性",
+    "intimacy_desc": "探索由於星盤差異帶來的深層渴望",
+    "social_circle": "垂直關係",
+    "friend_bestie": "閨蜜合盤",
+    "friend_bestie_desc": "是互補的靈魂還是相似的鏡子？揭秘默契真相。",
+    "friend_work": "職場/上下級",
+    "friend_work_desc": "掌握職場生存與向上管理的星盤密碼。",
+    "friend_normal": "朋友/一般關係",
+    "friend_normal_desc": "快速識人，一眼看透你們的社交緣分與潛在雷區。",
+    "add_new": "添加",
+    "unlock": "點擊解鎖"
   },
   "journey": {
     "title": "旅程",
