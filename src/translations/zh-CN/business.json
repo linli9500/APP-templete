@@ -67,22 +67,65 @@
   "journey": {
     "title": "旅程",
     "subtitle": "你的时间线：过去，现在与未来。",
+    "slogan": "穿越时空，预见未来的自己。",
     "time_machine": "时光机",
     "time_machine_desc": "解锁未来 5-10 年的洞察。",
-    "settings_title": "我的"
+    "settings_title": "我的",
+    
+    "life_title": "人生时光机",
+    "life_tag": "核心功能",
+    "life_desc": "探索你人生的关键节点，预见未来5年、10年的转折与机遇。",
+    "life_label": "全维度分析",
+    
+    "wealth_title": "财富\n时光机",
+    "wealth_tag": "财富预测",
+    "wealth_desc": "财运周期分析",
+    
+    "love_title": "爱情\n时光机",
+    "love_tag": "情感预测",
+    "love_desc": "桃花运势预测",
+    
+    "career_title": "职业发展\n时光机",
+    "career_tag": "事业预测",
+    "career_desc": "晋升转行时机",
+    
+    "energy_title": "能量\n时光机",
+    "energy_tag": "能量周期",
+    "energy_desc": "大运流年分析",
+    
+    "custom_title": "定制时光穿越",
+    "custom_tag": "高级功能",
+    "custom_desc": "选择任意年份，深度解读那一年的你。",
+    
+    "footer_title": "时光寄语",
+    "footer_quote": "时间是一条河流，你可以选择随波逐流，也可以学会预见潮汐。"
   },
   "you": {
     "title": "关于你",
     "subtitle": "一个关于你人生故事的成长库",
-    "view_friends": "查看好友",
     "history_reports": "历史报告",
-    "add_custom_friend": "添加自定义好友",
-    "wound_title": "强力疗愈者",
-    "wound_subtitle": "本命凯龙星情结",
-    "wound_desc": "这段音频深入探索你注定要挖掘、面对并治愈内心最深层创伤的部分。",
-    "listen_now": "立即收听",
-    "your_pattern": "你的模式",
-    "impacting_you": "此刻的影响",
+    "my_profiles": "我的档案",
+    
+    "daily_fortune_tag": "今日",
+    "daily_fortune_title": "每日运势",
+    "daily_fortune_desc": "专属于你的今日能量预报",
+    
+    "social_pattern_tag": "社交",
+    "social_pattern_title": "你的\n交友模式",
+    
+    "hidden_self_tag": "隐藏",
+    "hidden_self_title": "你隐藏的\n性格",
+    
+    "love_view_tag": "爱情",
+    "love_view_title": "你的\n恋爱观",
+    
+    "emotion_point_tag": "情绪",
+    "emotion_point_title": "你的\n情绪点",
+    
+    "wealth_level_tag": "财富",
+    "wealth_level_title": "你的财富层级",
+    "wealth_level_desc": "探索你的财富命运与潜力",
+    
     "new_tag": "新"
   },
   "analysis": {

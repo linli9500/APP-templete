@@ -67,22 +67,65 @@
   "journey": {
     "title": "旅程",
     "subtitle": "你的時間線：過去，現在與未來。",
+    "slogan": "穿越時空，預見未來的自己。",
     "time_machine": "時光機",
     "time_machine_desc": "解鎖未來 5-10 年的洞察。",
-    "settings_title": "我的"
+    "settings_title": "我的",
+    
+    "life_title": "人生時光機",
+    "life_tag": "核心功能",
+    "life_desc": "探索你人生的關鍵節點，預見未來5年、10年的轉折與機遇。",
+    "life_label": "全維度分析",
+    
+    "wealth_title": "財富\n時光機",
+    "wealth_tag": "財富預測",
+    "wealth_desc": "財運週期分析",
+    
+    "love_title": "愛情\n時光機",
+    "love_tag": "情感預測",
+    "love_desc": "桃花運勢預測",
+    
+    "career_title": "職業發展\n時光機",
+    "career_tag": "事業預測",
+    "career_desc": "晉升轉行時機",
+    
+    "energy_title": "能量\n時光機",
+    "energy_tag": "能量週期",
+    "energy_desc": "大運流年分析",
+    
+    "custom_title": "定製時光穿越",
+    "custom_tag": "高級功能",
+    "custom_desc": "選擇任意年份，深度解讀那一年的你。",
+    
+    "footer_title": "時光寄語",
+    "footer_quote": "時間是一條河流，你可以選擇隨波逐流，也可以學會預見潮汐。"
   },
   "you": {
     "title": "關於你",
     "subtitle": "一個關於你人生故事的成長庫",
-    "view_friends": "查看好友",
     "history_reports": "歷史報告",
-    "add_custom_friend": "添加自定義好友",
-    "wound_title": "強力療癒者",
-    "wound_subtitle": "本命凱龍星情結",
-    "wound_desc": "這段音頻深入探索你註定要挖掘、面對並治癒內心最深層創傷的部分。",
-    "listen_now": "立即收聽",
-    "your_pattern": "你的模式",
-    "impacting_you": "此刻的影響",
+    "my_profiles": "我的檔案",
+    
+    "daily_fortune_tag": "今日",
+    "daily_fortune_title": "每日運勢",
+    "daily_fortune_desc": "專屬於你的今日能量預報",
+    
+    "social_pattern_tag": "社交",
+    "social_pattern_title": "你的\n交友模式",
+    
+    "hidden_self_tag": "隱藏",
+    "hidden_self_title": "你隱藏的\n性格",
+    
+    "love_view_tag": "愛情",
+    "love_view_title": "你的\n戀愛觀",
+    
+    "emotion_point_tag": "情緒",
+    "emotion_point_title": "你的\n情緒點",
+    
+    "wealth_level_tag": "財富",
+    "wealth_level_title": "你的財富層級",
+    "wealth_level_desc": "探索你的財富命運與潛力",
+    
     "new_tag": "新"
   },
   "analysis": {

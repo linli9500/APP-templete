@@ -67,22 +67,65 @@
   "journey": {
     "title": "Journey",
     "subtitle": "Your timeline: Past, Present, and Future.",
+    "slogan": "Travel through time, foresee your future self.",
     "time_machine": "Time Machine",
     "time_machine_desc": "Unlock insights for the next 5-10 years.",
-    "settings_title": "You"
+    "settings_title": "You",
+    
+    "life_title": "Life Time Machine",
+    "life_tag": "Core Feature",
+    "life_desc": "Explore key turning points in your life, foresee opportunities in the next 5-10 years.",
+    "life_label": "Full Dimension Analysis",
+    
+    "wealth_title": "Wealth\nTime Machine",
+    "wealth_tag": "Wealth Forecast",
+    "wealth_desc": "Wealth cycle analysis",
+    
+    "love_title": "Love\nTime Machine",
+    "love_tag": "Romance Forecast",
+    "love_desc": "Romance fortune prediction",
+    
+    "career_title": "Career\nTime Machine",
+    "career_tag": "Career Forecast",
+    "career_desc": "Promotion & job change timing",
+    
+    "energy_title": "Energy\nTime Machine",
+    "energy_tag": "Energy Cycle",
+    "energy_desc": "Major fortune & yearly analysis",
+    
+    "custom_title": "Custom Time Travel",
+    "custom_tag": "Premium Feature",
+    "custom_desc": "Choose any year for deep analysis",
+    
+    "footer_title": "Time Wisdom",
+    "footer_quote": "Time is a river. You can drift with it, or learn to foresee the tides."
   },
   "you": {
     "title": "All About You",
     "subtitle": "An ever-growing library on the story of you",
-    "view_friends": "View Friends",
-    "history_reports": "History Reports",
-    "add_custom_friend": "Add Custom Friend",
-    "wound_title": "The Wounded Healer",
-    "wound_subtitle": "Natal Chiron Complex",
-    "wound_desc": "This audio dives into the part of you that is meant to unearth, address, and heal your deepest wounds.",
-    "listen_now": "Listen now",
-    "your_pattern": "Your Pattern",
-    "impacting_you": "Impacting You Now",
+    "history_reports": "History",
+    "my_profiles": "My Profiles",
+    
+    "daily_fortune_tag": "Today",
+    "daily_fortune_title": "Daily Fortune",
+    "daily_fortune_desc": "Your personalized energy forecast for today",
+    
+    "social_pattern_tag": "Social",
+    "social_pattern_title": "Friendship\nPattern",
+    
+    "hidden_self_tag": "Hidden",
+    "hidden_self_title": "Hidden\nPersonality",
+    
+    "love_view_tag": "Love",
+    "love_view_title": "Love\nPhilosophy",
+    
+    "emotion_point_tag": "Emotion",
+    "emotion_point_title": "Emotional\nTriggers",
+    
+    "wealth_level_tag": "Wealth",
+    "wealth_level_title": "Your Wealth Level",
+    "wealth_level_desc": "Discover your financial destiny and potential",
+    
     "new_tag": "New"
   },
   "analysis": {
