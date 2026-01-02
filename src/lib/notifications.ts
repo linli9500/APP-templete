@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
-import { supabase } from '@/lib/supabase';
+import { collectDeviceInfo } from '@/api/bootstrap';
 import { client } from '@/api/common/client';
 
 // Configure how notifications behave when the app is in foreground
@@ -60,16 +60,15 @@ export async function registerForPushNotificationsAsync() {
 
 async function saveTokenToBackend(token: string) {
   try {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session?.user) return;
-
-    // 仅更新推送 Token，设备信息已在 bootstrap 时上报
-    // 使用专用的 device 接口避免重复调用 bootstrap
-    await client.post('/app/device', {
-      token,
-      platform: Platform.OS,
+    // 使用 bootstrap 接口保存 pushToken，支持未登录用户
+    // 通过 deviceId 标识设备，无需登录也能关联
+    const deviceInfo = collectDeviceInfo();
+    
+    await client.post('/app/bootstrap', {
+      ...deviceInfo,
+      pushToken: token,
     });
-    console.log('✅ Push token saved to backend');
+    console.log('✅ Push token saved to backend via bootstrap');
   } catch (error) {
     console.error('❌ Error saving push token:', error);
   }
