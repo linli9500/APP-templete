@@ -4,6 +4,8 @@ import Constants from 'expo-constants';
 import { getLocales } from 'expo-localization';
 import { client } from './common/client';
 import { getLanguage } from '@/lib/i18n/utils';
+import { storage } from '@/lib/storage';
+import * as Crypto from 'expo-crypto';
 
 export type AppBootstrapData = {
   version: {
@@ -46,6 +48,7 @@ export type DeviceInfo = {
   deviceModel: string | null;
   isDevice: boolean;
   pushToken?: string;
+  deviceId: string;
 };
 
 // Default safe values in case of API, network error
@@ -91,9 +94,17 @@ export const collectDeviceInfo = (): DeviceInfo => {
   const appVersion = Constants.expoConfig?.version || null;
   
   // 获取构建号
+  // 获取构建号
   const buildNumber = Platform.OS === 'ios' 
     ? Constants.expoConfig?.ios?.buildNumber 
     : Constants.expoConfig?.android?.versionCode?.toString() || null;
+
+  // 获取或生成持久化 Device ID
+  let deviceId = storage.getString('device_id');
+  if (!deviceId) {
+    deviceId = Crypto.randomUUID();
+    storage.set('device_id', deviceId);
+  }
 
   return {
     platform: Platform.OS,
@@ -107,6 +118,7 @@ export const collectDeviceInfo = (): DeviceInfo => {
     deviceBrand: Device.brand || null,
     deviceModel: Device.modelName || null,
     isDevice: Device.isDevice,
+    deviceId,
   };
 };
 
@@ -123,6 +135,7 @@ export const getBootstrapData = async (pushToken?: string): Promise<AppBootstrap
     
     // 打印上行设备信息
     console.log('[Bootstrap] 上行设备信息:', JSON.stringify({
+      deviceId: deviceInfo.deviceId,
       platform: deviceInfo.platform,
       locale: deviceInfo.locale,
       timezone: deviceInfo.timezone,

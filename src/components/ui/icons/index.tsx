@@ -36,3 +36,16 @@ export * from './star';
 export * from './instagram';
 export * from './tiktok';
 export * from './snapchat';
+
+// 情绪图标
+export * from './fire';
+export * from './wave';
+export * from './wind';
+export * from './stone';
+export * from './battery';
+
+// 关系图标
+export * from './lock';
+export * from './handshake';
+export * from './briefcase';
+export * from './wealth';

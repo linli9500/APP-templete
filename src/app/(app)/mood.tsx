@@ -1,6 +1,9 @@
 import { ScrollView, View, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FocusAwareStatusBar, Text } from '@/components/ui';
+import { AnimatedCard } from '@/components/ui/AnimatedCard';
+import { AnimatedGlow } from '@/components/ui/AnimatedGlow';
+import { Fire, Wave, Wind, Stone, Battery } from '@/components/ui/icons';
 import { translate } from '@/lib';
 
 export default function Mood() {
@@ -26,122 +29,162 @@ export default function Mood() {
       >
         <View className="gap-4">
             {/* 1. Resentment (Red/Fire) */}
-            <TouchableOpacity className="w-full h-48 rounded-[32px] overflow-hidden shadow-sm active:opacity-95 bg-[#FFF0EE] dark:bg-[#4A2020]">
-                {/* Visuals */}
-                <View className="absolute right-0 top-0 bottom-0 w-32 bg-red-400/20 blur-2xl rounded-full translate-x-10" />
-                <View className="absolute left-10 bottom-0 w-20 h-20 bg-orange-400/20 blur-xl rounded-full" />
-                
-                <View className="p-6 flex-1 justify-between">
-                   <View>
-                      <View className="flex-row items-center space-x-2 mb-2">
-                          <View className="w-2 h-6 bg-red-500 rounded-full" />
-                          <Text className="text-sm font-bold text-red-800 dark:text-red-200 uppercase tracking-widest">{translate('mood.resentment_title')}</Text>
-                      </View>
-                      <Text className="text-xl font-serif text-red-950 dark:text-red-100 italic leading-relaxed pr-8">
-                         {translate('mood.resentment_desc')}
-                      </Text>
-                   </View>
-                   <View className="flex-row justify-between items-end">
-                       <View className="px-4 py-2 bg-white/60 dark:bg-black/30 rounded-full">
-                          <Text className="text-xs font-bold text-red-900 dark:text-red-100">{translate('mood.start_analysis')}</Text>
-                       </View>
-                       <Text className="text-4xl">🔥</Text>
-                   </View>
-                </View>
-            </TouchableOpacity>
+            <AnimatedCard delay={0}>
+              <TouchableOpacity className="w-full h-48 rounded-[32px] overflow-hidden shadow-sm bg-[#FFF0EE] dark:bg-[#4A2020]">
+                  {/* 动态光晕 */}
+                  <AnimatedGlow 
+                    color="fire" 
+                    size="medium" 
+                    position={{ right: 0, top: 0 }}
+                  />
+                  <AnimatedGlow 
+                    color="fire" 
+                    size="small" 
+                    breathDuration={5000}
+                    position={{ left: 40, bottom: 0 }}
+                  />
+                  
+                  <View className="p-6 flex-1 justify-between">
+                     <View className="z-10">
+                        <View className="flex-row items-center space-x-2 mb-2">
+                            <View className="w-2 h-6 bg-red-500 rounded-full" />
+                            <Text className="text-sm font-bold text-red-800 dark:text-red-200 uppercase tracking-widest">{translate('mood.resentment_title')}</Text>
+                        </View>
+                        <Text className="text-xl font-serif text-red-950 dark:text-red-100 italic leading-relaxed pr-8">
+                           {translate('mood.resentment_desc')}
+                        </Text>
+                     </View>
+                     <View className="flex-row justify-between items-end z-10">
+                         <View className="px-4 py-2 bg-white/60 dark:bg-black/30 rounded-full">
+                            <Text className="text-xs font-bold text-red-900 dark:text-red-100">{translate('mood.start_analysis')}</Text>
+                         </View>
+                         <Fire color="#7f1d1d" width={36} height={36} />
+                     </View>
+                  </View>
+              </TouchableOpacity>
+            </AnimatedCard>
 
             {/* 2. Lonely (Blue/Water) */}
-            <TouchableOpacity className="w-full h-48 rounded-[32px] overflow-hidden shadow-sm active:opacity-95 bg-[#F0F7FF] dark:bg-[#1E293B]">
-                <View className="absolute left-0 -top-10 w-40 h-40 bg-blue-300/20 blur-3xl rounded-full" />
-                <View className="absolute right-10 bottom-10 w-24 h-24 bg-indigo-300/20 blur-xl rounded-full" />
-                
-                <View className="p-6 flex-1 justify-between">
-                   <View>
-                      <View className="flex-row items-center space-x-2 mb-2">
-                          <View className="w-2 h-6 bg-blue-500 rounded-full" />
-                          <Text className="text-sm font-bold text-blue-800 dark:text-blue-200 uppercase tracking-widest">{translate('mood.lonely_title')}</Text>
-                      </View>
-                      <Text className="text-xl font-serif text-blue-950 dark:text-blue-100 italic leading-relaxed pr-8">
-                         {translate('mood.lonely_desc')}
-                      </Text>
-                   </View>
-                   <View className="flex-row justify-between items-end">
-                       <View className="px-4 py-2 bg-white/60 dark:bg-black/30 rounded-full">
-                          <Text className="text-xs font-bold text-blue-900 dark:text-blue-100">{translate('mood.start_analysis')}</Text>
-                       </View>
-                       <Text className="text-4xl">🌊</Text>
-                   </View>
-                </View>
-            </TouchableOpacity>
+            <AnimatedCard delay={100}>
+              <TouchableOpacity className="w-full h-48 rounded-[32px] overflow-hidden shadow-sm bg-[#F0F7FF] dark:bg-[#1E293B]">
+                  <AnimatedGlow 
+                    color="water" 
+                    size="large" 
+                    position={{ left: -40, top: -40 }}
+                  />
+                  <AnimatedGlow 
+                    color="water" 
+                    size="small" 
+                    breathDuration={5000}
+                    position={{ right: 40, bottom: 40 }}
+                  />
+                  
+                  <View className="p-6 flex-1 justify-between">
+                     <View className="z-10">
+                        <View className="flex-row items-center space-x-2 mb-2">
+                            <View className="w-2 h-6 bg-blue-500 rounded-full" />
+                            <Text className="text-sm font-bold text-blue-800 dark:text-blue-200 uppercase tracking-widest">{translate('mood.lonely_title')}</Text>
+                        </View>
+                        <Text className="text-xl font-serif text-blue-950 dark:text-blue-100 italic leading-relaxed pr-8">
+                           {translate('mood.lonely_desc')}
+                        </Text>
+                     </View>
+                     <View className="flex-row justify-between items-end z-10">
+                         <View className="px-4 py-2 bg-white/60 dark:bg-black/30 rounded-full">
+                            <Text className="text-xs font-bold text-blue-900 dark:text-blue-100">{translate('mood.start_analysis')}</Text>
+                         </View>
+                         <Wave color="#1e3a5f" width={36} height={36} />
+                     </View>
+                  </View>
+              </TouchableOpacity>
+            </AnimatedCard>
 
             {/* 3. Anxiety (Cyan/Wind) */}
-            <TouchableOpacity className="w-full h-48 rounded-[32px] overflow-hidden shadow-sm active:opacity-95 bg-[#F0FDFA] dark:bg-[#134E4A]">
-                <View className="absolute right-0 top-0 w-48 h-48 bg-teal-300/20 blur-3xl rounded-full" />
-                
-                <View className="p-6 flex-1 justify-between">
-                   <View>
-                      <View className="flex-row items-center space-x-2 mb-2">
-                          <View className="w-2 h-6 bg-teal-500 rounded-full" />
-                          <Text className="text-sm font-bold text-teal-800 dark:text-teal-200 uppercase tracking-widest">{translate('mood.anxiety_title')}</Text>
-                      </View>
-                      <Text className="text-xl font-serif text-teal-950 dark:text-teal-100 italic leading-relaxed pr-8">
-                         {translate('mood.anxiety_desc')}
-                      </Text>
-                   </View>
-                   <View className="flex-row justify-between items-end">
-                       <View className="px-4 py-2 bg-white/60 dark:bg-black/30 rounded-full">
-                          <Text className="text-xs font-bold text-teal-900 dark:text-teal-100">{translate('mood.start_analysis')}</Text>
-                       </View>
-                       <Text className="text-4xl">🌬️</Text>
-                   </View>
-                </View>
-            </TouchableOpacity>
+            <AnimatedCard delay={200}>
+              <TouchableOpacity className="w-full h-48 rounded-[32px] overflow-hidden shadow-sm bg-[#F0FDFA] dark:bg-[#134E4A]">
+                  <AnimatedGlow 
+                    color="wind" 
+                    size="large" 
+                    position={{ right: 0, top: 0 }}
+                  />
+                  
+                  <View className="p-6 flex-1 justify-between">
+                     <View className="z-10">
+                        <View className="flex-row items-center space-x-2 mb-2">
+                            <View className="w-2 h-6 bg-teal-500 rounded-full" />
+                            <Text className="text-sm font-bold text-teal-800 dark:text-teal-200 uppercase tracking-widest">{translate('mood.anxiety_title')}</Text>
+                        </View>
+                        <Text className="text-xl font-serif text-teal-950 dark:text-teal-100 italic leading-relaxed pr-8">
+                           {translate('mood.anxiety_desc')}
+                        </Text>
+                     </View>
+                     <View className="flex-row justify-between items-end z-10">
+                         <View className="px-4 py-2 bg-white/60 dark:bg-black/30 rounded-full">
+                            <Text className="text-xs font-bold text-teal-900 dark:text-teal-100">{translate('mood.start_analysis')}</Text>
+                         </View>
+                         <Wind color="#134e4a" width={36} height={36} />
+                     </View>
+                  </View>
+              </TouchableOpacity>
+            </AnimatedCard>
 
             {/* 4. Paralysis (Purple/Stagnation) */}
-            <TouchableOpacity className="w-full h-48 rounded-[32px] overflow-hidden shadow-sm active:opacity-95 bg-[#FAF5FF] dark:bg-[#3B0764]">
-                <View className="absolute left-1/2 top-1/2 -translate-x-16 -translate-y-16 w-32 h-32 bg-purple-400/20 blur-2xl rounded-full" />
-                
-                <View className="p-6 flex-1 justify-between">
-                   <View>
-                      <View className="flex-row items-center space-x-2 mb-2">
-                          <View className="w-2 h-6 bg-purple-500 rounded-full" />
-                          <Text className="text-sm font-bold text-purple-800 dark:text-purple-200 uppercase tracking-widest">{translate('mood.paralysis_title')}</Text>
-                      </View>
-                      <Text className="text-xl font-serif text-purple-950 dark:text-purple-100 italic leading-relaxed pr-8">
-                         {translate('mood.paralysis_desc')}
-                      </Text>
-                   </View>
-                   <View className="flex-row justify-between items-end">
-                       <View className="px-4 py-2 bg-white/60 dark:bg-black/30 rounded-full">
-                          <Text className="text-xs font-bold text-purple-900 dark:text-purple-100">{translate('mood.start_analysis')}</Text>
-                       </View>
-                       <Text className="text-4xl">🗿</Text>
-                   </View>
-                </View>
-            </TouchableOpacity>
+            <AnimatedCard delay={300}>
+              <TouchableOpacity className="w-full h-48 rounded-[32px] overflow-hidden shadow-sm bg-[#FAF5FF] dark:bg-[#3B0764]">
+                  <AnimatedGlow 
+                    color="earth" 
+                    size="medium" 
+                    position={{ left: '40%', top: '40%' }}
+                  />
+                  
+                  <View className="p-6 flex-1 justify-between">
+                     <View className="z-10">
+                        <View className="flex-row items-center space-x-2 mb-2">
+                            <View className="w-2 h-6 bg-purple-500 rounded-full" />
+                            <Text className="text-sm font-bold text-purple-800 dark:text-purple-200 uppercase tracking-widest">{translate('mood.paralysis_title')}</Text>
+                        </View>
+                        <Text className="text-xl font-serif text-purple-950 dark:text-purple-100 italic leading-relaxed pr-8">
+                           {translate('mood.paralysis_desc')}
+                        </Text>
+                     </View>
+                     <View className="flex-row justify-between items-end z-10">
+                         <View className="px-4 py-2 bg-white/60 dark:bg-black/30 rounded-full">
+                            <Text className="text-xs font-bold text-purple-900 dark:text-purple-100">{translate('mood.start_analysis')}</Text>
+                         </View>
+                         <Stone color="#581c87" width={36} height={36} />
+                     </View>
+                  </View>
+              </TouchableOpacity>
+            </AnimatedCard>
 
              {/* 5. Burnout (Grey/Depletion) */}
-             <TouchableOpacity className="w-full h-48 rounded-[32px] overflow-hidden shadow-sm active:opacity-95 bg-[#F5F5F4] dark:bg-[#1C1917]">
-                <View className="absolute bottom-0 right-0 w-64 h-32 bg-stone-400/10 blur-2xl rounded-t-full" />
-                
-                <View className="p-6 flex-1 justify-between">
-                   <View>
-                      <View className="flex-row items-center space-x-2 mb-2">
-                          <View className="w-2 h-6 bg-stone-500 rounded-full" />
-                          <Text className="text-sm font-bold text-stone-800 dark:text-stone-200 uppercase tracking-widest">{translate('mood.burnout_title')}</Text>
-                      </View>
-                      <Text className="text-xl font-serif text-stone-950 dark:text-stone-100 italic leading-relaxed pr-8">
-                         {translate('mood.burnout_desc')}
-                      </Text>
-                   </View>
-                   <View className="flex-row justify-between items-end">
-                       <View className="px-4 py-2 bg-white/60 dark:bg-black/30 rounded-full">
-                          <Text className="text-xs font-bold text-stone-900 dark:text-stone-100">{translate('mood.start_analysis')}</Text>
-                       </View>
-                       <Text className="text-4xl">🔋</Text>
-                   </View>
-                </View>
-            </TouchableOpacity>
+             <AnimatedCard delay={400}>
+               <TouchableOpacity className="w-full h-48 rounded-[32px] overflow-hidden shadow-sm bg-[#F5F5F4] dark:bg-[#1C1917]">
+                  <AnimatedGlow 
+                    color="metal" 
+                    size="large" 
+                    position={{ bottom: 0, right: 0 }}
+                  />
+                  
+                  <View className="p-6 flex-1 justify-between">
+                     <View className="z-10">
+                        <View className="flex-row items-center space-x-2 mb-2">
+                            <View className="w-2 h-6 bg-stone-500 rounded-full" />
+                            <Text className="text-sm font-bold text-stone-800 dark:text-stone-200 uppercase tracking-widest">{translate('mood.burnout_title')}</Text>
+                        </View>
+                        <Text className="text-xl font-serif text-stone-950 dark:text-stone-100 italic leading-relaxed pr-8">
+                           {translate('mood.burnout_desc')}
+                        </Text>
+                     </View>
+                     <View className="flex-row justify-between items-end z-10">
+                         <View className="px-4 py-2 bg-white/60 dark:bg-black/30 rounded-full">
+                            <Text className="text-xs font-bold text-stone-900 dark:text-stone-100">{translate('mood.start_analysis')}</Text>
+                         </View>
+                         <Battery color="#44403c" width={36} height={36} />
+                     </View>
+                  </View>
+              </TouchableOpacity>
+            </AnimatedCard>
 
         </View>
       </ScrollView>
