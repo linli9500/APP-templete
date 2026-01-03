@@ -1,5 +1,6 @@
-# 启动
+# 启动-在xcode构建成功后，执行下面的指令就可以运行了
 pnpm run ios:development
+pnpm run start:development
 
 
 # 真机测试

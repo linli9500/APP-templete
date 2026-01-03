@@ -141,6 +141,18 @@ export default function RootLayout() {
     }
   }, [isConfigReady, isLayoutReady]);
 
+  // Safety Fallback: Force hide splash screen after 15 seconds
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (showSplash) {
+        console.warn('[Splash] Force hiding splash screen due to timeout');
+        setShouldHideSplash(true);
+        await SplashScreen.hideAsync();
+      }
+    }, 15000);
+    return () => clearTimeout(timer);
+  }, [showSplash]);
+
   // 阶段二：当 App全部就绪时 -> 通知 Web Splash 淡出
   useEffect(() => {
     if (isAppReady) {

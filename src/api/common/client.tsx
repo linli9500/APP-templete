@@ -5,6 +5,7 @@ import { showErrorMessage } from '@/components/ui/utils';
 
 export const client = axios.create({
   baseURL: `${Env.EXPO_PUBLIC_API_URL}/api`,
+  timeout: 15000,
 });
 
 // Request Interceptor: Inject Supabase Token

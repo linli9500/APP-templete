@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  expo-localization@16.0.1:
+    hash: 4126f45977791718e985ff63c0e6d1960f86d6de97dbd4ef24b017e8ad617a4b
+    path: patches/expo-localization@16.0.1.patch
+
 importers:
 
   .:
@@ -88,7 +93,7 @@ importers:
         version: 7.0.5(expo@52.0.48(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1)))(react-native-webview@13.12.5(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1))(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1))(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1)
       expo-localization:
         specifier: ~16.0.1
-        version: 16.0.1(expo@52.0.48(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1)))(react-native-webview@13.12.5(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1))(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: 16.0.1(patch_hash=4126f45977791718e985ff63c0e6d1960f86d6de97dbd4ef24b017e8ad617a4b)(expo@52.0.48(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1)))(react-native-webview@13.12.5(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1))(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1))(react@18.3.1)
       expo-media-library:
         specifier: ~17.0.6
         version: 17.0.6(expo@52.0.48(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1)))(react-native-webview@13.12.5(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1))(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1))(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))
@@ -8574,6 +8579,7 @@ packages:
   whatwg-encoding@2.0.0:
     resolution: {integrity: sha512-p41ogyeMUrw3jWclHWTQg1k05DSVXPLcVxRTYsXUk+ZooOCZLcoYgPZ/HL/D/N+uQPOtcp1me1WhBEaX02mhWg==}
     engines: {node: '>=12'}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-fetch@3.6.20:
     resolution: {integrity: sha512-EqhiFU6daOA8kpjOWTL0olhVOF3i7OrFzSYiGsEMB8GcXS+RrzauAERX65xMeNWVqxA6HXH2m69Z9LaKKdisfg==}
@@ -14295,7 +14301,7 @@ snapshots:
       - expo
       - supports-color
 
-  expo-localization@16.0.1(expo@52.0.48(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1)))(react-native-webview@13.12.5(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1))(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1))(react@18.3.1):
+  expo-localization@16.0.1(patch_hash=4126f45977791718e985ff63c0e6d1960f86d6de97dbd4ef24b017e8ad617a4b)(expo@52.0.48(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1)))(react-native-webview@13.12.5(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1))(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1))(react@18.3.1):
     dependencies:
       expo: 52.0.48(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1)))(react-native-webview@13.12.5(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1))(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.28.5(@babel/core@7.26.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1)
       react: 18.3.1

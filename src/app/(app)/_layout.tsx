@@ -43,9 +43,9 @@ export default function TabLayout() {
     }
   }, [hideSplash, isLoaded]);
 
-  if (isFirstTime) {
-    return <Redirect href="/onboarding" />;
-  }
+  // if (isFirstTime) {
+  //   return <Redirect href="/onboarding" />;
+  // }
   // Remove mandatory login check to allow guest access
   // if (isLoaded && !session) {
   //   return <Redirect href="/login" />;

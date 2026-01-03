@@ -9,7 +9,7 @@
     "android": "cross-env EXPO_NO_DOTENV=1 expo run:android",
     "ios": "cross-env EXPO_NO_DOTENV=1 expo run:ios",
     "web": "cross-env EXPO_NO_DOTENV=1 expo start --web",
-    "xcode": "xed -b ios",
+    "xcode": "open ios/AItheaOS.xcworkspace",
     "doctor": "npx expo-doctor@latest",
     "preinstall": "npx only-allow pnpm",
     "start:staging": "cross-env APP_ENV=staging pnpm run start",
@@ -170,6 +170,11 @@
     "url": "git+https://github.com/obytes/react-native-template-obytes.git"
   },
   "packageManager": "pnpm@10.12.3",
+  "codegenConfig": {
+    "name": "AppSpecs",
+    "type": "all",
+    "jsSrcsDir": "src"
+  },
   "expo": {
     "doctor": {
       "reactNativeDirectoryCheck": {
@@ -183,6 +188,11 @@
       "exclude": [
         "eslint-config-expo"
       ]
+    }
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "expo-localization@16.0.1": "patches/expo-localization@16.0.1.patch"
     }
   }
 }
